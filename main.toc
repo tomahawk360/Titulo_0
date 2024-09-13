@@ -1,0 +1,20 @@
+\babel@toc {spanish}{}\relax 
+\contentsline {section}{RESUMEN}{\es@scroman {iv}}{section*.1}%
+\contentsline {section}{ABSTRACT}{\es@scroman {iv}}{section*.2}%
+\contentsline {section}{GLOSARIO}{\es@scroman {v}}{section*.3}%
+\contentsline {section}{ÍNDICE DE FIGURAS}{\es@scroman {vii}}{section*.4}%
+\contentsline {section}{ÍNDICE DE TABLAS}{\es@scroman {vii}}{section*.5}%
+\contentsline {section}{INTRODUCCIÓN}{1}{section*.6}%
+\contentsline {section}{CAPÍTULO 1: DEFINICIÓN DEL PROBLEMA}{2}{section*.7}%
+\contentsline {subsection}{\numberline {1.1}DEFINICIÓN}{2}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}CONTEXTO}{2}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}ACTORES INVOLUCRADOS}{3}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}DIFICULTADES}{3}{subsection.1.4}%
+\contentsline {subsection}{\numberline {1.5}OBJETIVOS Y ALCANCE}{3}{subsection.1.5}%
+\contentsline {section}{CAPÍTULO 2: MARCO CONCEPTUAL}{4}{section*.8}%
+\contentsline {section}{CAPÍTULO 3: PROPUESTA DE SOLUCIÓN}{5}{section*.9}%
+\contentsline {subsection}{\numberline {3.1}EJEMPLO DE COMO CITAR FIGURAS E ILUSTRACIONES}{5}{subsection.3.1}%
+\contentsline {section}{CAPÍTULO 4: VALIDACIÓN DE LA SOLUCIÓN}{6}{section*.10}%
+\contentsline {subsection}{\numberline {4.1}EJEMPLO DE COMO CITAR TABLAS}{6}{subsection.4.1}%
+\contentsline {section}{CAPÍTULO 5: CONCLUSIONES}{7}{section*.11}%
+\contentsline {section}{ANEXOS}{8}{section*.12}%

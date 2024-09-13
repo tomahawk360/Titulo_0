@@ -2,52 +2,41 @@
 
 \subsection{DEFINICIÓN}
 
-Los datos producidos por la Óptica Activa del telescopio VLT en Paranal poseen un tamaño y un formato tal que los vuelven
-inutilizables para su uso en análisis y ciencia de datos externo.
+Los datos producidos por la Óptica Activa del telescopio VLT en Paranal\comentario{VLT no es un telescopio, es un observatorio en el que están los telescopios UT} poseen un tamaño y un formato tal que los vuelven inutilizables para su uso en análisis y ciencia de datos externo.\comentario{El problema se centra en la inexistencia de un procedimiento para extraer la información contenida en los logs del telescopio para obtener un set de datos estructurados}
 
 \subsection{CONTEXTO}
 
-El Telescopio Muy Grande (VLT por sus siglas en inglés) es uno de los telescopios ópticos más avanzados del mundo, compuesto de 4 Telescopios Unitarios (UT por sus siglas en inglés) y 3 Telescopios Auxiliares (AT por sus siglas en inglés).
-Perteneciente al Observatorio Europeo Austral (ESO por sus siglas en inglés), el telescopio se ubica en el Cerro Paranal en el Norte de Chile, y se dedica principalmente a la búsqueda y estudio de galaxias y otras estructuras interestelares (1).
-Para cumplir con estos objetivos, el telescopio debe cumplir con altos estándares tecnológicos, de entre los cuales se destaca la necesidad de una alta resolución angular y una alta calidad de imagen (1). Dicha responsabilidad recae principalmente en los UTs.
+El Telescopio Muy Grande\comentario{Nombres como este no se traducen} (VLT por sus siglas en inglés\comentario{Esto debe ir en el glosario}) es uno de los telescopios ópticos más avanzados del mundo, compuesto de 4 Telescopios Unitarios (UT por sus siglas en inglés) y 3 Telescopios Auxiliares (AT por sus siglas en inglés)\comentario{Revisar esto, el VLT tiene 4 UT, \textbf{4} AT, el interferometro, VISTA y otros más}.
+Perteneciente al Observatorio Europeo Austral\comentario{Usar nombre original, sigla al glosario} (ESO por sus siglas en inglés), el telescopio\comentario{Observatorio} se ubica en el Cerro Paranal en el Norte de Chile, y se dedica principalmente a la búsqueda y estudio de galaxias y otras estructuras interestelares (1)\comentario{Revisar bien esto en la visión y misión de la organización}.
+Para cumplir con estos objetivos, el telescopio\comentario{ESO tiene más de un telescopio y más de un observatorio} debe cumplir con altos estándares tecnológicos, de entre los cuales se destaca la necesidad de una alta resolución angular y una alta calidad de imagen (1). Dicha responsabilidad recae principalmente en los UTs.
 
-\\
+Los UTs son telescopios de 8.2 metros\comentario{Contexto, el lector no sabe a que corresponde esa dimensión} que pueden trabajar solos o en conjunto, donde en este último modo alcanza el poder de colecta de luz de un solo telescopio de 16 metros\comentario{Esto es incorrecto, el interferometro tiene otra forma de determinar el espejo equivalente}.
+Cada UT esta sobre una montura altazimutal\comentario{Esto merece una explicación adicional}, y el tubo del telescopio\comentario{Nunca había escuchado esta expresión ¿traducción literal?} consiste de una estrucutra de acero apoyando en su parte inferior al Espejo Primario (M1 en inglés\comentario{M1 no es una sigla particularmente vinculada al idioma ingles}), y en su parte superior a la Unidad M2, la cuál corresponde al Espejo Secundario (M2 en inglés) con un mecanismo electromecánico que sujeta y controla la posición del M2 más los respectivos circuitos electrónicos (2)\comentario{Esta descripción del telescopio está muy confusa}.
 
-Los UTs son telescopios de 8.2 metros que pueden trabajar solos o en conjunto, donde en este último modo alcanza el poder de colecta de luz de un solo telescopio de 16 metros.
-Cada UT esta sobre una montura altazimutal, y el tubo del telescopio consiste de una estrucutra de acero apoyando en su parte inferior al Espejo Primario (M1 en inglés), y en su parte superior a la Unidad M2, la cuál corresponde al Espejo Secundario (M2 en inglés) con un mecanismo electromecánico que sujeta y controla la posición
-del M2 más los respectivos circuitos electrónicos (2).
+Bajo M1 se encuentran 150 actuadores de fuerza axiales\comentario{clarificar al lector que es esto}, los cuales dan a M1 una determinada forma óptima según el patrón de fuerza presentado en los actuadores (1).
+La forma en que cada telescopio captura las imagenes es la siguiente; primero se captura los rayos de luz estelares con el M1, y se concentra entre el M1 y el M2, donde la luz se puede concentrar en varios focos (1).\comentario{Descripción inexacta bordeando lo incorrecta}
 
-Bajo M1 se encuentran 150 actuadores de fuerza axiales, los cuales dan a M1 una determinada forma óptima según el patrón de fuerza presentado en los actuadores (1).
-La forma en que cada telescopio captura las imagenes es la siguiente; primero se captura los rayos de luz estelares con el M1, y se concentra entre el M1 y el M2, donde la luz se puede concentrar en varios focos (1).
- 
-\\
-
-Para cumplir con la necesidad de imagenes de alta calidad, los UTs está equipada con un sistema llamado Óptica Activa. 
+Para cumplir con la necesidad de imagenes de alta calidad, los UTs está equipada con un sistema llamado Óptica Activa. \comentario{La optica activa es lo que ya se describió anteriormente}
 
 Este se basa en un sistema de corrección de ciclo cerrado para telescopios usando un analizador de imagenes.
-De forma más específica, el sistema comienza cuando ingresa luz de una estrella natural al analizador de imagen, el cuál en los UTs corresponde de sensores de frente de onda Shack-Hartmann. Esta estrella es denominada Estrella Guía o Estrella Referencial.
+De forma más específica, el sistema comienza cuando ingresa luz de una estrella natural al analizador de imagen, el cuál en los UTs corresponde de sensores de frente de onda Shack-Hartmann. Esta estrella es denominada Estrella Guía o Estrella Referencial.\comentario{Esto también está descrito en los parrafos anteriores, unir}
 Estos sensores envían información a un computador, el cuál la procesa usando una prueba polinomial quasi-Zernike (3).
 
 Esta prueba detecta aberraciones en la imagen captada, las cuales se miden al comparar la imagen obtenida de la Estrella Guía por M1 con la luz de la Estrella obtenida por los sensonres Shack-Hartmann.
-Según las aberraciones presentes en la imagen, el sistema cambia la forma óptica de M1, redistribuyendo el patrón de fuerza a lo largo de los 150 acutadores axiales bajo M1, y la inclinación de M2, cambiando la posición del mecanismo electromecánico de la Unidad M2 (1).
+Según las aberraciones presentes en la imagen, el sistema cambia la forma óptica de M1, redistribuyendo el patrón de fuerza a lo largo de los 150 acutadores axiales bajo M1, y la inclinación de M2\comentario{¿Estas seguro que la inclinación de M2 es parte de la optica activa?}, cambiando la posición del mecanismo electromecánico de la Unidad M2 (1).
 
-La Óptica Activa permite mitigar las aberraciones y degradación en la calidad de imagen causada por factores como distorsiones térmicas, turbulencia atmosférica, deformación de espejo por ráfagas de viento,
-errores de manufactura y mantenimiento del telescopio, entre otros (3).
+La Óptica Activa permite mitigar las aberraciones y degradación en la calidad de imagen causada por factores como distorsiones térmicas, turbulencia atmosférica, deformación de espejo por ráfagas de viento, errores de manufactura y mantenimiento del telescopio, entre otros (3).\comentario{Revisar exactamente cuales de todas estas cosas se compensan por la optica activa de M1. La AO de M1 solo compensa las aberraciones de baja frecuencia. Ahora, no solo M1 tiene AO, en algunos telescopios como UT4 (uno de los UT) hay optica activa también en el M2, y los instrumentos de forma interna también pueden tener AO}
 
 \subsection{ACTORES INVOLUCRADOS}
 
-Los actores involucrados en el problema corresponden a los elementos participantes en el sistema de Óptima Activa del telescopio VLT , más especificamente
-la célula M1, la unidad M2, los sensores de frente de onda Shack-Hartmann y el computador que analiza los datos entregados por los sensores. (4)
+Los actores involucrados en el problema corresponden a los elementos participantes en el sistema de Óptima Activa del telescopio VLT , más especificamente la célula M1, la unidad M2, los sensores de frente de onda Shack-Hartmann y el computador que analiza los datos entregados por los sensores. (4)\comentario{¿Corresponde M2 para este caso generico para todos los UT? falta considerar los aspectos del software de control que son los que almacenan los logs}
 
 \subsection{DIFICULTADES}
 
-Actualmente, el sistema de Óptica Activa tarda una cantidad de tiempo considerable ajustando la configuración de M1 y M2 hasta lograr minimizar las aberraciones en la imagen captada.
-Se han propuesto formas de reducir este tiempo, sin embargo, toda implementación de nuevos sistemas se ve entorpecido por la naturaleza de los datos generados por el 
-sistema de Óptica Activa.
-Más especificamente, la cantidad de datos es demasiado grande y el formato en el que se presentan los mismos es demasiado abstracto para ser procesada adecuadamente.
+Actualmente, el sistema de Óptica Activa tarda una cantidad de tiempo considerable ajustando la configuración de M1 y M2 hasta lograr minimizar las aberraciones en la imagen captada.\comentario{Este es un juicio de valor, el calculo que te mencioné de la mejora potencial para VST era de agregar 3 noches de observación, pero 3 noches de observación son un 0.8\% de mejora, lo cual sificilmente se puede considerar una cantidad de tiempo considerable}
+Se han propuesto formas de reducir este tiempo, sin embargo, toda implementación de nuevos sistemas se ve entorpecido por la naturaleza de los datos generados por el sistema de Óptica Activa.\comentario{No es la naturaleza de los datos, es por que los datos no son faciles de acceder por no estar almacenados de forma estructurada}
+Más especificamente, la cantidad de datos es demasiado grande y el formato en el que se presentan los mismos es demasiado abstracto para ser procesada adecuadamente.\comentario{La cantidad de datos no es grande, el problema es como identificas al final, un tema de formato}
 
 \subsection{OBJETIVOS Y ALCANCE}
 
-Se espera que la solución a este problema permita el análisis de las grandes masas de datos producidas por los
-sistemas de óptica activa presente en los telescopios, los cuales debido a su gran tamaño no pueden ser procesados
-apropiadamente.
+Se espera que la solución a este problema permita el análisis de las grandes masas de datos producidas por los sistemas de óptica activa presente en los telescopios, los cuales debido a su gran tamaño no pueden ser procesados apropiadamente.\comentario{El objetivo es desarrollar un procedimiento para extraer de fuentes de datos no estructurados datos estructurados, y el alcance son multiples aplicaciones posibles desde mantenimeinto a técnicas de softcomputing}

@@ -1,0 +1,43 @@
+\begin{thebibliography}{}
+
+\bibitem[ESO, 1998]{eso1998vlt}
+ESO (1998).
+\newblock {\em The VLT White Book}, volumen 1.
+\newblock ESO.
+
+\bibitem[ESO, 2011a]{eso2011m1}
+ESO (2011a).
+\newblock The m1 cell and m3 tower.
+\newblock
+  \url{https://www.eso.org/sci/facilities/paranal/telescopes/ut/m1cellm3.html}.
+
+\bibitem[ESO, 2011b]{eso2011m2}
+ESO (2011b).
+\newblock The secondary mirror, m2 unit.
+\newblock
+  \url{https://www.eso.org/sci/facilities/paranal/telescopes/ut/m2unit.html}.
+
+\bibitem[ESO, 2011c]{eso2011vlt}
+ESO (2011c).
+\newblock The vlt active optics system.
+\newblock
+  \url{https://www.eso.org/sci/facilities/paranal/telescopes/ut/actopt.html}.
+
+\bibitem[ESO, 2023a]{eso2023paranal}
+ESO (2023a).
+\newblock Paranal telescopes.
+\newblock \url{https://www.eso.org/sci/facilities/paranal/telescopes.html}.
+
+\bibitem[ESO, 2023b]{eso2023vlti}
+ESO (2023b).
+\newblock The very large telescope interferometer.
+\newblock
+  \url{https://www.eso.org/sci/facilities/paranal/telescopes/vlti.html}.
+
+\bibitem[Wilson \textit{et al.}, 1987]{wilson1987active}
+Wilson, R.~N., Franza, F., y Noethe, L. (1987).
+\newblock Active optics i. a system for optimizing the optical quality and
+  reducing the costs of large telescopes.
+\newblock 34(4):485--509.
+
+\end{thebibliography}

@@ -6,7 +6,7 @@
 
 % NOTE: Leer nota en el README sobre la font.
 
-\newcommand{\titulo}{Título de la memoria}
+\newcommand{\titulo}{Pre-Memoria: Definición del problema}
 \newcommand{\ciudad}{Santiago} % e.g. Valparaíso
 % TODO: Consultar el formato de los nombres:
 \newcommand{\nombrealumno}{Ignacio Ortiz Valdebenito}
@@ -54,6 +54,9 @@ Corresponde a la traducción al idioma inglés de Palabras Clave anteriores.
 % Paquete para definir cualquier tamaño de font
 \usepackage{anyfontsize}
 
+% Paquete para la bibliografia
+\usepackage{cite}
+
 % Settear font
 \setmainfont{Carlito}
 
@@ -62,17 +65,18 @@ Corresponde a la traducción al idioma inglés de Palabras Clave anteriores.
 
 % Habilita los comentarios al margen, comentar para versión final
 % Para desabilitar los comentarios y cambios de margen comentar la siguiente linea
-\newcommand{\comentado}{}
+%\newcommand{\comentado}{}
 % Paquete para comentarios
-\usepackage{sidenotes}
+%\usepackage{sidenotes}
 % Package para color en los comentarios
-\usepackage{xcolor}
+%\usepackage{xcolor}
 % Comando para habilitar y desabilitar comentarios al margen
-\newcommand{\comentario}[1]{
-	\ifdefined\comentado
-		\sidenote{\textcolor{red}{#1}}
-	\fi
-}
+
+%\newcommand{\comentario}[1]{
+%	\ifdefined\comentado
+%		\sidenote{\textcolor{red}{#1}}
+%	\fi
+%}
 
 % Determinar interlineado:
 \renewcommand{\baselinestretch}{1.0}
@@ -207,40 +211,40 @@ Corresponde a la traducción al idioma inglés de Palabras Clave anteriores.
 \input{glosario}
 
 %Índice de contenidos:
-\newpage
-\thispagestyle{portada}
-\tableofcontents
+%\newpage
+%\thispagestyle{portada}
+%\tableofcontents
 
 %Índice de figuras:
-\newpage
-\thispagestyle{portada}
-\phantomsection
-\addcontentsline{toc}{section}{ÍNDICE DE FIGURAS}
-\listoffigures
-\phantomsection
-\addcontentsline{toc}{section}{ÍNDICE DE TABLAS}
-\listoftables
+%\newpage
+%\thispagestyle{portada}
+%\phantomsection
+%\addcontentsline{toc}{section}{ÍNDICE DE FIGURAS}
+%\listoffigures
+%\phantomsection
+%\addcontentsline{toc}{section}{ÍNDICE DE TABLAS}
+%\listoftables
 
 \newpage
 \pagestyle{intermedio}
 \pagenumbering{arabic}
 
 % Ajustes de margen para comentarios al margen
-\ifdefined\comentado
-  \newgeometry{right=\dimexpr 10.795cm, marginparwidth=\dimexpr 7.795cm-5pt}
-\fi
+%\ifdefined\comentado
+%  \newgeometry{right=\dimexpr 10.795cm, marginparwidth=\dimexpr 7.795cm-5pt}
+%\fi
 
-\input{introduccion}
-\newpage
+%\input{introduccion}
+%\newpage
 \input{definicion_del_problema}
 \newpage
-\input{marco_conceptual}
-\newpage
-\input{propuesta_de_solucion}
-\newpage
-\input{validacion_de_la_solucion}
-\newpage
-\input{conclusiones}
+%\input{marco_conceptual}
+%\newpage
+%\input{propuesta_de_solucion}
+%\newpage
+%\input{validacion_de_la_solucion}
+%\newpage
+%\input{conclusiones}
 
 \newpage
 \input{anexos}

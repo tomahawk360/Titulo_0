@@ -2,7 +2,11 @@
 
 \subsection{DEFINICIÓN}
 
-Actualmente, no existe un procedimiento que permita extraer un set de datos estructurados desde los logs de los UTs.
+Actualmente, en el VLT del Observatorio Paranal, no existe un procedimiento que permita extraer un set de datos estructurados desde los logs de los UTs. 
+
+Esto se debe a que los datos retornados por el sistema de Óptica Activa usan un formato abstracto y poco estructurado. Esto también aplica para los logs retornados durante las operaciones dentro del sistema. Además, estos logs registran todas las actividades y factores presentes durante la operación de los UTs en una noche, generando archivos de gran tamaño con información muy variada.
+
+Estos factores imposibilitan el análisis de la información dispuesta en dichos logs, ya que el costo para reordenar y organizar los datos acorde a lo necesitado supera los beneficios del análisis mismo. A partir del análisis de estos datos, se podría extraer información útil para el diseño de sistemas para la asistencia y mejora de las operaciones de los UTs.
 
 \subsection{CONTEXTO}
 
@@ -43,18 +47,9 @@ solo la Óptica Activa para M1, los cuales principalmente se encargan de compens
 
 Los actores involucrados en el problema corresponden a los elementos participantes en el sistema de Óptima Activa del telescopio VLT, más especificamente la célula M1, los sensores de frente de onda Shack-Hartmann y el software de control que almacena y analiza los logs y los datos entregados por los sensores\cite{eso2011vlt}.
 
-\subsection{DIFICULTADES}
-
-Actualmente, los datos retornados por el sistema de Óptica Activa usan un formato abstracto y poco estructurado. Esto también aplica para los logs retornados durante las operaciones dentro del sistema.
-Esta falta de estructura imposibilita el análisis de datos, ya que el costo para reordenar y organizar los datos acorde a lo necesitado supera los beneficios del análisis mismo. 
-
 \subsection{OBJETIVOS Y ALCANCE}
 
 EL objetivo detrás de la solución busca desarrollar un procedimiento para extraer los datos no estructurados, transformarlos en datos estructurados, y disponerlos para distintos modelos y sistemas
-que buquen analizar dichos datos con diversos fines, como por ejemplo mantenimiento o técnicas de softcomputing.
+que busquen analizar dichos datos con diversos fines, como por ejemplo mantenimiento o técnicas de softcomputing.
 
-\subsection{ARBOL DE PROBLEMA}
-
-\vspace{0.5cm}
-\includegraphics[width=9.5cm,height=16cm]{figures/arbol_problema.jpeg} \\
-\vspace{3.5cm}
+Para el caso específico de esta memoría, se tendrá como sistema final de análisis al modelo Neural M1: una red neuronal que es entrenada con datos relacionados al sistema de Óptica Activa, con el propósito de modelar y predecir la operación de dicho sistema durante una noche.

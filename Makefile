@@ -5,10 +5,10 @@
 # Se usa xelatex porque pdflatex no soporta usar fonts del sistema, otra opción sería lualatex.
 
 document: clean
-	xelatex main.tex
-	bibtex main || true
-	xelatex main.tex
-	xelatex main.tex
+	xelatex releases/main.tex
+	bibtex releases/main || true
+	xelatex releases/main.tex
+	xelatex releases/main.tex
 
 clean:
 	rm main.log main.aux main.blg main.out main.bbl main.pdf missfont.log main.lof main.lot main.toc || true

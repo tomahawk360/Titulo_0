@@ -6,22 +6,161 @@ Tradicionalmente es una etapa crítica, pues debe comprobarse por algún medio q
 
 \subsection{EJEMPLO DE COMO CITAR TABLAS}
 
-Se colocó una tabla que se puede referenciar también desde el texto (Ver tabla \ref{table:coloquios}).
+Se colocó una tabla que se puede referenciar también desde el texto 
+
+
+\subsection{Algoritmo}
+
+El código del modelo fue desarrollado con Python 3.10.8, siguiendo el modelo descrito durante el Capítulo 3. Se puede encontrar el mismo en un repositorio público en Github \footnote{link al repo github}.
+
+\subsubsection{Implementación}
+
+El flujo del algoritmo final es puede notar en el Anexo 2, donde cada bloque rectangular corresponde a una función, mientras que cada bloque con borde inferior irregular corresponde a un archivo, ya sea de texto plano o dataframe.
+
+El algoritmo se divide en los siguientes pasos:
+
+\begin{enumerate}
+
+    \item log\_formatting: Cumple con el proceso planteado en la sección 3.3.1, donde se remueven los tokens de fecha y hora iniciales, debido a su redundancia a nivel de línea, además de corregir otros detalles de formato con tal de facilitar el posterior análisis.
+
+    \item obs\_filtering: Cumple con el proceso descrito en la sección 3.3.2, donde se obtiene un archivo csv con las observaciones de la noche seleccionada, para luego formar bloques de tiempo basados en los tiempos que tarda cada observaciones, más el efecto de parámetros de margen y unión, donde finalmente se filtran las líneas de log con tal de quedar solo con aquellas cuya fecha se encuentre dentro de alguno de esos bloques de tiempo.
+
+    \item log\_parsing\_regex: Cumple con el proceso descrito en la sección 3.4, donde a base de una archivo plano de plantillas, se itera sobre las líneas de log, aplicando cada plantilla por línea hasta encontrar alguna que calze y guardar la data extraída en un json final.
+
+    Como se mencionó en la sección 3.4.2, el método para realizar el parsing es mediante Expresiones Regulares, lo cuál se manifiesta tanto en el archivo de plantillas que se ingresa a la función, junto con las líneas a parsear, como en el método de parsing que se aplica a línea de log.
+
+    \item generate\_dataframes: Cumple con el proceso de la sección 3.5.2, donde se menciona el traslado de los datos del json generado en la función anterior a un conjunto de dataframes, usando los campos "group" y "label" como etiquetas para reconocer a qué dataframe destinar los datos.
+
+    De esta función se generan 4 dataframes, como se señalo en la sección 3.5.1: df\_corrections, para las instancias de corrección; df\_images, para las imágenes capturadas; df\_f\_dist, para las distribuciones de fuerza de los actuadores; y df\_additional\_data, para los datos adicionales relacionados con la Óptica Activa.
+
+    \item validate\_forces: Cumple con el segundo item de la sección 3.5.3, donde se especifica la validación de los datos dentro de df\_f\_dist generado en la función anterior. 
+
+    Principalmente, se eliminan los datos con ID nulo, además de remover aquellos que no sean antecedidas y/o seguidas por imágenes únicas.
+
+    \item validate\_images: Cumple con el tercer item de la sección 3.5.3, donde se especifica la validación de los datos dentro de df\_images generado en la función anterior.
+
+    Solamente se eliminan aquellos datos con ID nulo.
+
+    \item link\_images: Cumple con el requisito de la sección 3.5.1, sobre df\_images manteniendo la dirección local del archivo .fits correspondiente como un atributo de los datos del dataframe.
+
+    En esta función, se ingresa a la carpeta donde estan almacenados los archivos .fits, se extrae el número de ID y el tiempo de exposición del header de cada .fits y se usan estos para buscar el dato de df\_images que le sea correspondiente. En caso de encontrarlo, se guarda su dirección local en el atributo correspondiente del dato.
+
+    \item validate\_corrections: Cumple con el primer item de la sección 3.5.3, donde se especifica la validación de los datos dentro de df\_corrections generado en la función anterior.
+
+    Principalmente se eliminan los datos con ID nulo, además de remover aquellos sin distribución de fuerza posterior a la corrección.
+
+    \item link\_dataframes: Cumple con el proceso descrito en la sección 3.5.4, en la que se indica como calzar los datos de un dataframe con los datos de dataframe df\_corrections mediante los timestamp de estos datos, comparando estos para luego copiar la ID del dato de la cantidad deseada en un campo designado dentro del dato correspondient en df\_corrections.
+
+    Para esta función, como la construcción de relaciones entre df\_images con df\_corrections y entre df\_f\_dist con df\_corrections es identico, por lo que se pudo generalizar y paramétrizar esta construcción en una misma función, que varía con el dataframe de la cualidad deseada, el nombre de la cualidad deseada y el campo de tiempo dentro del dataframe, como parámetros de entrada.
+    
+\end{enumerate}
+
+\subsubsection{Ejecución}
+
+Para ejecutar el código desarrollado, se debe entregar la fecha y el número del UT, en ese orden, del registro a analizar. Para el apropiado funcionamiento del algoritmo, el archivo de log debe estar previamente cargado en el sistema local.
+
+Además se desarrolló un sistema de flags opcionales que otorga la posibilidad de habilitar o deshabilitar las funciones descritas en la sección 4.2.1.
+
+-- Imagen de las flags del código --
+
+Existen 2 posibles modos de retorno de los dataframes generados: por consola o por csv. Estos se habilitan con las flags -c y -s, respectivamente.
+
+\subsection{Pruebas}
+
+Para corroborar el correcto funcionamiento del algoritmo, es necesario analizar los resultados del mismo, junto con revisar el rendimiento y exactitud de la ejecución.
+
+\subsubsection{Metodología}
+
+Para poder analizar el desempeño y resultados del algoritmo, primero se realiza un conteo manual de las instancias de corrección, las distribuciones de fuerza y las imagenes presenten en una muestra de archivos de log. Luego, se ejecuta el algoritmo para procesar los mismos archivos de log, y se comparan los resultados. 
+
+La muestra se compone de los siguientes archivos de log:
+
+\begin{itemize}
+    \item wt1tcs.2025-08-03.log : Archivo de log para la observación del UT 1 durante la noche del 4 de Agosto del 2025.
+
+    \item wt1tcs.2025-08-04.log : Archivo de log para la observación del UT 1 durante la noche del 5 de Agosto del 2025.
+
+    \item wt3tcs.2025-08-03.log : Archivo de log para la observación del UT 3 durante la noche del 4 de Agosto del 2025.
+
+    \item wt3tcs.2025-08-04.log : Archivo de log para la observación del UT 3 durante la noche del 5 de Agosto del 2025.
+
+    \item wt4tcs.2025-08-03.log : Archivo de log para la observación del UT 4 durante la noche del 4 de Agosto del 2025.
+
+    \item wt4tcs.2025-08-04.log : Archivo de log para la observación del UT 4 durante la noche del 5 de Agosto del 2025.    
+\end{itemize}
+
+Una vez realizadas las ejecuciones, se procede a analizar las estadísticas de los resultados, más específicamente el número de instancias de corrección, distribución de fuerzas e imágenes obtenidas, además del tiempo de ejecución y el uso de memoria durante la ejecución.
+
+\subsubsection{Resultados}
+
+Los resultados encontrados de forma manual para cada archivo de log se refleja en la Tabla \ref{table:manual}:
+
 
 \begin{table}[h]
     \centering
-    \caption{\label{table:coloquios} Coloquios del Ciclo de Charlas Informática.} Fuente: Elaboración Propia.
-    \begin{tabular}{|p{7cm}|p{7cm}|}
+    \caption{\label{table:manual} Cantidades encontradas de forma manual}
+    \begin{tabular}{|p{2.8cm}|p{2.8cm}|p{2.8cm}|p{2.8cm}|p{2.8cm}|}
         \hline
-        Título Coloquio & Presentador, País \\
+        Nombre de archivo de log & Número de líneas & Número de instancias de corrección & Número de distribuciones de fuerza & Número de imágenes tomadas \\
         \hline
-        ``Sensible, invisible, sometimes tolerant, heterogeneous, decentralized and interoperable... and we still need to assure its quality...''' & Guilherme Horta Travassos, Brasil.\\
+        wt1tcs.2025-08-03.log & 427195 & 626 & 586 & 851 \\
         \hline
-        ``Dispersed Multiphase Flow Modeling: From Environmental to Industrial Applications''' & Orlando Ayala, EE.UU.\\
+        wt1tcs.2025-08-04.log & 384729 & 598 & 562 & 802 \\
         \hline
-        ``Líneas de Producto Software Dinámicas para Sistemas atentos el Contexto''' & Rafael Capilla, España.\\
+        wt3tcs.2025-08-03.log & 409830 & 537 & 277 & 908 \\
         \hline
-        ... & ... \\
+        wt3tcs.2025-08-04.log & 371450 & 546 & 262 & 741 \\
+        \hline
+        wt4tcs.2025-08-03.log & 444126 & 491 & 287 & 786 \\
+        \hline
+        wt4tcs.2025-08-04.log & 422312 & 495 & 358 & 713 \\
         \hline
     \end{tabular}
 \end{table}
+
+Luego, las cantidades encontradas en los mismos archivos por el algoritmo se encuentran en la Tabla \ref{table:auto}:
+
+
+\begin{table}[h]
+    \centering
+    \caption{\label{table:auto} Cantidades encontradas por el algoritmo}
+    \begin{tabular}{|p{2.3cm}|p{2.3cm}|p{2.3cm}|p{2.3cm}|p{2.3cm}|p{2.3cm}|}
+        \hline
+        Nombre de archivo de log & Número de líneas & Número de instancias de corrección & Número de distribuciones de fuerza & Número de imágenes tomadas & Tiempo de ejecución (en segundos) \\
+        \hline
+        wt1tcs.2025-08-03.log & 427195 & 4 & 5 & 11 & 61.92 \\
+        \hline
+        wt1tcs.2025-08-04.log & 384729 & 31 & 33 & 54 & 89.33 \\
+        \hline
+        wt3tcs.2025-08-03.log & 409830 & 4 & 5 & 8 & 69.49 \\
+        \hline
+        wt3tcs.2025-08-04.log & 371450 & 19 & 19 & 46 & 79.14 \\
+        \hline
+        wt4tcs.2025-08-03.log & 444126 & 3 & 3 & 4 & 59.18 \\
+        \hline
+        wt4tcs.2025-08-04.log & 422312 & 18 & 18 & 31 & 103.25 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Es evidente la amplia diferencia entre ambas cantidades, sin embargo, existen motivos para explicarlo.
+
+Primero, se debe mencionar que la extracción manual se realizó mediante un simple conteo de lineas de log según ciertos tokens clave, mientras que para la extracción con el algoritmo se aplicó lógica durante las validaciones y filtros que permiten un conteo con información más certera, aunque reducida en tamaño.
+
+Ejemplos de reglas incumplidas en los logs: se ha visto que en los registros de log, existen varias fotos que se pueden tomar consecutivamente en lapsos de unos pocos segundos; distribuciones de fuerza que no son anticipados ni seguidos directamente por una toma de imágen; entre otros.
+
+-- Foto de ejemplo: varias fotos seguidas desde el el log--
+
+Estos casos, son detectados por el algoritmo, evitando el parseo de estos datos extra.
+
+El otro motivo de porque la diferencia en el número de cantidades es la filtración por observación: la cantidad de obesrvaciones totales es baja, lo cuál inmediatamente deja fuera a una buena parte de las cantidades presentes en el archivo de log, como se puede ilustrar en la siguiente imágen:
+
+-- Foto del log del nm1e, mostrando todas las lineas eliminadas --
+
+En la imágen anterior, los nombres mostrados equivalen a líneas de imágen, desechadas del parsing final, debido a no calzar con algún horario de observación.
+
+Ahora bien, como se menciono en la sección 3.3.2, el filtro de observaciones se realiza con tres parámetros, los cuáles son de asignación directa dentro del código. Por ende, la modificación de estos parámetros ampliaría el rango de búsqueda de las cantidades en el archivo de log. Actualmente, se definieron los margenes anterior y posterior como 10 segundos cada uno, y el umbral de unidad de los bloques de observación se encuentra en 30 segundos.
+
+Es posible aumentar estos paramétros, sin embargo tampoco se pueden llegar a extremos muy altos que terminen volviendo obsoleto al proceso de filtro por observación.
+
+Se deja abierta la posibilidad de un estudio futuro con el cuál analizar los valores óptimos para los parámetros.

@@ -27,7 +27,7 @@ El algoritmo se divide en los siguientes pasos:
 
     \item log\_parsing\_regex: Cumple con el proceso descrito en la sección 3.4, donde a base de una archivo plano de plantillas, se itera sobre las líneas de log, aplicando cada plantilla por línea hasta encontrar alguna que calze y guardar la data extraída en un json final.
 
-    Como se mencionó en la sección 3.4.2, el método para realizar el parsing es mediante Expresiones Regulares, lo cuál se manifiesta tanto en el archivo de plantillas que se ingresa a la función, junto con las líneas a parsear, como en el método de parsing que se aplica a línea de log.
+    Como se mencionó en la sección 3.4.2, el método para realizar la extracción es mediante Expresiones Regulares, lo cuál se manifiesta tanto en el archivo de plantillas que se ingresa a la función, junto con las líneas a extraer, como en el método de extracción que se aplica a línea de log.
 
     \item generate\_dataframes: Cumple con el proceso de la sección 3.5.2, donde se menciona el traslado de los datos del json generado en la función anterior a un conjunto de dataframes, usando los campos "group" y "label" como etiquetas para reconocer a qué dataframe destinar los datos.
 
@@ -151,13 +151,13 @@ Ejemplos de reglas incumplidas en los logs: se ha visto que en los registros de 
 
 -- Foto de ejemplo: varias fotos seguidas desde el el log--
 
-Estos casos, son detectados por el algoritmo, evitando el parseo de estos datos extra.
+Estos casos, son detectados por el algoritmo, evitando la extracción de estos datos extra.
 
 El otro motivo de porque la diferencia en el número de cantidades es la filtración por observación: la cantidad de obesrvaciones totales es baja, lo cuál inmediatamente deja fuera a una buena parte de las cantidades presentes en el archivo de log, como se puede ilustrar en la siguiente imágen:
 
 -- Foto del log del nm1e, mostrando todas las lineas eliminadas --
 
-En la imágen anterior, los nombres mostrados equivalen a líneas de imágen, desechadas del parsing final, debido a no calzar con algún horario de observación.
+En la imágen anterior, los nombres mostrados equivalen a líneas de imágen, desechadas de la extracción final, debido a no calzar con algún horario de observación.
 
 Ahora bien, como se menciono en la sección 3.3.2, el filtro de observaciones se realiza con tres parámetros, los cuáles son de asignación directa dentro del código. Por ende, la modificación de estos parámetros ampliaría el rango de búsqueda de las cantidades en el archivo de log. Actualmente, se definieron los margenes anterior y posterior como 10 segundos cada uno, y el umbral de unidad de los bloques de observación se encuentra en 30 segundos.
 

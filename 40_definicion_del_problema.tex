@@ -2,19 +2,21 @@
 
 \subsection{DEFINICIÓN}
 
-Actualmente, en el VLT del Observatorio Paranal, no existe un procedimiento que permita analizar los registros de log y extraer sets de información bien precisas de estos, bajo ciertas condiciones especificas, con tal de generar batches de data que puedan ser utiles en un futuro. 
+En el VLT del Observatorio Paranal, con el fin de implementar sistemas novedoso para la asistencia y mejora de las operaciones de un sistema denominado Óptica Activa, se busca disponer de datasets con información útil sobre el comportamiento de dicho sistema, la cuál se encuentra disponible en los registros de log del mismo.
 
-Esto se debe a que los datos retornados por el sistema de Óptica Activa usan un formato abstracto y poco estructurado. Esto también aplica para los logs retornados durante las operaciones dentro del sistema. Además, estos logs registran todas las actividades y factores presentes durante la operación de los UTs en una noche, generando archivos de gran tamaño con información muy variada.
+Sin embargo, actualmente no existe un procedimiento que permita analizar los registros de log y extraer sets de información precisas de estos, bajo ciertas condiciones especificas, con tal de generar los datasets deseados. 
 
-Estos factores imposibilitan el análisis de la información dispuesta en dichos logs, ya que el costo para reordenar y organizar los datos acorde a lo necesitado supera los beneficios del análisis mismo. A partir del análisis de estos datos, se podría extraer información útil para el diseño de sistemas para la asistencia y mejora de las operaciones de los UTs.
+Este procedimiento es esencial, ya que el análisis as-is de la información dispuesta en dichos logs no es posible, debido a que el costo para reordenar y organizar los datos acorde a lo necesitado supera los beneficios del análisis mismo.
+
+Esto es a causa de que los datos retornados por el sistema de Óptica Activa usan un formato abstracto y poco estructurado. Los registros de log generados durante las operaciones dentro del sistema también usan dicho formato. Además, estos logs registran todas las actividades y factores presentes durante la operación de los UTs en una noche, generando archivos de gran tamaño con información muy variada.
 
 \subsection{CONTEXTO}
 
-Perteneciente a la ESO, el observatorio Paranal se ubica en el cerro homónimo en el Norte de Chile, y se dedica principalmente a la búsqueda y estudio de galaxias y otras estructuras interestelares. Para lograr estos objetivos, el observatorio cuenta con el VLT, uno de los telescopio ópticos más avanzados del mundo\cite{eso1998vlt}.
+El observatorio Paranal, perteneciente a la ESO, se ubica en el cerro homónimo en el Norte de Chile, y se dedica principalmente a la búsqueda y estudio de galaxias y otras estructuras interestelares. El observatorio, para lograr estos objetivos, cuenta con el VLT, uno de los telescopio ópticos más avanzados del mundo\cite{eso1998vlt}.
 
 El VLT debe cumplir con altos estándares tecnológicos, con tal de cumplir la visión de avanzar el entendimiento del Universo mediante la disposición de instalaciones de clase mundial \cite{eso1998vlt}.
 
-Como telescopio óptico, el VLT usa una serie de espejos para conducir la luz estelar a instrumentos que capturan la misma en la forma de imagenes, destinada tanto a fines científicos como para la mejora del funcionamiento del telescopio\cite{eso1998vlt}.
+Como telescopio óptico, el VLT usa una serie de espejos para conducir la luz estelar a instrumentos que capturan la misma para la toma de imagenes, análisis del espectro electromagnético e interferometría óptica; todos estas formas destinadas tanto a fines científicos como para la mejora del funcionamiento del telescopio\cite{eso1998vlt}.
 
 Para cumplir con estas funciones, el VLT consta principalmente de 4 telescopios primarios, denominados UT, sumado a 4 telescopios auxiliares y otros sistemas complementarios\cite{eso1998vlt}.
 
@@ -22,9 +24,9 @@ La forma en la que cada UT capta la luz esta reflejada en el Anexo 1. Primero, l
 
 Las características físicas del M1 lo vuelven susceptible a sufrir deformaciones por diversos factores, como por ejemplo el efecto de la gravedad cuando se inclina. Estas deformaciones, a su vez, pueden generar aberraciones en las imágenes obtenidas \cite{wilson1987active}.
 
-Para resolver estos problemas, se implementa un sistema en el que el M1 está posicionado sobre 150 propulsores hidráulicos y/o neumáticos, denominado actuador de fuerza. La fuerza que cada actuador ejerce sobre el M1 brinda al mismo de una forma determinada, la cuál permite capturar una imágen de una cierta calidad \cite{eso1998vlt}. 
+Se implementa un sistema con tal de resolver estos problemas, en el que el M1 está posicionado sobre 150 pistones hidráulicos y/o neumáticos, denominado actuador de fuerza. La fuerza que cada actuador ejerce sobre el M1 brinda al mismo de una forma tal que le permite capturar una imágen de alta calidad \cite{eso1998vlt}. 
 
-Cada imágen tomada es analizada por el sensor Shack-Hartmann, calculando una nueva distribución de fuerzas para los actuadores, la cuál luego es aplicada por los mismos en el M1, brindando a este último de una nueva forma que permita tomar una imágen de mejor calidad \cite{eso1998vlt}. 
+Cada imágen tomada por los UTs es analizada por el sensor Shack-Hartmann, calculando una nueva distribución de fuerzas para los actuadores, la cuál luego es aplicada por los mismos en el M1, brindando a este último de una nueva forma que permita tomar una imágen de mejor calidad \cite{eso1998vlt}. 
 
 El ciclo anteriormente descrito corresponde al sistema de Óptica Activa, implementada en todos los UTs, el cuál se ejecuta repetidas veces por cada observación hasta lograr una imágen de calida óptima\cite{eso1998vlt}.
 
@@ -37,4 +39,4 @@ Los actores involucrados en el problema corresponden a los elementos participant
 EL objetivo detrás de la solución busca desarrollar un procedimiento para extraer los datos no estructurados, transformarlos en datos estructurados, y disponerlos para distintos modelos y sistemas
 que busquen analizar dichos datos con diversos fines, como por ejemplo mantenimiento o técnicas de softcomputing.
 
-Para el caso específico de esta memoría, se tendrá como sistema final de análisis al modelo Neural M1: una red neuronal que es entrenada con datos relacionados al sistema de Óptica Activa, con el propósito de modelar y predecir la operación de dicho sistema durante una noche.
+Para el caso específico de esta memoría, se considerará un modelo final hipotético que se ingeste con datos relacionados al sistema de Óptica Activa, con fines analíticos.

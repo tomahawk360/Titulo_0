@@ -1,5 +1,23 @@
 \secnumberlesssection{INTRODUCCIÓN}
 
-Debe proporcionar a un lector los antecedentes suficientes para poder contextualizar en general la situación tratada, a través de una descripción breve del área de trabajo y del tema particular abordado, siendo bueno especificar la naturaleza y alcance del problema; así como describir el tipo de propuesta de solución que se realiza, esbozar la metodología a ser empleada e introducir a la estructura del documento mismo de la memoria.
+El observatorio Paranal, ubicado en el Norte de Chile, es uno de los más importantes a nivel mundial. Su enfoque en la investigación estelar se ve apoyado por el VLT, uno de los telescopios ópticos más avanzados del mundo, el cuál a su vez esta compuesto de 4 UTs, entre otros.
 
-En el fondo, que el lector al leer la Introducción pueda tener una síntesis de cómo fue desarrollada la memoria, a diferencia del Resumen dónde se explicita más qué se hizo, no cómo se hizo.
+Este título se lo lleva por varios factores, uno de estos es el sistema de Óptica Activa: un sistema implementado en los UTs, que busca optimizar la imágen tomada por el respectivo telescopio en una observación.
+
+El ciclo de la Óptica Activa implica tomar una imágen durante una observación, analizar dicha imagen y medir sus perturbaciones ópticas, generar un set de fuerzas que se deben aplicar al espejo principal del telescopio para corregir las perturbaciones, y por último, se aplican las fuerzas al espejo principal y se repite el proceso.
+
+Como es común para modelos de software, se van registrando varios datos e interacciones ocurridas durante las operaciones del sistema de Óptica Activa en archivos llamados registros de log.
+
+Con tal de continuar con el avance científico, se busca implementar nuevos sistemas y técnicas de computación que se asocien con el funcionamiento del sistema de Óptica Activa. Para lograr esto, se requiere de un dataset con datos de operación de la Óptica Activa.
+
+Sin embargo, este dataset no es accesible, debido a que estos datos se encuentran en los registros de log, y actualmente no existe un procedimiento que permita la extracción de un dataset de estos registros.
+
+Considerando la problemática descrita anteriormente, el objetivo de esta memoria será el desarrollo de un procedimiento que extraíga los datos, bajo contexto del sistema de Óptica Activa, de los registros de log, los transforme de forma acorde, y los deposite en forma de dataset con información útil y estructurada.
+
+Para lograr este objetivo, primero se debe realizar una definición formal y educada del problema en el Capítulo Definición del Problema, sumando contexto y razones detrás de la problemática, actores involucrados y el alcance del proyecto.
+
+Luego, se investiga, tanto el sistema de Óptica Activa como métodos para la extracción de datos de registros de logs, en el Capítulo Marco Conceptual, con el fin de recabar antecedentes y poder guiar el desarrollo en base a hechos.
+
+Entonces, en el Capitulo Propuesta de la Solución se describe de forma teórica los aspectos más fundamentales del modelo a desarrolar, incluyendo librerías, etapas, estructura, entre otros.
+
+Finalmente, durante el Capitulo Validación de la Solución, se ejecuta el modelo descrito en el capítulo anterior, y se corrobora que la información extraída cumpla con la lógica y la calidad deseada.

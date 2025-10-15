@@ -2,16 +2,27 @@
 
 \subsection{Identificación de datos deseados}
 
-Los registros de log proporcionan una gran cantidad de información sobre las operaciones del VLT en una noche. Sin embargo, Neural M1 no necesita ingerir toda esta información; acorde a su objetivo, la red neuronal solo necesita aquella información que le permita predecir el proceso de Óptica Activa.
-Debido a esto, antes del diseño del procedimiento ETL, es necesario hacer un estudio de los registros de log y determinar aquellos que sean de utilidad para Neural M1.
+Los registros de log proporcionan una gran cantidad de información sobre las operaciones del VLT en una noche. Sin embargo, para efectos prácticos no es necesario ingerir toda esta información; acorde al objetivo general, sol ose buscan datos relevantes para el sistema de Óptica Activa.
 
-\subsubsection{Datos principales}
+Debido a esto, antes del diseño del procedimiento ETL, es necesario hacer un estudio de los registros de log y determinar aquellos que se tengan importancia dentro del contexto de la Óptica Activa.
 
-Durante el proceso de Óptica Activa, las correcciones de las distribuciones de fuerza en los actuadores son realizadas en base imágenes tomadas previamente por los sensores. Se debe considerar, además, que el proceso es iterativo, por lo que después de una corrección, se toma una nueva imágen con la nueva distribución de fuerzas para una nueva corrección \cite{eso1998vlt}.
+Cada telescopio durante su operación nocturna, genera un log sobre su comportamiento. De esta información se deben extraer dos caracteristicas centrales: datos sobre la Óptica Activa y datos sobre las cualidades ambientales.
+
+Los datos principales serán aquellos relacionados con el sistema de Óptica Activa: las distribuciones de fuerzas de los 150 actuadores, las imágenes tomadas durante la operación y las instancias de corrección; todas dentro del rango de una observación.
+
+\subsubsection{Distribución de fuerzas}
+
+Para el contexto del sistema de Óptica Activa, se hace necesario conocer los valores de las distribuciones de fuerza de los 150 actuadores, ya que esta es la cantidad que se busca optimizar durante la Óptica Activa \cite{eso1998vlt}. 
+
+Durante cada iteración de la Óptica Activa, se analizan las aberraciones de la imágen tomada previamente y luego se calculan los cambios en los valores de la distribución de fuerza en los actuadores del espejo M1. Finalmente, se suman estas diferencias a la distribución de fuerza en vigencia, terminando en una distribución de fuerza final \cite{wilson1987active}.
+
+Tanto los cambios en la distribución de fuerzas como la distribución final son escritas en los registros de log. Como se busca extraer un conjunto de distribuciones de fuerzas, presentes en el registro de log, se decide extraer la distribución final y descartar los cambios en la distribución de fuerzas.
+
+\subsubsection{Imágenes tomadas}
+
+Durante el proceso de Óptica Activa, las correcciones de las distribuciones de fuerza en los actuadores son realizadas en base a imágenes tomadas previamente por los sensores. Se debe considerar, además, que el proceso es iterativo, por lo que después de una corrección, se toma una nueva imágen con la nueva distribución de fuerzas para una nueva corrección, continuando el ciclo \cite{eso1998vlt}.
 
 Con estas consideraciones en mente, se puede inferir para una instancia de corrección, debe existir una imágen tomada antes y una imágen tomada después, donde esta última correspondería a la imágen previa de la siguiente instancia de corrección.
-
-Además, para los fines de Neural M1, se hace necesario conocer los valores de las distribuciones de fuerza de los actuadores resultantes, ya que esta es la cantidad optimizada durante la Óptica Activa \cite{eso1998vlt}. 
 
 \subsubsection{Datos adicionales}
 
@@ -62,15 +73,7 @@ Con respecto a los datos adicionales, debido a que estos no cambian con las corr
 
 Después de diseñar la estructura de los datos, se hace necesario saber qué tecnologías usar para llevarla a cabo.
 
-Los modelos dejan ver que una base de datos SQL sería la mejor opción. Si bien esta puede permanecer como una opción para futuros usos de los datos extraídos, esta opción no sería óptima para el objetivo de esta memoria, debido a que el procedimiento ETL a desarrollar se acoplara a nivel de código a Neural M1, por lo que subir los datos a un servidor SQL para luego bajarlos en el mismo sistema es redundante e innecesario.
-
-Por ende, y considerando el lenguaje de programación usado, la mejor opción es la librería Pandas, más específicamente la estructura Dataframe, la cuál a nivel técnico es homóloga a una tabla SQL dentro de un ambiente Python.
-
-\subsubsection{Tecnología de almacenamiento}
-
-Después de diseñar la estructura de los datos, se hace necesario saber qué tecnologías usar para llevarla a cabo.
-
-Los modelos dejan ver que una base de datos SQL sería la mejor opción. Si bien esta puede permanecer como una opción para futuros usos de los datos extraídos, esta opción no sería óptima para el objetivo de esta memoria, debido a que el procedimiento ETL a desarrollar se acoplara a nivel de código a Neural M1, por lo que subir los datos a un servidor SQL para luego bajarlos en el mismo sistema es redundante e innecesario.
+Los modelos dejan ver que una base de datos SQL sería la mejor opción. Si bien esta puede permanecer como una opción para futuros usos de los datos extraídos, esta opción no sería óptima para el objetivo de esta memoria, debido a que el procedimiento ETL a desarrollar se acoplara a nivel de código con otros modelos de computación y/o análisis, por lo que subir los datos a un servidor SQL para luego bajarlos en el mismo sistema es redundante e innecesario.
 
 Por ende, y considerando el lenguaje de programación usado, la mejor opción es la librería Pandas, más específicamente la estructura Dataframe, la cuál a nivel técnico es homóloga a una tabla SQL dentro de un ambiente Python.
 
@@ -147,7 +150,7 @@ Los registros de log no muestran de qué tipo es cada observación, por ende es 
 
 \subsection{Extracción de datos}
 
-Para extraer los datos, el método tradicional es el parsing usando plantillas de líneas de log. El objetivo es extraer los datos deseados de las líneas de texto, y disponerlos en los formatos adecuados.
+Para extraer los datos, el método tradicional usa plantillas de líneas de log. El objetivo es extraer los datos deseados de las líneas de texto, y disponerlos en los formatos adecuados.
 
 Debido a la proliferación y estandarización de este método, se procederá a usar el mismo para las líneas previamente procesadas.
 
@@ -157,52 +160,58 @@ Las plantillas corresponden a una secuencia de carácteres que especifican los v
 
 Estas pueden ser creadas manualmente o generadas automáticamente. Debido a que se conoce la cantidad específica de datos requeridos, se prefiere no complejizar el procedimiento con un sistema de creación de plantillas automático, y en cambio crear las plantillas manualmente.
 
-Estas plantillas se disponen finalmente al procedimiento ELT, el cuál aplicará parsing con las plantillas de forma automática.
+Estas plantillas se disponen finalmente al procedimiento ELT, el cuál extraerá los datos de las líneas de log con las plantillas de forma automática.
 
-El formato final de las plantillas varía según el método de parsing usado, por lo que se muestran imágenes de las mismas en las subsecciones correspondientes.
+El formato final de las plantillas varía según el método de extracción de datos usado, por lo que se muestran imágenes de las mismas en las subsecciones correspondientes.
 
-Sin embargo, según el análisis realizado en la sección 3.X, se puede estimar que se necesitan unas 16 plantillas para obtener los datos deseados; una plantilla para cada línea a parsear.
+Sin embargo, según el análisis realizado en la sección 3.1, se puede estimar que se necesitan unas 16 plantillas para obtener los datos deseados; una plantilla para cada línea a analizar.
 
-\subsubsection{Parsing}
+\subsubsection{Extracción de información de las lineas de log}
 
-El parsing de líneas de log se refiere al análisis de las líneas de texto presentes en los registros de log con el fin de identificar los tokens presentes y detectar los datos relevantes con el fin de extraerlos \cite{jayathilake2011mind}. 
+La extracción de datos de líneas de log se refiere al análisis de las líneas de texto presentes en los registros de log con el fin de identificar los tokens presentes y detectar los datos relevantes con el fin de extraerlos \cite{jayathilake2011mind}. 
 
-Existen varias formas de realizar parsing en registros de log; escoger la adecuada no es trivial, ya que se presentan dos desafíos principales a la hora de aplicar parsing en logs \cite{jayathilake2011mind}:
+Existen varias formas de realizar la extracción de datos en registros de log; escoger la adecuada no es trivial, ya que se presentan dos desafíos principales a la hora de aplicar la misma en logs \cite{jayathilake2011mind}:
 
 Las arquitecturas de software grandes y complejas generan grandes cantidades de información de log mientras se ejecutan, por lo que la forma tradicional de construir manualmente expresiones regulares es demasiado costosa.
 Las funciones de sistemas de software complejos y actualizaciones de negocio de alta frecuencia llevan a actualizaciones más frecuentes de plantillas de línea, incrementado así en gran medida la diversidad de plantillas de línea.
 
-La problemática 1 se orienta principalmente al parsing general de registros de log, el cuál no es el caso para este trabajo; ya que se tiene claridad de los datos requeridos y de las líneas específicas que los poseen, el uso de expresiones regulares y plantillas creadas manualmente no es descartado.
+La problemática 1 se orienta principalmente a la extracción de datos general de registros de log, el cuál no es el caso para este trabajo; ya que se tiene claridad de los datos requeridos y de las líneas específicas que los poseen, el uso de expresiones regulares y plantillas creadas manualmente no es descartado.
 
-La problemática 2, si bien también se orienta hacia el parsing general de registros de log y a la creación automática de plantillas de log, se puede extender su cuestionamiento a la creación de plantillas manuales; a medida que se actualicen las reglas de negocio de la Óptica Activa o las necesidades de Neural M1, las plantillas manuales creadas pueden aumentar.
+La problemática 2, si bien también se orienta hacia la extracción de datos general de registros de log y a la creación automática de plantillas de log, se puede extender su cuestionamiento a la creación de plantillas manuales; a medida que se actualicen las reglas de negocio de la Óptica Activa, las plantillas manuales creadas pueden aumentar.
 
-Como se mencionó en el Capítulo 1, el sistema de logging de Óptica Activa tiene décadas de servicio continuo, por lo que es poco probable que se realicen cambios en esta área. Por el lado de Neural M1, es posible que puedan existir cambios en los datos requeridos en un futuro, sin embargo el análisis realizado en la sección 3.X, se puede asegurar que los cambios se mantendrían dentro de ese modelo de datos. Por ende, cualquier cambio futuro no incrementa el número de plantillas en gran medida.
+Como se mencionó en el Capítulo 1, el sistema de logging de Óptica Activa tiene décadas de servicio continuo, por lo que es poco probable que se realicen cambios en esta área. Por el lado de los datos relevantes para el sistema de Óptica Activa, es posible que puedan existir cambios en los datos requeridos en un futuro, sin embargo el análisis realizado en la sección 3.1, se puede asegurar que los cambios se mantendrían dentro de ese modelo de datos. Por ende, cualquier cambio futuro no incrementa el número de plantillas en gran medida.
 
-Debido a todo lo anterior, se decide optar por un modelo sencillo de parsing, donde se itera sobre las secciones de log obtenidas tras el preprocesamiento, y dentro de cada iteración se aplica de forma greedy cada plantilla sobre la línea seleccionada hasta que una calce. En caso de calzar, se extraen los datos acordes a la plantilla y se almacenan estos en una lista.
+Debido a todo lo anterior, se decide optar por un modelo sencillo de extracción de datos en líneas de log, donde se itera sobre las secciones de log obtenidas tras el preprocesamiento, y dentro de cada iteración se aplica de forma greedy cada plantilla sobre la línea seleccionada hasta que una calce. En caso de calzar, se extraen los datos acordes a la plantilla y se almacenan estos en una lista.
 
-Para aplicar el parsing en las líneas de texto, existen varios métodos y librerías diseñadas para la extracción de datos desde strings. Para este trabajo, se analizaron dos opciones posibles y se compararon según eficiencia y exactitud.
+Para aplicar la extracción de datos en las líneas de texto, existen varios métodos y librerías diseñadas para la extracción de datos desde strings. Para este trabajo, se analizaron dos opciones posibles y se compararon según eficiencia y exactitud.
 
 \begin{enumerate}
 
-    \item{Parsing con Expresiones Regulares}
+    \item{Extracción de datos con Expresiones Regulares}
     
     En este caso, se tienen las plantillas en forma de expresiones regulares, donde los tokens deseados estan marcados como grupos dentro de las mismas plantillas.
 
     Para este caso, se iteran en todas las líneas de log filtradas por observación, y se detectan las líneas que contienen los datos deseados usando ciertos tokens claves detectados al estudiar el formato del archivo de log.
 
-    Luego de detectar las líneas, se aplican a estas todas las plantillas hasta que se pueda parsear correctamente con una.
+    Luego de detectar las líneas, se aplican a estas todas las plantillas hasta que se pueda extraer correctamente con una.
 
-    \item{Parsing con Template Text Parser}
+    Para este método de extracción, las plantillas tienen el siguiente formato:
+
+    -- Imagen de plantillas regex --
+
+    \item{Extracción de datos con Template Text Parser}
 
     Para este caso, se usa la librería externa Template Text Parser, o TTP, la cuál, de forma similar al caso anterior, permite escribir los tokens deseados en la misma plantilla, y luego durante la extracción solo retorna los datos llamados anteriormente.
 
-    Como es una librería diseñada para estos fines exclusivos, se procede solo a ejecutar un método de la misma para parsear.
+    Como es una librería diseñada para estos fines exclusivos, se procede solo a ejecutar un método de la misma para extraer datos.
+
+    Para este método de extracción, las plantillas tienen el siguiente formato:
+
+    -- Imagen de plantillas ttp --
 
 \end{enumerate}
 
-Para ambos casos, los datos parseados quedan en formato json, donde la llave corresponde al nombre de la caracteristica (definida desde la plantilla con TTP y definida desde el codigo con Regex) y el valor corresponde al dato parseado.
-
-Se verificó con ambos métodos, y si bien ambos funcionan, eventualmente se decanto por el primer método. Esto más que nada llevado por una necesidad de optimización, ya que si bien TTP es una libreria diseñada especificamente para este tipo de tareas, toma una cantidad de tiempo considerablemente mayor en parsear comparado con el método de expresiones regulares.
+Para ambos casos, los datos extraídos quedan en formato json, donde la llave corresponde al nombre de la caracteristica (definida desde la plantilla con TTP y definida desde el codigo con Regex) y el valor corresponde al dato extraído.
 
 Independiente del origen del dato, todos poseen campos de nombre "group" y la mayoría posee también un campo "label". Se usará el campo "group" para definir el tipo del dato (distribución de fuerza, imágen, etc.) y el campo "label" para identificar subdivisiones dentro de cada tipo de dato cuando sea conveniente.
 
@@ -215,7 +224,7 @@ De esta forma, mediante el uso de estos campos, se puede dejar registro de la in
 
 \subsection{Guardado de los datos}
 
-Una vez parseados los datos, se deben crear y validar los dataframes donde se almacenaran estos mismos, siguiendo la filosofía descrita en la sección 3.2.
+Una vez extraídos los datos, se deben crear y validar los dataframes donde se almacenaran estos mismos, siguiendo la filosofía descrita en la sección 3.2.
 
 Es necesario, como se mencionó, no solo crear los dataframes de forma coherente, sino que también validar que los datos ingresados sean correctos ya sea en formato, en contexto, etc.
 
@@ -244,7 +253,7 @@ De esta forma, los dataframes finales poseen los siguiente esquemas finales:
 
 \subsubsection{Ingesta a los dataframes}
 
-Debido a que los datos parseados se encuentran en formato json, corresponde iterar por todos los datos, y migrar los datos desde el formato json a dataframe.
+Debido a que los datos extraídos se encuentran en formato json, corresponde iterar por todos los datos, y migrar los datos desde el formato json a dataframe.
 
 En la sección 3.4.2. se mencionaron las llaves "group" y "label" para diferenciar los tipos de datos. Estas llaves se usan en este proceso, con tal de poder identificar el tipo de dato, y según aquello, migrar los datos de forma acorde.
 

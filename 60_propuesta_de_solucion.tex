@@ -26,17 +26,22 @@ Con estas consideraciones en mente, se puede inferir para una instancia de corre
 
 \subsubsection{Datos adicionales}
 
-Sumado a los datos anteriormente descritos, existen otras características que son de interés, debido a que complementan y/o influyen en el comportamiento de la Óptica Activa.
+Existen otras características ambientales que son de interés, debido a que  podrían estar relacionados con la modificación de la toma de datos desde el espejo.
 
-Dentro de estas características se encuentran:
+Debido a esto, se ha generado la siguiente lista de características ambientales que también se deben extraer:
 
 \begin{itemize}
-    \item Cantidades del torque, tanto en altitud como en acimut, aplicado al motor durante el tracking del telescopio \cite{eso1998vlt}.
+    \item Torque aplicado al motor, tanto en altitud como en acimut, durante el tracking del telescopio \cite{eso1998vlt}.
 
-    \item Tantos en ángulos como la posición actuales del UT, considerando altitud y acimut \cite{eso1998vlt}.
+    \item Posición y ángulo del UT en el momento de la observación, representados ambos con altitud y acimut \cite{eso1998vlt}.
 
-    \item Aberraciones de imágen, obtenido después de una corrección, con tal de evaluar el rendimiento deseado \cite{wilson1987active}.
-    
+    \item Velocidad y dirección del viento detectado dentro de la estructura del telescopio, medidos en metros por segundo y grados, respectivamente \cite{eso1998vlt}.
+
+    \item Temperatura ambiental detectada dentro de la estructura del telescopio, medida en grados Celsius \cite{eso1998vlt}.
+
+    \item Porcentaje de humedad ambiental relativa detectada dentro de la estructura del telescopio \cite{eso1998vlt}.
+
+    \item Presión del aire detectada dentro de la estructura del telescopio \cite{eso1998vlt}.    
 \end{itemize}
 
 \subsection{Almacenamiento de datos}
@@ -44,6 +49,10 @@ Dentro de estas características se encuentran:
 Una vez identificados los datos a extraer desde las líneas de log, se hace necesario plantear como se almacenaran los mismos despues de obtenerlos. 
 
 Tener esta claridad previo al desarrollo del procedimiento ETL permite tener la claridad de que transformaciones realizar a los datos extraídos.
+
+Para la solución a desarrollar, es plantea la siguiente estructura de almacenamiento de datos:
+
+\includegraphics[width=10cm,height=6cm]{figures/db_diagram.png} \\
 
 \subsubsection{Estructura de los datos}
 
@@ -61,13 +70,11 @@ Finalmente, considerando que el set de datos se compone de datos de naturaleza v
 
 Recapitulando, con respecto a los datos asociados a correcciones, se opta almacenar los datos en un modelo de tablas relacionales, compuesta de una tabla central dedicada a las instancias de corrección y varias tablas para los datos correspondientes al antes y después de una corrección.
 
-%** Imagen de las tablas de correction **
---- Imagen de las tablas de correction ---
+\includegraphics[width=9cm,height=6cm]{figures/db_diagram_corr.png} \\
 
 Con respecto a los datos adicionales, debido a que estos no cambian con las correcciones, se decide almacenar estos en una tabla propia, conteniendo los atributos clave y sin necesidad de relaciones con otras tablas.
 
-%** Imagen de tabla de additional_data **
---- Imagen de tabla de additional-data ---
+\includegraphics[width=3cm,height=2cm]{figures/db_diagram_add_data.png} \\
 
 \subsubsection{Formato de almacenamiento}
 
@@ -75,9 +82,28 @@ Después de diseñar la estructura de los datos, se hace necesario saber qué te
 
 Los modelos dejan ver que una base de datos SQL sería la mejor opción. Si bien esta puede permanecer como una opción para futuros usos de los datos extraídos, esta opción no sería óptima para el objetivo de esta memoria, debido a que el procedimiento ETL a desarrollar se acoplara a nivel de código con otros modelos de computación y/o análisis, por lo que subir los datos a un servidor SQL para luego bajarlos en el mismo sistema es redundante e innecesario.
 
-Por ende, y considerando el lenguaje de programación usado, la mejor opción es la librería Pandas, más específicamente la estructura Dataframe, la cuál a nivel técnico es homóloga a una tabla SQL dentro de un ambiente Python.
+Por ende, y considerando el lenguaje de programación usado (Python 3.10.8), la mejor opción es la librería Pandas, más específicamente la estructura Dataframe, la cuál a nivel técnico es homóloga a una tabla SQL dentro de un ambiente Python.
 
-\subsection{Preprocesamiento de lineas}
+\subsection{Descripción general del proceso}
+
+El proceso de la solución puede ser revisado en el Anexo 3. Igualmente, el mismo puede resumirse de tres etapas principales, cada una dividida en distintas sub-etapas: 
+
+\begin{enumerate}
+    \item Filtrado de líneas de logs:
+    En esta etapa, a los registros de log de una noche de operación se les remueven elementos repetidos dentro de las líneas, para luego filtrarlos según las observaciones tomadas durante la noche.
+
+    \item Extracción de datos:
+    En esta etapa, se extrae la información deseada a las líneas de los registros de log, usando una plantilla de lineas prefabricada, que especifica la ubicación de los datos a extraer dentro de las lineas a leer.
+
+    \item Guardado de datos:
+    En esta etapa, se construyen datasets dedicados para uno de los datos a extraer (según discutido en la sección 3.1)  y se ingestan con la información previamente extraída. Luego de esto, se valida que la información ingestada sea consistente y se construyen las relaciones correspondientes entre los datasets.
+\end{enumerate}
+
+Se desarrollará el código de la solución con Python 3.10.8. y se alojará al mismo en un repositorio público en Github \footnote{link al repo github}.
+
+Los siguientes capítulos se encargan de describir a mayor detalle las etapas del proceso.
+
+\subsection{Filtrado de líneas de log}
 
 Los registros de log poseen cientos de miles de líneas, por lo que un proceso de filtrado aplicado directamente sobre estos sería costoso en tiempo y poder de cómputo.
 
@@ -85,10 +111,7 @@ Por ende, es prudente procesar los registros de log de forma previa, aplicando t
 
 \subsubsection{Remoción de tokens estáticos comunes}
 
-Tras revisar los registros de log, se puede notar que existe un patrón recurrente en todas las líneas:
-
-%** Ejemplo de líneas del log **
---- Ejemplo de líneas del log ---
+Tras revisar los registros de log, como el ejemplo presente en el Anexo 2, se puede notar que existe un patrón recurrente en todas las líneas.
 
 Estos tokens iniciales aportan información que es redundante dentro de la misma línea y, a su vez, que es estática, ya que la misma no cambia entre las distintas líneas. De este modo, se puede concluir que dicha información no es necesaria para el objetivo de esta memoria.
 
@@ -104,14 +127,13 @@ Los registros de log no muestran de qué tipo es cada observación, por ende es 
 
 \begin{enumerate}
 
-    \item{ESO raw}
+    \item{ESO Observational Raw Data Query}
     
-    La ESO posee una página web donde se puede acceder de forma libre a información sobre las observaciones realizadas por el VLT. Dentro de esta información, se puede extraer las observaciones realizadas, la hora en que se realizaron y el tipo de observación, entre otros atributos.
+    Como se mencionó en la sección 2.7, la ESO posee una página donde se puede acceder de forma libre a información sobre las observaciones realizadas por el VLT. Dentro de esta información, se puede extraer las observaciones realizadas, la hora en que se realizaron y el tipo de observación, entre otros atributos.
     
     Para obtener el documento de observación necesario para el procedimiento ETL, se deben añadir los siguientes campos:
     
-    %** Imagen de la pagina ESO raw con los campos puestos **
-    --- Imagen de la pagina ESO raw con los campos puestos ---
+    \includegraphics[width=13.5cm,height=9cm]{figures/eso_raw.png} \\
     
     Estos campos permiten obtener todas las observaciones cientificas y de adquisición de todos los instrumentos en una noche determinada.
     
@@ -197,7 +219,7 @@ Para aplicar la extracción de datos en las líneas de texto, existen varios mé
 
     Para este método de extracción, las plantillas tienen el siguiente formato:
 
-    -- Imagen de plantillas regex --
+    \includegraphics[width=13cm,height=3cm]{figures/plantillas_regex.png} \\
 
     \item{Extracción de datos con Template Text Parser}
 
@@ -207,18 +229,15 @@ Para aplicar la extracción de datos en las líneas de texto, existen varios mé
 
     Para este método de extracción, las plantillas tienen el siguiente formato:
 
-    -- Imagen de plantillas ttp --
+    \includegraphics[width=13cm,height=5cm]{figures/plantillas_ttp.png} \\
 
 \end{enumerate}
 
 Para ambos casos, los datos extraídos quedan en formato json, donde la llave corresponde al nombre de la caracteristica (definida desde la plantilla con TTP y definida desde el codigo con Regex) y el valor corresponde al dato extraído.
 
-Independiente del origen del dato, todos poseen campos de nombre "group" y la mayoría posee también un campo "label". Se usará el campo "group" para definir el tipo del dato (distribución de fuerza, imágen, etc.) y el campo "label" para identificar subdivisiones dentro de cada tipo de dato cuando sea conveniente.
+Independiente del origen del dato, todos poseen campos de nombre \"group\" y la mayoría posee también un campo "label". Se usará el campo \"group\" para definir el tipo del dato (distribución de fuerza, imágen, etc.) y el campo "label" para identificar subdivisiones dentro de cada tipo de dato cuando sea conveniente.
 
-Estos campos se tornan particularmente útiles, cuando se considera que la información para un dato puede estar repartida en varias líneas, como es por ejemplo el caso de las distribuciones de fuerza, donde las fuerzas de los 150 actuadores están siempre repartidos en 6 líneas de 25 actuadores, y que a su vez todas esas líneas están separadas de la ID de la distribucón, que se encuentra en su línea propia.
-
-%** Ejemplo de linea de log de fuerzas **
---- Ejemplo de linea de log de fuerzas ---
+Estos campos se tornan particularmente útiles, cuando se considera que la información para un dato puede estar repartida en varias líneas, como es por ejemplo el caso de las distribuciones de fuerza, donde las fuerzas de los 150 actuadores están siempre repartidos en 6 líneas de 25 actuadores, y que a su vez todas esas líneas están separadas de la ID de la distribucón, que se encuentra en su línea propia. Este formato se puede revisar en el ejemplo disponible en el Anexo 4.
 
 De esta forma, mediante el uso de estos campos, se puede dejar registro de la información de un mismo dato para su posterior unión.
 
@@ -246,20 +265,17 @@ Asi mismo, se crearan 4 dataframes:
     
 \end{itemize}
 
-De esta forma, los dataframes finales poseen los siguiente esquemas finales:
-
-%** Imagen de los schemas de dataframes **
---- Imagen de los schemas de dataframes ---
+De esta forma, los dataframes finales poseen los mismos esquemas que los presentados en el diagrama de la sección 3.2.1.
 
 \subsubsection{Ingesta a los dataframes}
 
 Debido a que los datos extraídos se encuentran en formato json, corresponde iterar por todos los datos, y migrar los datos desde el formato json a dataframe.
 
-En la sección 3.4.2. se mencionaron las llaves "group" y "label" para diferenciar los tipos de datos. Estas llaves se usan en este proceso, con tal de poder identificar el tipo de dato, y según aquello, migrar los datos de forma acorde.
+En la sección 3.4.2. se mencionaron las llaves \"group\" y \"label\" para diferenciar los tipos de datos. Estas llaves se usan en este proceso, con tal de poder identificar el tipo de dato, y según aquello, migrar los datos de forma acorde.
 
-Como ejemplo, se conoce que los datos de distribución de fuerzas posee un campo con las fuerzas de los actuadores, y que ningún otro tipo de dato posee tal campo. Entonces, al tener registro del tipo de dato en la llave "group", se puede validar que datos poseen ese campo y extraerlos sin temor a falla.
+Como ejemplo, se conoce que los datos de distribución de fuerzas posee un campo con las fuerzas de los actuadores, y que ningún otro tipo de dato posee tal campo. Entonces, al tener registro del tipo de dato en la llave \"group\", se puede validar que datos poseen ese campo y extraerlos sin temor a falla.
 
-Asi mismo, se puede concatenar la información de ciertos datos que se encontraban en múltiples líneas. Tras revisar el campo "group", se revisa que no existan datos en el dataframe con información faltante, y se revisa el campo "label" para verificar que tipo de información específica es la que falta.
+Asi mismo, se puede concatenar la información de ciertos datos que se encontraban en múltiples líneas. Tras revisar el campo \"group\", se revisa que no existan datos en el dataframe con información faltante, y se revisa el campo "label" para verificar que tipo de información específica es la que falta.
 
 \subsubsection{Validación de los dataframes}
 

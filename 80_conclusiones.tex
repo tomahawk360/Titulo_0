@@ -1,36 +1,11 @@
 \secnumbersection{CONCLUSIONES}
 
-En esta memoria se aborda la problemática, con la intención de aplicar nuevas tecnologías de computación y análisis bajo el contexto del sistema de óptica activa para los telescopios UT, de la carencia de un proceso que extraiga información de sus registros de log y los disponga en datasets de datos.
+En esta memoria se logró abordar la problemática planteada, con el desarrollo de un procedimiento que extrae información de los registros de log de los telescopios UTs, en relación con el sistema de Óptica Activa, y los disponga en datasets de datos.
 
-Los desafíos centrales detrás de esta problemática províenen del alto costo de organizar y extraer los datos de los registros de log, causado por la gran cantidad de líneas de log en los registros y al formato abstracto existente en las mismas.
+Para lograr esto, fue necesario estudiar varios métodos de extracción de datos y estructuración de logs, intentando implementar métodos de la forma más fiel a la fuente original, hasta que se decantó por tomar las bases de estos métodos para desarrollar uno propio.
 
-Para lograr esta resolver esta problemática, se planteo como objetivo principal desarrollar un procedimiento para extraer información relevante, en el marco del sistema de óptica activa, de los registros de log no estructurados, transformarlos en datos estructurados, y disponerlos en datasets para distintos modelos y sistemas que busquen analizar dichos datos con diversos fines.
+Igualmente, durante una parte considerable del desarrollo, se barajo el uso de dos métodos de extracción: una usando Expresiones Regulares, y otra usando una librería especializada de Python. Si bien ambas opciones son válidas, para el caso de esta memoria se demostró que la opción de Expresiones Regulares era la más apta.
 
-El algoritmo propuesto cubre este objetivo en tres etapas:
+El algoritmo actual genera datasets con una cantidad considerable de datos, extraídos con la seguridad total de que se generan durante las observaciones del telescopio. Sin embargo, el algoritmo deja una alta cantidad de líneas de log sin procesar, y no se puede corroborar que todas las líneas de log descartadas no posean datos de distribución de fuerzas o de condiciones ambientales del telescopio. Por lo mismo, un punto crucial para estudio futuro es la búsqueda de nuevos métodos, o mejorar los ya existentes, con tal de ampliar el rango de captura de líneas de log para su análsis y extracción de datos.
 
-\begin{enumerate}
-    \item Procesamiento de registros de log según observaiones: 
-    
-    Se pudo notar que esta etapa es la que más líneas de log filtró, lo cuál a pesar de reducir significativamente el número de datos que se puedan extraer posteriormente, permite corroborar que aquellos datos que sí se extraigan sean validos y durante un periodo donde el telescopio estuvo funcionando de forma correcta y realizando observaciones. 
-    
-    Se pudo notar también que los parámetros de margen inferior, superior y de umbral de unión, usados durante la creación de bloques de tiempo, tienen un efecto significativo en la cantidad de líneas que son filtradas. Se corroboró que al incrementar los valores de estos parámetros, el número de datos que pasan los filtros también incrementa. Sin embargo, incrementar demasiado los valores de estos parámetros resulta en bloques de tiempo demasiado grandes, lo cuál básicamente vuelve a este filtro redundante. 
-    
-    Es necesario estudiar a futuro los valores óptimos para estos parámetros, que permita obtener un máximo número de líneas de log mientras que, a su vez, no reduzca el impacto general de los filtros.
-
-    \item Extracción de los datos:
-
-    Se pudo observar que la implementación de plantillas arrojo buenos resultados, permitiendo extraer exitosamente datos de las líneas de log en texto plano. 
-
-    Un aspecto a destacar sobre esto es que las plantillas deben ser creadas manualmente previo a la ejecución del algoritmo, lo cuál indica que los operadores del mismo deben tener conocimiento previo de las características a buscar en el registro de logs. Se puede estudiar a futuro formas de automatizar la creación de plantillas, sin embargo este punto se encuentra fuera del alcance de esta memoria.
-
-    De los dos métodos para realizar la extracción de datos, se nota que la extracción de datos usando expresiones regulares toma una cantidad considerablemente menor de tiempo comparado con la extracción de datos usando la librería TTP. Por ende, se prefiere el primer método por sobre el segundo.
-
-    \item Guardado de los datos:
-
-    Su pudo observar que esta etapa entregó de forma correcta datasets detallados y separados para cada característica deseada, tal como se demanda en el objetivo general. 
-
-    Estos dataframes, al ser estructuras de Python, permite su uso directo por parte de otros algoritmos, sin procesamiento extra. Esto crea un punto de entrada, antes inexistente, para nuevas herramientas de computación y/o análisis con fines diversos.
-    
-\end{enumerate}
-
-Un enfoque de posible interés para estudio futuro es la generalización de este algoritmo, actualmente enfocado al sistema de Óptica Activa, para la extracción de datos orientados a otras áreas de la operación de los UTs, según requieran los operadores e ingenieros que usen el algoritmo.
+Otro enfoque de posible interés para estudio futuro es la generalización de este algoritmo, ya que actualmente está enfocado al sistema de Óptica Activa. Se debe evaluar si la misma arquitectura puede servir para la extracción de datos orientados a otras áreas de la operación de los UTs, como por ejemplo la detección de errores en tiempo real.

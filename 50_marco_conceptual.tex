@@ -32,10 +32,19 @@ La Óptica Activa es un sistema integrado en el M1, encargado de corregir las ab
 
 Estas aberraciones suelen ser causadas por la sensibilidad de este a perturbaciones ambientales, cómo las distorsiones térmicas, turbulencia atmosférica, deformación de espejo por ráfagas de viento, errores de manufactura y mantenimiento del telescopio, entre otros. Esta sensibilidad a su vez es causada por la baja proporción entre el grosor y el diámetro del espejo \cite{wilson1987active}.
 
-El ciclo básico del sistema de Óptica Activa se ilustra en la imágen del Anexo 1.
+El ciclo básico del sistema de Óptica Activa se ilustra en la imágen del Anexo 1. El mismo sigue el siguiente procedimiento:
 
-El sensor de frente de onda Shack-Hartmann toma una estrella desde el cielo y la usa como referencia offset, con la cuál monitorea constantemente la calidad óptica de la imágen mediante análisis. Cuando se calcula una desviación considerable de la imágen de su calidad óptima, se descompone dicha desviación en contribuciones ópticas simples (grados de astigmatismo, desenfoque, entre otros.) y posteriormente calcula las correcciones al patrón de fuerza presente en los actuadores de fuerza de M1 \cite{eso1998vlt}.
-Este nuevo patrón de fuerza cambia la forma de M1, con la cuál se obtiene una nueva calidad de la imágen captada. Luego, con esta imágen, el sensor de frente de onda Shack-Hartmann vuelve a calcular la desviación a la calidad óptima, y si la desviación calculada es considerable, se repite el proceso hasta que se logre la calidad óptima \cite{eso1998vlt}\cite{wilson1987active}.
+\begin{enumerate}
+    \item El sensor de frente de onda Shack-Hartmann toma una imagen de una estrella en el cielo y la toma como guia\cite{eso1998vlt}.
+
+    \item Se analiza la imágen y se miden las perturbaciones ópticas, calculando que tanto se desvian de la calidad óptima\cite{wilson1987active}.
+
+    \item Cuando la desviación es considerable, se genera un set de fuerzas que se deben aplica al M1 para corregir las perturbaciones \cite{wilson1987active}.
+
+    \item Se aplica el set de fuerzas al espejo M1 y, durante una observación, el sensor de frente de onda Shack-Hartmann toma una nueva imágen, repitiendo el proceso\cite{wilson1987active}.
+\end{enumerate}
+
+Todo este ciclo es repetido hasta que la imágen tomada durante el Paso 1 venga con una calidad óptica\cite{wilson1987active}.
 
 \subsection{SENSOR DE FRENTE DE ONDA}
 Un sensor de frente de onda es un dispositivo electrónico diseñado para capturar los frentes de onda de una fuente, ya sea en el espectro visible o en infrarrojo. El VLT usa CCD Shack-Hartmann como sensores de frente de onda, con cada UT poseyendo uno en un brazo mecánico específico para los sensores.\cite{eso1998vlt}
@@ -45,7 +54,9 @@ El objetivo del uso de sensores Shack-Hartmann es la medición de distorsiones d
 \subsection{LOGS}
 Logging se refiere al proceso de registrar diferentes eventos y actividades que ocurren dentro de un sistema de software \cite{jayathilake2011mind}. Estos registros suelen almacenarse en archivos para su posterior análisis, tanto por parte de desarrolladores como de operadores externos.
 
-Los registros de log son los único tipo de datos que registran, valga la redundancia, información de la operación interna de un sistema de software, por lo que su rol en la industria es importante \cite{ma2023automatic}.
+Los registros de log son los único tipo de datos que, valga la redundancia, registran información de la operación interna de un sistema de software, por lo que su rol en la industria es importante. Debido a esto mismo, los registros de log pueden alcanzar tamaños enormes, en algunas casos hasta el orden de millones de líneas\cite{ma2023automatic}.
+
+Los registros de log de los telescopios UT registra un día completo de operación, donde se registra información sobre las condiciones ambientales, el funcionamiento del sistema de Óptica Activa, la toma de imágenes durante periodos de calibración y de observación, entre otros. Debido a lo anterior, estos registros de log suelen alcanzar el orden de cientos de miles de líneas. Un ejemplo de estos registros de log puede verse en el Anexo 2.
 
 \subsection{ANÁLISIS DE LOGS}
 Originalmente, el análisis de registros de logs era realizado por desarrolladores con el fin de trazar el flujo de ejecución del sistema de software, identificar excepciones y potenciales errores. \cite{jayathilake2011mind}
@@ -73,3 +84,15 @@ Actualmente, el workflow de análisis automático de registros de log se divide 
     \item Feature Extraction: Se aplican las plantillas generadas sobre los registros de log para obtener las características, esto es, las variables dinámicas, de los mismos. \cite{ma2023automatic}
 
 \end{itemize}
+
+\subsection{ORIGENES DE DATOS}
+
+Tres origenes de datos son considerados para la presente memoria:
+
+\begin{enumerate}
+    \item Registros de log: El origen de dato más importante para esta memoria, considerando la problemática a resolver. Estos datos son propios de los telescopios UT, y como tales, se obtienen directamente de los mismos una vez terminada su ejecución \cite{eso1998vlt}
+
+    \item Imágenes en formáto fits: Corresponden a las imágenes tomadas por el telescopio durante un ciclo de Óptica Activa. Estas imágenes se disponibilizan en formato fits, el cuál es un formato diseñado para almacenar y distribuir datos astronómicos. Este se compone de un Header y uno o más listas multidimensionales, los cuáles componen el dataset de datos científicos \cite{nasa2025fits}. Las imágenes tomadas durante el sistema de Óptica Activa también se obtienen directamente de los telescopios UT, al igual que con los registros de log.
+
+    \item Observaciones en formáto csv: Corresponde a un archivo csv que registra información sobre las observaciones realizadas en un periodo de tiempo dado, filtrada según una serie de parámetros entregados durante la solicitud. Para obtener este archivo, se debe enviar una query a la página de archivado Observational Raw Data de la ESO (https://archive.eso.org/wdb/wdb/eso/eso\_archive\_main/query), la cuál disponibiliza información sobre las observaciones de forma pública. En dicha query se definen los parámetros con los cuáles se filtrarán las observaciones, incluyendo el periodo de tiempo, el tipo de observación, entre otros.
+\end{enumerate}

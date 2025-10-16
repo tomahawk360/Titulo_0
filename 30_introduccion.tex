@@ -1,23 +1,23 @@
 \secnumberlesssection{INTRODUCCIÓN}
 
-El observatorio Paranal, ubicado en el Norte de Chile, es uno de los más importantes a nivel mundial. Su enfoque en la investigación estelar se ve apoyado por el VLT, uno de los telescopios ópticos más avanzados del mundo, el cuál a su vez esta compuesto de 4 UTs, entre otros.
+El observatorio Paranal, ubicado en el Norte de Chile, es uno de los más importantes a nivel mundial. Su enfoque en la investigación estelar se ve apoyado por el VLT, uno de los telescopios ópticos más avanzados del mundo, el cuál a su vez esta compuesto de 4 UTs, entre otros. Estos telescopios están equipados con el sistema de Óptica Activa: un sistema implementado en los UTs, que busca optimizar la imágen tomada por el respectivo telescopio en una observación.
 
-Este título se lo lleva por varios factores, uno de estos es el sistema de Óptica Activa: un sistema implementado en los UTs, que busca optimizar la imágen tomada por el respectivo telescopio en una observación.
+El sistema de Óptica Activa logra este objetivo al controlar el espejo principal del respectivo telescopio mediante la aplicación de fuerzas sobre él. Esto se genera dentro de un ciclo cerrado, el cuál implica tomar una imágen durante una observación, analizar dicha imagen y medir sus aberraciones ópticas, luego generar el set de fuerzas que se deben aplicar al espejo principal del telescopio para corregir las perturbaciones, y por último, aplicar las fuerzas al espejo principal antes de repetir el proceso.
 
-El ciclo de la Óptica Activa implica tomar una imágen durante una observación, analizar dicha imagen y medir sus perturbaciones ópticas, generar un set de fuerzas que se deben aplicar al espejo principal del telescopio para corregir las perturbaciones, y por último, se aplican las fuerzas al espejo principal y se repite el proceso.
+Durante todo este proceso se van registrando varios datos e interacciones ocurridas durante las operaciones en archivos llamados registros de log, como es común para modelos de software.
 
-Como es común para modelos de software, se van registrando varios datos e interacciones ocurridas durante las operaciones del sistema de Óptica Activa en archivos llamados registros de log.
+Se busca implementar nuevos sistemas y técnicas de computación que se asocien con el funcionamiento del sistema de Óptica Activa, esto con el fin de continuar con el avance científico. Para lograr esto, se requiere de un dataset con datos de operación de la Óptica Activa.
 
-Con tal de continuar con el avance científico, se busca implementar nuevos sistemas y técnicas de computación que se asocien con el funcionamiento del sistema de Óptica Activa. Para lograr esto, se requiere de un dataset con datos de operación de la Óptica Activa.
-
-Sin embargo, este dataset no es accesible, debido a que estos datos se encuentran en los registros de log, y actualmente no existe un procedimiento que permita la extracción de un dataset de estos registros.
+Sin embargo este dataset no es accesible, debido a que estos datos se encuentran en los registros de log, y actualmente no existe un procedimiento que permita la extracción de un dataset de estos registros.
 
 Considerando la problemática descrita anteriormente, el objetivo de esta memoria será el desarrollo de un procedimiento que extraíga los datos, bajo contexto del sistema de Óptica Activa, de los registros de log, los transforme de forma acorde, y los deposite en forma de dataset con información útil y estructurada.
 
-Para lograr este objetivo, primero se debe realizar una definición formal y educada del problema en el Capítulo Definición del Problema, sumando contexto y razones detrás de la problemática, actores involucrados y el alcance del proyecto.
+Este documento se dividirá en las siguientes partes centrales:
 
-Luego, se investiga, tanto el sistema de Óptica Activa como métodos para la extracción de datos de registros de logs, en el Capítulo Marco Conceptual, con el fin de recabar antecedentes y poder guiar el desarrollo en base a hechos.
+Primero en el Capítulo Definición del Problema, se realiza una definición formal del problema, sumando contexto y razones detrás de la problemática, actores involucrados y el alcance del proyecto.
 
-Entonces, en el Capitulo Propuesta de la Solución se describe de forma teórica los aspectos más fundamentales del modelo a desarrolar, incluyendo librerías, etapas, estructura, entre otros.
+Luego, en el Capítulo Marco Conceptual, se investiga tanto el sistema de Óptica Activa como métodos para la extracción de datos de registros de logs, con el fin de recabar antecedentes y poder planificar el desarrollo.
+
+Luego, en el Capitulo Propuesta de la Solución, se describe de forma teórica los aspectos más fundamentales del modelo a desarrolar, incluyendo librerías, etapas, estructura, entre otros.
 
 Finalmente, durante el Capitulo Validación de la Solución, se ejecuta el modelo descrito en el capítulo anterior, y se corrobora que la información extraída cumpla con la lógica y la calidad deseada.

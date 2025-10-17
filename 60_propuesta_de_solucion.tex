@@ -62,8 +62,8 @@ Para la solución a desarrollar, es presenta una estructura de almacenamiento de
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=10cm,height=6cm]{figures/db_diagram.png}
-\caption{\label{fig:db_general} Malla Curricular Ingeniería Civil Informática.} Fuente: Elaboración propia.
+\includegraphics[width=16cm]{figures/db_diagram}
+\caption{\label{fig:db_general} Diagrama general del almacenamiento de datos} Fuente: Elaboración propia.
 \end{figure}
 
 \subsubsection{Estructura de los datos}
@@ -84,16 +84,16 @@ Recapitulando, con respecto a los datos asociados a correcciones, se opta almace
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=10cm,height=6cm]{figures/db_diagram_corr.png}
-\caption{\label{fig:db_corr} Malla Curricular Ingeniería Civil Informática.} Fuente: Elaboración propia.
+\includegraphics{figures/db_diagram_corr}
+\caption{\label{fig:db_corr} Diagrama del almacenamiento de datos directamente relacionados con la corrección de fuerzas.} Fuente: Elaboración propia.
 \end{figure}
 
 Con respecto a los datos adicionales, debido a que estos no cambian con las correcciones, se decide almacenar estos en una tabla propia, conteniendo los atributos clave y sin necesidad de relaciones con otras tablas, como se muestran en la Imágen \ref{fig:db_add_data}.
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=3cm,height=2cm]{figures/db_diagram_add_data.png}
-\caption{\label{fig:db_add_data} Malla Curricular Ingeniería Civil Informática.} Fuente: Elaboración propia.
+\includegraphics[width=6cm]{figures/db_diagram_add_data}
+\caption{\label{fig:db_add_data} Diagrama de almacenamiento de datos sobre características ambientales} Fuente: Elaboración propia.
 \end{figure}
 
 \subsubsection{Formato de almacenamiento}
@@ -154,7 +154,7 @@ Los registros de log no muestran de qué tipo es cada observación, por ende es 
     \begin{figure}[h]
     \centering
     \includegraphics[width=13.5cm,height=9cm]{figures/eso_raw.png}
-    \caption{\label{fig:eso_raw} Malla Curricular Ingeniería Civil Informática.} Fuente: Elaboración propia.
+    \caption{\label{fig:eso_raw} Página web de archivo de observación de la ESO con los paramétros necesarios seleccionados} Fuente: Elaboración propia.
     \end{figure}
     
     Estos campos permiten obtener todas las observaciones cientificas y de adquisición de todos los instrumentos en una noche determinada.
@@ -163,7 +163,9 @@ Los registros de log no muestran de qué tipo es cada observación, por ende es 
 
     \item{Segmentación de los periodos de observación}
 
-    Una vez cargado el documento, se procede a usar el mismo para delimitar los horarios de inicio y término de cada periodo de observación valido, para luego usar estos límites en el filtrado de las observaciones obtenidas desde el registro de logs.
+    Se asume que durante una observación válida el UT funcionó de forma correcta y, por consiguiente, todas las líneas de log que se encuentren dentro de ese tiempo de observación serán validas.
+
+    Bajo esta hipótesis, se procede a cargar el documento de observaciones y usar el mismo para delimitar los horarios de inicio y término de cada periodo de observación valido, para luego usar estos límites en el filtrado de las observaciones obtenidas desde el registro de logs.
 
     Inicialmente, se pueden crear estos 'bloques de tiempo' usando la hora de inicio de cada observación junto con el tiempo de exposición de la misma. Es importante que, al momento de crear estos bloques, se mantenga la distinción de bajo que instrumento se produce la observación en cuestión.
 
@@ -243,66 +245,39 @@ Para aplicar la extracción de datos en las líneas de texto, existen varios mé
 
     \begin{myverbatim}[caption={Plantillas Regex},label={myverbatim:regex}]
 
-(([0-2][0-9]{3}-[0-1][0-9]-[0-3][0-9]) ([0-2][0-9]:
-[0-5][0-9]:[0-5][0-9](.[0-9]+)*) lt[1-4]m1m3 m1as 
-m1asSetGlb[Abs|Rel]+ [0-9.-]+ [0-9.-]+ AS Forces 
-#([0-9.-]+) \(abs\): ([0-9.\-\s]+))
+(([0-2][0-9]{3}-[0-1][0-9]-[0-3][0-9]) ([0-2][0-9]:[0-5][0-9]:[0-5][0-9](.[0-9]+)*) lt[1-4]m1m3 m1as m1asSetGlb[Abs|Rel]+ [0-9.-]+ [0-9.-]+ AS Forces #([0-9.-]+) \(abs\): ([0-9.\-\s]+))
 
-(([0-2][0-9]{3}-[0-1][0-9]-[0-3][0-9]) ([0-2][0-9]:
-[0-5][0-9]:[0-5][0-9](.[0-9]+)*) lt[1-4]m1m3 m1as 
-m1asSetGlb[Abs|Rel]+ [0-9.-]+ [0-9.-]+ AS Executed 
-cmd #([0-9.-]+): SUCCESS)
+(([0-2][0-9]{3}-[0-1][0-9]-[0-3][0-9]) ([0-2][0-9]:[0-5][0-9]:[0-5][0-9](.[0-9]+)*) lt[1-4]m1m3 m1as m1asSetGlb[Abs|Rel]+ [0-9.-]+ [0-9.-]+ AS Executed cmd #([0-9.-]+): SUCCESS)
 
-(([0-2][0-9]{3}-[0-1][0-9]-[0-3][0-9]) ([0-2][0-9]:
-[0-5][0-9]:[0-5][0-9](.[0-9]+)*) lt[1-4]m1m3 m1as 
-m1asSetGlb[Abs|Rel]+ [0-9.-]+ [0-9.-]+ AS Received 
-cmd #([0-9.-]+): [A-Z]+)
+(([0-2][0-9]{3}-[0-1][0-9]-[0-3][0-9]) ([0-2][0-9]:[0-5][0-9]:[0-5][0-9](.[0-9]+)*) lt[1-4]m1m3 m1as m1asSetGlb[Abs|Rel]+ [0-9.-]+ [0-9.-]+ AS Received cmd #([0-9.-]+): [A-Z]+)
 
-(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9]
-(.[0-9]+)*)> DET EXP NO = ([0-9]+) \/ Unique exposure 
-ID number \[(lt[1-4][a-z]{2}[a-c])\])
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9](.[0-9]+)*)> DET EXP NO = ([0-9]+) \/ Unique exposure ID number \[(lt[1-4][a-z]{2}[a-c])\])
 
-(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9]
-(.[0-9]+)*)> TEL ACTO (INTTIME) = ([0-9]+))
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9](.[0-9]+)*)> TEL ACTO (INTTIME) = ([0-9]+))
 
-(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9]
-(.[0-9]+)*)> TEL (ALT) (TORQUE) = ([0-9.-]+))
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9](.[0-9]+)*)> TEL (ALT) (TORQUE) = ([0-9.-]+))
 
-(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9]
-(.[0-9]+)*)> TEL (AZ) (TORQUE) = ([0-9.-]+))
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9](.[0-9]+)*)> TEL (AZ) (TORQUE) = ([0-9.-]+))
 
-(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9]
-(.[0-9]+)*)> TEL (ALT)( )= ([0-9.-]+))
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9](.[0-9]+)*)> TEL (ALT)( )= ([0-9.-]+))
 
-(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9]
-(.[0-9]+)*)> TEL (AZ)( )= ([0-9.-]+))
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9](.[0-9]+)*)> TEL (AZ)( )= ([0-9.-]+))
 
-(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9]
-(.[0-9]+)*)> TEL (IA) (ABER)([0-9.-]+) = ([0-9.-]+))
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9](.[0-9]+)*)> TEL (IA) (ABER)([0-9.-]+) = ([0-9.-]+))
 
-(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9]
-(.[0-9]+)*)> TEL (IA) (ABERANG)([0-9.-]+) = ([0-9.-]+))
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9](.[0-9]+)*)> TEL (IA) (ABERANG)([0-9.-]+) = ([0-9.-]+))
 
-(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9]
-(.[0-9]+)*)> TEL (ACTO) (ALTPOS) = ([0-9.-]+))
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9](.[0-9]+)*)> TEL (ACTO) (ALTPOS) = ([0-9.-]+))
 
-(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9]
-(.[0-9]+)*)> TEL (ACTO) (AZPOS) = ([0-9.-]+))
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9](.[0-9]+)*)> TEL (ACTO) (AZPOS) = ([0-9.-]+))
 
-(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9]
-(.[0-9]+)*)> TEL (IA) (ABERAVE)([0-9.-]+) = ([0-9.-]+))
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9](.[0-9]+)*)> TEL (IA) (ABERAVE)([0-9.-]+) = ([0-9.-]+))
 
-(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9]
-(.[0-9]+)*)> TEL (IA) (ABERAVEANG)([0-9.-]+) = 
-([0-9.-]+))
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9](.[0-9]+)*)> TEL (IA) (ABERAVEANG)([0-9.-]+) = ([0-9.-]+))
 
-(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9]
-(.[0-9]+)*)> TEL (IA) (ABERFILMOD)([0-9.-]+) = 
-([0-9.-]+))
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9](.[0-9]+)*)> TEL (IA) (ABERFILMOD)([0-9.-]+) = ([0-9.-]+))
 
-(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9]
-(.[0-9]+)*)> TEL (IA) (ABERFILANG)([0-9.-]+) = 
-([0-9.-]+))
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9](.[0-9]+)*)> TEL (IA) (ABERFILANG)([0-9.-]+) = ([0-9.-]+))
     
     \end{myverbatim}
 
@@ -316,35 +291,25 @@ ID number \[(lt[1-4][a-z]{2}[a-c])\])
 
     \begin{myverbatim}[caption={Plantillas TTP},label={myverbatim:ttp}]
 
-{{ date }} {{ hour }} lt[1-4]m1m3 m1as m1asSetGlbAbs 
-[0-9.-]+ [0-9.-]+ AS Forces #([0-9.-]+) \(abs\): 
-{{ data }}
+{{ date }} {{ hour }} lt[1-4]m1m3 m1as m1asSetGlbAbs [0-9.-]+ [0-9.-]+ AS Forces #([0-9.-]+) \(abs\): {{ data }}
 
-{{ date }} {{ hour }} lt[1-4]m1m3 m1as m1asSetGlbAbs 
-[0-9.-]+ [0-9.-]+ AS Executed cmd #([0-9.-]+): SUCCESS
+{{ date }} {{ hour }} lt[1-4]m1m3 m1as m1asSetGlbAbs [0-9.-]+ [0-9.-]+ AS Executed cmd #([0-9.-]+): SUCCESS
 
-{{ date }} {{ hour }} lt[1-4]m1m3 m1as m1asSetGlbAbs 
-[0-9.-]+ [0-9.-]+ AS Received cmd #([0-9.-]+): [A-Z]+
+{{ date }} {{ hour }} lt[1-4]m1m3 m1as m1asSetGlbAbs [0-9.-]+ [0-9.-]+ AS Received cmd #([0-9.-]+): [A-Z]+
 
-wt[1-4]tcs {{ hour }}> DET EXP NO = ([0-9]+) \/ Unique 
-exposure ID number \[(lt[1-4][a-z]{2}[a-c])\]
+wt[1-4]tcs {{ hour }}> DET EXP NO = ([0-9]+) \/ Unique exposure ID number \[(lt[1-4][a-z]{2}[a-c])\]
 
 wt[1-4]tcs {{ hour }}> TEL ACTO (INTTIME) = ([0-9]+)
 
-wt[1-4]tcs {{ hour }}> TEL {{ group }} >{{ label }} = 
-{{ data }}
+wt[1-4]tcs {{ hour }}> TEL {{ group }} >{{ label }} = {{ data }}
 
-wt[1-4]tcs {{ hour }}> TEL {{ group }} {{ label }} = 
-{{ data }}
+wt[1-4]tcs {{ hour }}> TEL {{ group }} {{ label }} = {{ data }}
 
-wt[1-4]tcs {{ hour }}> TEL {{ group }}{{ label }}= 
-{{ data }}
+wt[1-4]tcs {{ hour }}> TEL {{ group }}{{ label }}= {{ data }}
 
-wt[1-4]tcs {{ hour }}> TEL {{ group }}{{ label }}= 
-{{ data }}
+wt[1-4]tcs {{ hour }}> TEL {{ group }}{{ label }}= {{ data }}
 
-wt[1-4]tcs {{ hour }}> TEL {{ group }} {{ label }} = 
-{{ data }}
+wt[1-4]tcs {{ hour }}> TEL {{ group }} {{ label }} = {{ data }}
     
     \end{myverbatim}
 
@@ -354,7 +319,25 @@ Para ambos casos, los datos extraídos quedan en formato json, donde la llave co
 
 Independiente del origen del dato, todos poseen campos de nombre 'group' y la mayoría posee también un campo 'label'. Se usará el campo 'group' para definir el tipo del dato (distribución de fuerza, imágen, etc.) y el campo 'label' para identificar subdivisiones dentro de cada tipo de dato cuando sea conveniente.
 
-Estos campos se tornan particularmente útiles, cuando se considera que la información para un dato puede estar repartida en varias líneas, como es por ejemplo el caso de las distribuciones de fuerza, donde las fuerzas de los 150 actuadores están siempre repartidos en 6 líneas de 25 actuadores, y que a su vez todas esas líneas están separadas de la ID de la distribucón, que se encuentra en su línea propia. Este formato se puede revisar en el ejemplo disponible en el Anexo 4.
+Estos campos se tornan particularmente útiles, cuando se considera que la información para un dato puede estar repartida en varias líneas, como es por ejemplo el caso de las distribuciones de fuerza, donde las fuerzas de los 150 actuadores están siempre repartidos en 6 líneas de 25 actuadores, y que a su vez todas esas líneas están separadas de la ID de la distribucón, que se encuentra en su línea propia. Este formato se puede revisar en el Listing \ref{myverbatim:fuerza_ejemplo}.
+
+    \begin{myverbatim}[caption={Extracto de distribución de fuerzas presente en registro de log para UT 1},label={myverbatim:fuerza_ejemplo}]
+
+Sep 21 23:30:55 wt1tcs logManager[318044]: 2024-09-21  23:30:51.970000  lt1m1m3  m1as  m1asSetGlbRel  33  110  AS Executed cmd #807: SUCCESS
+
+Sep 21 23:30:55 wt1tcs logManager[318044]: 2024-09-21  23:30:51.970000  lt1m1m3  m1as  m1asSetGlbRel  33  110  AS Forces #1 (abs):   42   45   49   50   39   14  -20  -33  -10   21   47   57   53  -38  -13   25   47   43    9   18  -20   36   46   11   25
+
+Sep 21 23:30:55 wt1tcs logManager[318044]: 2024-09-21  23:30:51.970000  lt1m1m3  m1as  m1asSetGlbRel  33  110  AS Forces #2 (abs):  -58  -53  -47  -31   -6   19   35   40   26    1  -22  -38  -42   31   16  -14  -37   -8   -6    9   52   29  -14    9    9
+
+Sep 21 23:30:55 wt1tcs logManager[318044]: 2024-09-21  23:30:51.970000  lt1m1m3  m1as  m1asSetGlbRel  33  110  AS Forces #3 (abs):  -66  -75  -74  -55  -26   -2    3   38   28   23   31   46   57   21    2   0.   21   45  -32  -37  -27  -71  -64  -18  -43
+
+Sep 21 23:30:55 wt1tcs logManager[318044]: 2024-09-21  23:30:51.970000  lt1m1m3  m1as  m1asSetGlbRel  33  110  AS Forces #4 (abs):   39   53   43   14  -11  -19   -8  -24    3   24   38   49   57  -23   15   43   53    9   38   37    6   23   22   -7   29
+
+Sep 21 23:30:55 wt1tcs logManager[318044]: 2024-09-21  23:30:51.970000  lt1m1m3  m1as  m1asSetGlbRel  33  110  AS Forces #5 (abs):  -83  -58  -38  -28  -24  -14   10   80   67   36   -4  -35  -41   73   64   24  -25  -45  -28  -22   -5  -44  -83   14  -12
+
+Sep 21 23:30:55 wt1tcs logManager[318044]: 2024-09-21  23:30:51.970000  lt1m1m3  m1as  m1asSetGlbRel  33  110  AS Forces #6 (abs):  -99  -99  -89  -78  -72  -66  -49   80   73   62   51   44   45   58   36   22   26  -22  -33  -80  -62  -88 -114   14  -13
+    
+    \end{myverbatim}
 
 De esta forma, mediante el uso de estos campos, se puede dejar registro de la información de un mismo dato para su posterior unión.
 

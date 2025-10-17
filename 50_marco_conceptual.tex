@@ -15,15 +15,55 @@ Los fines bajo los cuáles se construyó el VLT corresponden a los siguientes \c
 
 El VLT se compone de una red de 4 telescopios principales idénticos, denominados como “Unitary Telescopes” (o por sus siglas UT), 4 telescopios auxiliares, denominados como “Auxiliary Telescopes” (o por sus siglas AT), Interferómetro (por sus siglas en inglés VLTI) y dos telescopios de survey (por sus siglas en inglés VISTA y VST).
 
-Cada UT posee un espejo principal (denominado M1) de forma cóncava con 8,2 metros de diámetro, instalado en un montura de 22 metros de largo, 10 metros de ancho y 20 metros de alto. Dicha montura permite al espejo moverse según azimut (eje horizontal) y altitud (eje vertical) \cite{eso1998vlt}, como se muestra en la Imagen X.
+Cada UT posee un espejo principal (denominado M1) de forma cóncava con 8,2 metros de diámetro, instalado en un montura de 22 metros de largo, 10 metros de ancho y 20 metros de alto, como se aprecia en la Imágen \ref{fig:real_mount}. Dicha montura permite al espejo moverse según azimut (eje horizontal) y altitud (eje vertical) \cite{eso1998vlt}, como se muestra en la Imagen \ref{fig:front_ut}, con el azimut como líneas celestes en vertical y la altitud como líneas celestes en horizontal.
 
--- INSERTAR IMAGEN DE AZIMUT Y LATITUD --
+\begin{figure}[h]
+\centering
+\includegraphics[width=6cm]{figures/front_ut.jpg}
+\caption{\label{fig:front_ut} Diagrama frontal de un UT} Fuente: The VLT White Book \cite{eso1998vlt}
+\end{figure}
 
-El M1 está compuesto de espejos más pequeñas, distribuidas en forma de dona. Bajo M1, repartidos en 6 anillos concéntricos, se encuentran 150 actuadores de fuerza axiales; estos son, pistones hidráulicos y neumáticos, donde cada actuador se encuentra debajo de una espejo pequeña respectiva. Estos actuadores dan a M1 una determinada forma óptica, determinada por el patrón de fuerza presentado por los actuadores \cite{eso1998vlt}.
+\begin{figure}[h]
+\centering
+\includegraphics[width=6cm]{figures/side_ut.jpg}
+\caption{\label{fig:side_ut} Diagrama lateral de un UT} Fuente: The VLT White Book \cite{eso1998vlt}
+\end{figure}
 
-El M2 consiste de una espejo de 0.9 metros de diámetro, montada a una distancia de aproximadamente 12.3 metros de M1 a lo largo del eje azimutal, con la espejo de M2 apuntando hacia M1. El M2 además está montado sobre un mecanismo electromecánico que sujeta y controla su inclinación \cite{eso2011m2}.
+\begin{figure}[h]
+\centering
+\includegraphics[width=8cm]{figures/real_ut.jpg}
+\caption{\label{fig:real_ut} UT 2 visto desde el exterior} Fuente: Elaboración propia
+\end{figure}
 
-El M3 consiste de una espejo elíptica de 1.24 metros de diámetro mayor con 0.86 metros de diámetro menor. Este se ubica dentro de una torre, posicionada en el orificio central del M1. Este puede rotar alrededor de su eje azimutal \cite{eso2011m1}.
+\begin{figure}[h]
+\centering
+\includegraphics[width=8cm]{figures/real_mount.jpg}
+\caption{\label{fig:real_mount} Montura del M1} Fuente: Elaboración propia
+\end{figure}
+
+El M1 está compuesto de espejos más pequeñas, distribuidas en forma de dona. Bajo M1, repartidos en 6 anillos concéntricos, se encuentran 150 actuadores de fuerza axiales; estos son, pistones hidráulicos y neumáticos, donde cada actuador se encuentra debajo de una espejo pequeña respectiva. Estos actuadores dan a M1 una determinada forma óptica, determinada por el patrón de fuerza presentado por los actuadores \cite{eso1998vlt}. El M1 es visible en la Imágen \ref{fig:real_m1}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=8cm]{figures/real_m1.jpg}
+\caption{\label{fig:real_m1} Espejo M1, con M2 reflejado y M3 en el centro} Fuente: Elaboración propia
+\end{figure}
+
+El M2 consiste de una espejo de 0.9 metros de diámetro, montada a una distancia de aproximadamente 12.3 metros de M1 a lo largo del eje azimutal, con la espejo de M2 apuntando hacia M1. El M2 además está montado sobre un mecanismo electromecánico que sujeta y controla su inclinación \cite{eso2011m2}. El M2 es visible en la Imágen \ref{fig:real_m2}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=8cm]{figures/real_m2.jpg}
+\caption{\label{fig:real_m2} Espejo M2} Fuente: Elaboración propia
+\end{figure}
+
+El M3 consiste de una espejo elíptica de 1.24 metros de diámetro mayor con 0.86 metros de diámetro menor. Este se ubica dentro de una torre, posicionada en el orificio central del M1. Este puede rotar alrededor de su eje azimutal \cite{eso2011m1}. El M3 es visible en la Imágen \ref{fig:real_m3}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=8cm]{figures/real_m3.jpg}
+\caption{\label{fig:real_m3} Espejo M3} Fuente: Elaboración propia
+\end{figure}
 
 \subsection{SISTEMA DE ÓPTICA ACTIVA}
 La Óptica Activa es un sistema integrado en el M1, encargado de corregir las aberraciones y degradación en la calidad de imágen provocadas por las ópticas del espejo \cite{eso1998vlt}.
@@ -39,11 +79,13 @@ El ciclo básico del sistema de Óptica Activa se ilustra en la imágen del Anex
 
     \item Cuando la desviación es considerable, se genera un set de fuerzas que se deben aplica al M1 para corregir las perturbaciones \cite{wilson1987active}.
 
-    \item Se aplica el set de fuerzas al espejo M1 y, durante una observación, el sensor de frente de onda Shack-Hartmann toma una nueva imágen, repitiendo el proceso\cite{wilson1987active}. Ejemplos de las imágenes tomadas por el sensor Shack-Hartmann se muestran en las Imagesnes X e Y, donde X presenta pocas aberraciones ópticas e Y preseneta más aberraciones:
+    \item Se aplica el set de fuerzas al espejo M1 y, durante una observación, el sensor de frente de onda Shack-Hartmann toma una nueva imágen, repitiendo el proceso\cite{wilson1987active}. Un ejemplo de imágen tomada por el sensor Shack-Hartmann se muestra en la Imágen \ref{fig:sh}.
 
-    -- Imagen X --
-
-    -- Imagen Y --
+    \begin{figure}[h]
+    \centering
+    \includegraphics[width=8cm]{figures/sh_eje.png}
+    \caption{\label{fig:sh} Imágen capturada por un sensor de frente de onda Shack-Hartmann} Fuente: Implementation of adaptive optics in fluorescent microscopy using wavefront sensing and correction\cite{azucena2010ao}
+    \end{figure}
 
      \item Todo este ciclo es repetido hasta que la imágen tomada durante el Paso 1 venga con una calidad óptica\cite{wilson1987active}.
 
@@ -57,7 +99,7 @@ El objetivo del uso de sensores Shack-Hartmann es la medición de distorsiones d
 \subsection{LOGS}
 Logging se refiere al proceso de registrar diferentes eventos y actividades que ocurren dentro de un sistema de software \cite{jayathilake2011mind}. Estos registros suelen almacenarse en archivos para su posterior análisis, tanto por parte de desarrolladores como de operadores externos.
 
-Los registros de log son los único tipo de datos que, valga la redundancia, registran información de la operación interna de un sistema de software, por lo que su rol en la industria es importante. Debido a esto mismo, los registros de log pueden alcanzar tamaños en el orden de hasta el orden de millones de líneas\cite{ma2023automatic}.
+Los registros de log son los únicos tipos de datos que, valga la redundancia, registran información de la operación interna de un sistema de software, por lo que su rol en la industria es importante. Debido a esto mismo, los registros de log pueden alcanzar tamaños en el orden de hasta el orden de millones de líneas\cite{ma2023automatic}.
 
 Los registros de log de los telescopios UT registra un día completo de operación, donde se registra información sobre las condiciones ambientales, el funcionamiento del sistema de Óptica Activa, la toma de imágenes durante periodos de calibración y de observación, entre otros. Debido a lo anterior, estos registros de log suelen alcanzar el orden de cientos de miles de líneas. Un ejemplo de estos registros de log puede verse en el Anexo 2.
 
@@ -95,7 +137,9 @@ Tres origenes de datos son considerados para la presente memoria:
 \begin{enumerate}
     \item Registros de log: El origen de dato más importante para esta memoria, considerando la problemática a resolver. Estos datos son propios de los telescopios UT, y como tales, se obtienen directamente de los mismos una vez terminada su ejecución \cite{eso1998vlt}
 
-    \item Imágenes en formáto fits: Corresponden a las imágenes tomadas por el telescopio durante un ciclo de Óptica Activa. Estas imágenes se disponibilizan en formato fits, el cuál es un formato universal en ciencias y astronomía diseñado para almacenar y distribuir datos astronómicos. Este se compone de un Header y uno o más listas multidimensionales, donde el Header contiene la metadata que describe a la misma imágen que lo aloja, y las listas multidimensionales componen el dataset de datos científicos \cite{nasa2025fits}. Las imágenes tomadas durante el ciclo de Óptica Activa también se obtienen directamente de los telescopios UT.
+    \item Imágenes en formáto fits: Las imágenes tomadas por el telescopio usan el formato fits, el cuál es universal en ciencias y astronomía\cite{nasa2025fits}. Es formato se divide en dos secciones: el contenido científico y el Header, donde este último contiene la metadata que describe a la misma imágen que lo aloja, como por ejemplo su número de ID, su tiempo de exposición, las fechas de inicio y término de grabado, entre otros\cite{nasa2025fits}. Para el caso de esta memoria, solo importan las imágenes que fueron tomadas desde el sensor de frente de onda como parte del ciclo de Óptica Activa.
 
-    \item Observaciones en formáto csv: Corresponde a un archivo csv que registra información sobre las observaciones realizadas en un periodo de tiempo dado. Para obtener este archivo, se debe enviar una query a la página de archivado Observational Raw Data de la ESO (https://archive.eso.org/wdb/wdb/eso/eso\_archive\_main/query), la cuál disponibiliza información sobre las observaciones de forma pública. Se considera este origen de datos bajo la teoría  de que cada observación debe ser valida para ser cargada a la página de archivado.
+
+    \item Observaciones en formáto csv: La ESO mantiene en una página web con el fin de archivar la información sobre todas las observaciones válidas de los UTs. Desde esa página se pueden obtener los datos de todas las observaciones de un día mediante una query. La información disponible en la página puede incluir el número de ID de la observación, la fecha de inicio, el tiempo de exposición, el instrumento de captura de la imágen, entre otros.
+
 \end{enumerate}

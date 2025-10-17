@@ -16,7 +16,7 @@ Cumple con el proceso descrito en la sección 3.4, donde a base de una archivo p
 Como se mencionó en la sección 3.4.2, el método para realizar la extracción es mediante Expresiones Regulares, lo cuál se manifiesta tanto en el archivo de plantillas que se ingresa a la función, junto con las líneas a extraer, como en el método de extracción que se aplica a línea de log.
 
 \subsubsection{Generate Dataframes} 
-Cumple con el proceso de la sección 3.5.2, donde se menciona el traslado de los datos del json generado en la función anterior a un conjunto de dataframes, usando los campos \"group\" y \"label\" como etiquetas para reconocer a qué dataframe destinar los datos.
+Cumple con el proceso de la sección 3.5.2, donde se menciona el traslado de los datos del json generado en la función anterior a un conjunto de dataframes, usando los campos 'group' y 'label' como etiquetas para reconocer a qué dataframe destinar los datos.
 
 De esta función se generan 4 dataframes, como se señalo en la sección 3.5.1: df\_corrections, para las instancias de corrección; df\_images, para las imágenes capturadas; df\_f\_dist, para las distribuciones de fuerza de los actuadores; y df\_additional\_data, para los datos adicionales relacionados con la Óptica Activa.
 
@@ -59,7 +59,8 @@ positional arguments:
 
 options:
   -h, --help        show this help message and exit
-  -t TEMPLATEFILE, --templatefile TEMPLATEFILE
+  -t TEMPLATEFILE, 
+  --templatefile TEMPLATEFILE
                     Path to the text file where the templates
                     are stored (if no name is written, 
                     ./poc_templates.txt
@@ -76,15 +77,17 @@ options:
                     fits files: write of the fits files' 
                     path respective to each image row 
                     in the images' dataframe
-  -l, --linkdataframes  Skips linking of correction 
-                        dataframe with related dataframes: 
-                        write of the ids of the force 
-                        distribution and image respective 
-                        to each row in the correction 
-                        dataframe
+  -l, 
+  --linkdataframes  Skips linking of correction 
+                    dataframe with related dataframes: 
+                    write of the ids of the force 
+                    distribution and image respective 
+                    to each row in the correction 
+                    dataframe
   -c, --console     Prints resulting dataframes on console
-  -s SAVE, --save SAVE Stores resulting dataframes in 
-                        csv files
+  -s SAVE, 
+  --save SAVE       Stores resulting dataframes in 
+                    csv files
   -r, --report      Prints a report detailing the processing 
                     of log lines
 \end{myverbatim}

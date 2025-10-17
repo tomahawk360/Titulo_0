@@ -10,7 +10,7 @@
 generación de datasets del sistema de óptica activa de los espejos M1.}
 \newcommand{\ciudad}{Santiago} % e.g. Valparaíso
 % TODO: Consultar el formato de los nombres:
-\newcommand{\nombrealumno}{Ignacio Ortiz Valdebenito}
+\newcommand{\nombrealumno}{Ignacio Andrés Ortiz Valdebenito}
 \newcommand{\nombreprofesor}{Pedro Toledo Correa}
 \newcommand{\nombrecorreferente}{Jose Luis Martí Lara}
 % Mes y año del examen
@@ -57,6 +57,19 @@ Corresponde a la traducción al idioma inglés de Palabras Clave anteriores.
 
 % Paquete para la bibliografia
 \usepackage{cite}
+
+% Para las etiquetas
+\usepackage{listings,lipsum}
+\usepackage{courier}
+
+\lstnewenvironment{myverbatim}[1][]{%
+  \lstset{
+    basicstyle=\scriptsize\ttfamily,
+    breaklines=true,
+    frame=tb,
+    #1
+  }%
+}{}
 
 % Settear font
 \setmainfont{Carlito}

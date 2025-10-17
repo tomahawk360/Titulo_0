@@ -23,10 +23,10 @@ De esta función se generan 4 dataframes, como se señalo en la sección 3.5.1: 
 \subsubsection{Validate Forces} 
 Cumple con el segundo item de la sección 3.5.3, donde se especifica la validación de los datos dentro de df\_f\_dist generado en la función anterior. 
 
-Principalmente, se eliminan los datos con ID nulo, además de remover aquellos que no sean antecedidas y/o seguidas por imágenes únicas.
+Principalmente, se eliminan los datos con ID\_f\_dist nulo, además de remover aquellos que no sean antecedidas y/o seguidas por imágenes únicas.
 
 \subsubsection{Validate Images} 
-Cumple con el tercer item de la sección 3.5.3, donde se especifica la validación de los datos dentro de df\_images generado en la función anterior. Solamente se eliminan aquellos datos con ID nulo.
+Cumple con el tercer item de la sección 3.5.3, donde se especifica la validación de los datos dentro de df\_images generados en la función anterior. Solamente se eliminan aquellos datos con ID\_image nulo.
 
 \subsubsection{Link Images} 
 Cumple con el requisito de la sección 3.5.1, sobre df\_images manteniendo la dirección local del archivo .fits correspondiente como un atributo de los datos del dataframe.
@@ -36,7 +36,7 @@ En esta función, se ingresa a la carpeta donde estan almacenados los archivos .
 \subsubsection{Validate Corrections} 
 Cumple con el primer item de la sección 3.5.3, donde se especifica la validación de los datos dentro de df\_corrections generado en la función anterior.
 
-Principalmente se eliminan los datos con ID nulo, además de remover aquellos sin distribución de fuerza posterior a la corrección.
+Principalmente se eliminan los datos con ID\_corr nulo, además de remover aquellos sin distribución de fuerza posterior a la corrección.
 
 \subsubsection{Link Dataframes}
 Cumple con el proceso descrito en la sección 3.5.4, en la que se indica como calzar los datos de un dataframe con los datos de dataframe df\_corrections mediante los timestamp de estos datos, comparando estos para luego copiar la ID del dato de la cantidad deseada en un campo designado dentro del dato correspondient en df\_corrections.
@@ -47,9 +47,47 @@ Para esta función, como la construcción de relaciones entre df\_images con df\
 
 Para ejecutar el código desarrollado, se debe entregar la fecha y el número del UT, en ese orden, del registro a analizar. Para el apropiado funcionamiento del algoritmo, el archivo de log debe estar previamente cargado en el sistema local.
 
-Además se desarrolló un sistema de flags opcionales que otorga la posibilidad de habilitar o deshabilitar las funciones descritas en la sección 4.2.1.
+Además se desarrolló un sistema de flags opcionales que otorga la posibilidad de habilitar o deshabilitar las funciones descritas en la sección 4.2.1. Estas se pueden ver en \ref{myverbatim:flags}.
 
-\includegraphics[width=12cm,height=8cm]{figures/flags.png} \\
+\begin{myverbatim}[caption={Flags del codigo},label={myverbatim:flags}]
+usage: poc-final-v2.py [-h] [-t TEMPLATEFILE] 
+[-p] [-o] [-i] [-l] [-c] [-s SAVE] [-r] date ut
+
+positional arguments:
+  date              Date to analyzed
+  ut                Number of the UT telescope to be analyzed
+
+options:
+  -h, --help        show this help message and exit
+  -t TEMPLATEFILE, --templatefile TEMPLATEFILE
+                    Path to the text file where the templates
+                    are stored (if no name is written, 
+                    ./poc_templates.txt
+                    will be set by default)
+  -p, --preprocess  Skips logs pre-processing stage: removal
+                    of log headers and grouping of log 
+                    lines in sections, based on when 
+                    AG GUIDE has stopped activity
+  -o, --obsprocess  Skips observation files processing stage: 
+                    filtering of log lines based on time 
+                    intervals where a valid observation has 
+                    been performed
+  -i, --linkimages  Skips linking of image log data with 
+                    fits files: write of the fits files' 
+                    path respective to each image row 
+                    in the images' dataframe
+  -l, --linkdataframes  Skips linking of correction 
+                        dataframe with related dataframes: 
+                        write of the ids of the force 
+                        distribution and image respective 
+                        to each row in the correction 
+                        dataframe
+  -c, --console     Prints resulting dataframes on console
+  -s SAVE, --save SAVE Stores resulting dataframes in 
+                        csv files
+  -r, --report      Prints a report detailing the processing 
+                    of log lines
+\end{myverbatim}
 
 Existen 2 posibles modos de retorno de los dataframes generados: por consola o por csv. Estos se habilitan con las flags -c y -s, respectivamente.
 
@@ -64,17 +102,17 @@ Para poder analizar el desempeño y resultados del algoritmo, primero se realiza
 La muestra se compone de los siguientes archivos de log:
 
 \begin{itemize}
-    \item L1 : Archivo de log para la observación del UT 1 durante la noche del 4 de Agosto del 2025.
+    \item L1 : Archivo de log para la observación del UT 1 durante la noche del 04/08/2025.
 
-    \item L2 : Archivo de log para la observación del UT 1 durante la noche del 5 de Agosto del 2025.
+    \item L2 : Archivo de log para la observación del UT 1 durante la noche del 05/08/2025.
 
-    \item L3 : Archivo de log para la observación del UT 3 durante la noche del 4 de Agosto del 2025.
+    \item L3 : Archivo de log para la observación del UT 3 durante la noche del 04/08/2025.
 
-    \item L4 : Archivo de log para la observación del UT 3 durante la noche del 5 de Agosto del 2025.
+    \item L4 : Archivo de log para la observación del UT 3 durante la noche del 05/08/2025.
 
-    \item L5 : Archivo de log para la observación del UT 4 durante la noche del 4 de Agosto del 2025.
+    \item L5 : Archivo de log para la observación del UT 4 durante la noche del 04/08/2025.
 
-    \item L6 : Archivo de log para la observación del UT 4 durante la noche del 5 de Agosto del 2025.    
+    \item L6 : Archivo de log para la observación del UT 4 durante la noche del 05/08/2025.    
 \end{itemize}
 
 Una vez realizadas las ejecuciones, se procede a analizar las estadísticas de los resultados, más específicamente el número de instancias de corrección, distribución de fuerzas e imágenes obtenidas, además del tiempo de ejecución.
@@ -91,7 +129,7 @@ Los resultados encontrados de forma manual para cada archivo de log se refleja e
     \caption{\label{table:manual} Cantidades encontradas de forma manual}
     \begin{tabular}{|p{2.8cm}|p{2.8cm}|p{2.8cm}|p{2.8cm}|p{2.8cm}|}
         \hline
-        Log & N° de líneas & N° de correcciones & N° de dist. de fuerza & N° de imágenes \\
+        Log & Líneas & Correcciones & Fuerzas & Imagenes \\
         \hline
         L1 & 427195 & 626 & 586 & 851 \\
         \hline
@@ -114,7 +152,7 @@ Los resultados encontrados de forma manual para cada archivo de log se refleja e
     \caption{\label{table:auto} Cantidades encontradas por el algoritmo}
     \begin{tabular}{|p{2.3cm}|p{2.3cm}|p{2.3cm}|p{2.3cm}|p{2.3cm}|p{2.3cm}|}
         \hline
-        Log & N° de líneas & N° de correcciones & N° de dist. de fuerza & N° de imágenes & Tiempo (en segundos) \\
+        Log & Líneas & Correcciones & Fuerzas & Imagenes & Tiempo (en segundos) \\
         \hline
         L1 & 427195 & 4 & 5 & 11 & 61.92 \\
         \hline
@@ -137,15 +175,11 @@ Primero, se debe mencionar que la extracción manual se realizó mediante un sim
 
 Ejemplos de reglas incumplidas en los logs: se ha visto que en los registros de log, existen varias fotos que se pueden tomar consecutivamente en lapsos de unos pocos segundos; distribuciones de fuerza que no son anticipados ni seguidos directamente por una toma de imágen; entre otros. Estos casos, son detectados por el algoritmo, evitando la extracción de estos datos extra.
 
-El otro motivo de porque la diferencia en el número de cantidades es la filtración por observación: la cantidad de observaciones totales es baja, lo cuál inmediatamente deja fuera a una buena parte de las cantidades presentes en el archivo de log, como se puede ilustrar en la siguiente imágen:
+El otro motivo de porque la diferencia en el número de cantidades es la filtración por observación: la cantidad de observaciones totales es baja, lo cuál inmediatamente deja fuera a una buena parte de las cantidades presentes en el archivo de log.
 
-\includegraphics[width=13.5cm,height=9cm]{figures/log_deletes.png} \\
+Ahora bien, como se menciono en la sección 3.3.2, el filtro de observaciones se realiza con tres parámetros: el margen inferior y el margen superior para cada bloque de tiempo, y el umbral de unión entre bloques de tiempo. Estos tienen sus valores asignados de forma rígida dentro del código. Por ende, la modificación de estos parámetros ampliaría el rango de búsqueda de las cantidades en el archivo de log. Actualmente, se definieron los margenes anterior y posterior como 10 segundos cada uno, y el umbral de unidad de los bloques de observación se encuentra en 30 segundos.
 
-En la imágen anterior, los nombres mostrados equivalen a líneas de imágen, desechadas de la extracción final, debido a no calzar con algún horario de observación.
-
-Ahora bien, como se menciono en la sección 3.3.2, el filtro de observaciones se realiza con tres parámetros, los cuáles son de asignación directa dentro del código. Por ende, la modificación de estos parámetros ampliaría el rango de búsqueda de las cantidades en el archivo de log. Actualmente, se definieron los margenes anterior y posterior como 10 segundos cada uno, y el umbral de unidad de los bloques de observación se encuentra en 30 segundos.
-
-Es posible aumentar estos paramétros, sin embargo tampoco se pueden llegar a extremos muy altos que terminen volviendo obsoleto al proceso de filtro por observación.
+Es posible aumentar estos paramétros, sin embargo tampoco se pueden llegar a extremos muy altos, ya que puede comenzar a presentar ruido por el sobrelape de bloque de tiempo de las observaciones.
 
 \subsection{Resultados para Filtrado de líneas de log}
 
@@ -159,7 +193,7 @@ Los resultados de estas pruebas se exponen en la Tabla \ref{table:etapa1}
     \caption{\label{table:etapa1} Cantidad de líneas de log filtradas}
     \begin{tabular}{|p{3.5cm}|p{3.5cm}|p{3.5cm}|p{3.5cm}|}
         \hline
-        Log & N° de líneas entrada & N° de líneas salida & P. de reducción \\
+        Log & Líneas entrada & Líneas salida & Porcentaje reducción \\
         \hline
         L1 & 427195 & 3829 & 99.10\% \\
         \hline
@@ -176,9 +210,9 @@ Los resultados de estas pruebas se exponen en la Tabla \ref{table:etapa1}
     \end{tabular}
 \end{table}
 
-Se puede notar de inmediato la efectividad de los filtros aplicados en esta etapa: en todos los casos probados se redujo el número de líneas de log en más de un 90\%.
+Se puede notar de inmediato el peso de los filtros en esta etapa: en todos los casos probados se redujo el número de líneas de log en más de un 90\%.
 
-Esta eficiencia trae ventajas y desventajas: por un lado, se asegura que las líneas de log que pasen a la etapa de Extracción de Datos correspondan a observaciones válidas del telescopio; por el otro lado, es posible teorizar que se están desechando líneas de log que puedan poseer información relacionada con la ejecución del sistema de Óptica Activa.
+Esto trae ventajas y desventajas: por un lado, se asegura que las líneas de log que pasen a la etapa de Extracción de Datos correspondan a observaciones válidas del telescopio; por el otro lado, es posible teorizar que se están desechando líneas de log que puedan poseer información relacionada con la ejecución del sistema de Óptica Activa.
 
 \subsection{Resultados para Extracción de los datos}
 
@@ -189,7 +223,7 @@ Se prueban los dos métodos de extracción mencionados en la sección 3.4.2, usa
     \caption{\label{table:etapa2} Tiempos y cantidad de datos para modos de extracción}
     \begin{tabular}{|p{2cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|}
         \hline
-        Log & N° de datos TTP & Tiempo TTP (en segundos) & N° de datos Regex & Tiempo Regex (en segundos) \\
+        Log & Datos TTP & Tiempo TTP (en segundos) & Datos Regex & Tiempo Regex (en segundos) \\
         \hline
         L1 & 64 & 156.56 & 68 & 61.92 \\
         \hline
@@ -206,7 +240,9 @@ Se prueban los dos métodos de extracción mencionados en la sección 3.4.2, usa
     \end{tabular}
 \end{table}
 
-Con esta prueba, se puede notar que ambos métodos de extracción retornan cantidades similares de datos, sin embargo TTP toma una mayor cantidad de tiempo en comparación con Regex. Con esto, se corrobora que el método de extracción con Regex es más apropiado para el algoritmo.
+Con esta prueba, se puede notar que ambos métodos de extracción retornan cantidades similares de datos, sin embargo TTP toma una mayor cantidad de tiempo en comparación con Regex. Más particularmente, se puede notar que para los casos con decenas de datos, el método con TTP tardaba más del doble que el método con Regex, mientras que en los casos con cientos de datos, el método de TTP tarda alrededor de 7 veces más que el método de Regex.
+
+Con esta prueba, se decide escoger el método de extracción con Regex por sobre el método de extracción usando TTP, basándose exclusivamente en la velocidad del método de extracción predilecto.
 
 Una vez determinado el método de extracción, se procede a determinar la cantidad de líneas cuyos datos fueron extraídos sobre la cantidad de líneas que ingresaron a la etapa, similar a la prueba realizada para Filtrado de Líneas de Log. Los resultados se muestran en la Tabla \ref{table:etapa2c2}
 
@@ -218,7 +254,7 @@ Esto se revisa en esta etapa porque, si bien aquí no tiene el fin de filtrar di
     \caption{\label{table:etapa2c2} Cantidad de líneas de log extraídas}
     \begin{tabular}{|p{3.5cm}|p{3.5cm}|p{3.5cm}|p{3.5cm}|}
         \hline
-        Log & N° de líneas entrada & N° de líneas salida & P. de reducción \\
+        Log & Líneas entrada & Líneas salida & Porcentaje reducción \\
         \hline
         L1 & 3829 & 135 & 96.47\% \\
         \hline
@@ -248,7 +284,7 @@ Para ilustrar esta defensa, se analizan los logs de operación del algoritmo, do
     \caption{\label{table:etapa2c3} Perdidas de datos durante extracción}
     \begin{tabular}{|p{3.5cm}|p{3.5cm}|p{3.5cm}|p{3.5cm}|}
         \hline
-        Log & I. de corrección perdidas & Dist. de fuerzas perdidas & Imágenes perdidas \\
+        Log & Corrección perdidas & Fuerzas perdidas & Imágenes perdidas \\
         \hline
         L1 & 2 & 0 & 0 \\
         \hline
@@ -281,7 +317,7 @@ Los resultados de este análisis se presentan en la Tabla \ref{table:etapa3}
     \caption{\label{table:etapa3} Cantidad de datos filtrados}
     \begin{tabular}{|p{3.5cm}|p{3.5cm}|p{3.5cm}|p{3.5cm}|}
         \hline
-        Log & N° de datos entrada & N° de datos salida & P. de reducción \\
+        Log & Datos entrada & Datos salida & Porcentaje reducción \\
         \hline
         L1 & 26 & 20 & 30\% \\
         \hline

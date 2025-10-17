@@ -1,8 +1,6 @@
 \secnumbersection{DEFINICIÓN DEL PROBLEMA}
 
-\subsection{DEFINICIÓN}
-
-En el VLT del Observatorio Paranal, con el fin de implementar sistemas novedoso para la asistencia y mejora de las operaciones de un sistema denominado Óptica Activa, se busca disponer de datasets con información útil sobre el comportamiento de dicho sistema, la cuál se encuentra disponible en los registros de log del mismo.
+En el VLT del Observatorio Paranal, se busca disponer de datasets con información útil sobre el comportamiento del sistema de Óptica Activa, extrayendola de sus registros de log, con el fin de implementar técnicas de soft-computing para la asistencia y mejora de las operaciones del sistema.
 
 Sin embargo, actualmente no existe un procedimiento que permita analizar los registros de log y extraer sets de información precisas de estos, bajo ciertas condiciones especificas, con tal de generar los datasets deseados. 
 
@@ -22,11 +20,11 @@ Para cumplir con estas funciones, el VLT consta principalmente de 4 telescopios 
 
 La forma en la que cada UT capta la luz esta reflejada en el Anexo 1. Primero, la luz es captada por un espejo principal de 8.2 metros de diametro, denominado M1, el cuál gracias a su forma redirige la luz a un espejo de 0.9 metros de diametro, denominado M2. Luego este último vuelve a redirigir la luz a un tercer espejo eliptico, denominado M3, el cuál redirige la luz a uno de cuatro puntos focales. Desde cada punto focal, la luz es procesada por un sensor de frente de onda Shack-Hartmann, y luego estos datos son procesados por un computador central, el cuál interpreta estos datos como imágenes \cite{eso1998vlt}.
 
-Las características físicas del M1 lo vuelven susceptible a sufrir deformaciones por diversos factores, como por ejemplo el efecto de la gravedad cuando se inclina. Estas deformaciones, a su vez, pueden generar aberraciones en las imágenes obtenidas \cite{wilson1987active}.
+Las características físicas del M1 lo vuelven susceptible a sufrir deformaciones por diversos factores, como por ejemplo el efecto de la gravedad cuando se inclina. Estas deformaciones, a su vez, pueden causar aberraciones ópticas en las imágenes obtenidas \cite{wilson1987active}.
 
-Se implementa un sistema con tal de resolver estos problemas, en el que el M1 está posicionado sobre 150 pistones hidráulicos y/o neumáticos, denominado actuador de fuerza. La fuerza que cada actuador ejerce sobre el M1 brinda al mismo de una forma tal que le permite capturar una imágen de alta calidad \cite{eso1998vlt}. 
+Con tal de resolver estos problemas, en los UT se implementa un sistema de soporte bajo el espejo M1, con 150 pistones de funcionamiento hidráulico y neumático que aplican fuerza al espejo, deformandolo \cite{eso1998vlt}. 
 
-Cada imágen tomada por los UTs es analizada por el sensor Shack-Hartmann, calculando una nueva distribución de fuerzas para los actuadores, la cuál luego es aplicada por los mismos en el M1, brindando a este último de una nueva forma que permita tomar una imágen de mejor calidad \cite{eso1998vlt}. 
+Durante las observaciones de los UTs, estos escogen una estrella guía, cuya luz es capturada y analizada por el sensor Shack-Hartmann, calculando con esta las aberraciones ópticas. En base a estos calculos, se determina una nueva distribución de fuerzas para los actuadores, la cuál luego es aplicada por los mismos en el M1, brindando a este último de una nueva forma que permita tomar una imágen de mejor calidad \cite{eso1998vlt}. 
 
 El ciclo anteriormente descrito corresponde al sistema de Óptica Activa, implementada en todos los UTs, el cuál se ejecuta repetidas veces por cada observación hasta lograr una imágen de calida óptima\cite{eso1998vlt}.
 
@@ -38,5 +36,3 @@ Los actores involucrados en el problema corresponden a los elementos participant
 
 EL objetivo detrás de la solución busca desarrollar un procedimiento para extraer los datos no estructurados, transformarlos en datos estructurados, y disponerlos para distintos modelos y sistemas
 que busquen analizar dichos datos con diversos fines, como por ejemplo mantenimiento o técnicas de softcomputing.
-
-Para el caso específico de esta memoría, se considerará un modelo final hipotético que se ingeste con datos relacionados al sistema de Óptica Activa, con fines analíticos.

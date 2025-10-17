@@ -2,13 +2,21 @@
 
 \subsection{Identificación de datos deseados}
 
-Los registros de log proporcionan una gran cantidad de información sobre las operaciones del VLT en una noche. Sin embargo, para efectos prácticos no es necesario ingerir toda esta información; acorde al objetivo general, sol ose buscan datos relevantes para el sistema de Óptica Activa.
+Los registros de log proporcionan una gran cantidad de información sobre las operaciones del VLT en una noche. Sin embargo, para efectos prácticos no es necesario ingerir toda esta información; acorde al objetivo general, solo se buscan datos relevantes para el sistema de Óptica Activa.
 
 Debido a esto, antes del diseño del procedimiento ETL, es necesario hacer un estudio de los registros de log y determinar aquellos que se tengan importancia dentro del contexto de la Óptica Activa.
 
-Cada telescopio durante su operación nocturna, genera un log sobre su comportamiento. De esta información se deben extraer dos caracteristicas centrales: datos sobre la Óptica Activa y datos sobre las cualidades ambientales.
+Cada telescopio durante su operación nocturna, genera un log sobre su comportamiento. De esta información se deben extraer dos caracteristicas centrales: datos sobre la Óptica Activa y datos sobre las características ambientales.
 
 Los datos principales serán aquellos relacionados con el sistema de Óptica Activa: las distribuciones de fuerzas de los 150 actuadores, las imágenes tomadas durante la operación y las instancias de corrección; todas dentro del rango de una observación.
+
+\subsubsection{Instancia de corrección}
+
+Se realizan varias correcciones de las distribuciones de fuerza en un ciclo de Óptica Activa, cada una de las cuáles se realiza en base a una imágen tomada anteriormente.
+
+Si se toma en consideración que estas correcciones van en serie, entonces cada una de estas es precedida por la distribución de fuerza que corrigieron, y seguida por la nueva imágen capturada por el telescopio.
+
+Con esto en consideración, se puede separar la instancia de la corrección de las distribuciones de fuerza, y de esta forma tener un dato con el cuál poder relacionar las imágenes y las distribuciones de fuerza.
 
 \subsubsection{Distribución de fuerzas}
 
@@ -50,15 +58,19 @@ Una vez identificados los datos a extraer desde las líneas de log, se hace nece
 
 Tener esta claridad previo al desarrollo del procedimiento ETL permite tener la claridad de que transformaciones realizar a los datos extraídos.
 
-Para la solución a desarrollar, es plantea la siguiente estructura de almacenamiento de datos:
+Para la solución a desarrollar, es presenta una estructura de almacenamiento de datos en la Imágen \ref{fig:db_general}.
 
-\includegraphics[width=10cm,height=6cm]{figures/db_diagram.png} \\
+\begin{figure}[h]
+\centering
+\includegraphics[width=10cm,height=6cm]{figures/db_diagram.png}
+\caption{\label{fig:db_general} Malla Curricular Ingeniería Civil Informática.} Fuente: Elaboración propia.
+\end{figure}
 
 \subsubsection{Estructura de los datos}
 
 Según lo visto anteriormente, los datos principales consisten en imágenes, distribuciones de fuerzas, etc. asociados a instancias de corrección de la forma del espejo M1. Más específicamente, se tiene que cada instancia de corrección cambia, generalmente, los valores de estos datos. 
 
-Se puede considerar entonces agrupar los datos principales según la instancia de corrección asociada. Por lo señalado anteriormente, cada instancia de corrección tendría asociado un set de datos previos a la corrección y otro set de datos similar luego de la misma. Entonces, cada corrección correspondería a una tabla con ambos sets de datos como atributos de la misma.
+Se puede considerar entonces agrupar los datos deseados según la instancia de corrección asociada. Por lo señalado anteriormente, cada instancia de corrección tendría asociado un set de datos previos a la corrección y otro set de datos similar luego de la misma. Entonces, cada corrección correspondería a una tabla con ambos sets de datos como atributos de la misma.
 
 Esto puede llevar a un problema, ya que en el escenario de dos correcciones consecutivas, el set de datos post-corrección de la primera instancia y el set de datos pre-corrección de la segunda instancia serían los mismos, por lo que estos datos aparecen repetidos en ambas tablas.
 
@@ -68,19 +80,27 @@ Siguiendo con el caso anterior, se tendrían dos tablas para las correcciones m�
 
 Finalmente, considerando que el set de datos se compone de datos de naturaleza variada (rutas a imágenes, valores numéricos de fuerzas, etc), se decide agrupar los datos en tablas propias según su naturaleza.
 
-Recapitulando, con respecto a los datos asociados a correcciones, se opta almacenar los datos en un modelo de tablas relacionales, compuesta de una tabla central dedicada a las instancias de corrección y varias tablas para los datos correspondientes al antes y después de una corrección.
+Recapitulando, con respecto a los datos asociados a correcciones, se opta almacenar los datos en un modelo de tablas relacionales, compuesta de una tabla central dedicada a las instancias de corrección y varias tablas para los datos correspondientes al antes y después de una corrección. Esta se puede apreciar en la Imágen \ref{fig:db_corr}.
 
-\includegraphics[width=9cm,height=6cm]{figures/db_diagram_corr.png} \\
+\begin{figure}[h]
+\centering
+\includegraphics[width=10cm,height=6cm]{figures/db_diagram_corr.png}
+\caption{\label{fig:db_corr} Malla Curricular Ingeniería Civil Informática.} Fuente: Elaboración propia.
+\end{figure}
 
-Con respecto a los datos adicionales, debido a que estos no cambian con las correcciones, se decide almacenar estos en una tabla propia, conteniendo los atributos clave y sin necesidad de relaciones con otras tablas.
+Con respecto a los datos adicionales, debido a que estos no cambian con las correcciones, se decide almacenar estos en una tabla propia, conteniendo los atributos clave y sin necesidad de relaciones con otras tablas, como se muestran en la Imágen \ref{fig:db_add_data}.
 
-\includegraphics[width=3cm,height=2cm]{figures/db_diagram_add_data.png} \\
+\begin{figure}[h]
+\centering
+\includegraphics[width=3cm,height=2cm]{figures/db_diagram_add_data.png}
+\caption{\label{fig:db_add_data} Malla Curricular Ingeniería Civil Informática.} Fuente: Elaboración propia.
+\end{figure}
 
 \subsubsection{Formato de almacenamiento}
 
 Después de diseñar la estructura de los datos, se hace necesario saber qué tecnologías usar para llevarla a cabo.
 
-Los modelos dejan ver que una base de datos SQL sería la mejor opción. Si bien esta puede permanecer como una opción para futuros usos de los datos extraídos, esta opción no sería óptima para el objetivo de esta memoria, debido a que el procedimiento ETL a desarrollar se acoplara a nivel de código con otros modelos de computación y/o análisis, por lo que subir los datos a un servidor SQL para luego bajarlos en el mismo sistema es redundante e innecesario.
+El modelo relacional de la imágen X entrega la impresión que una base de datos SQL sería la mejor opción. Si bien esta puede permanecer como una opción para futuros usos de los datos extraídos, esta opción no sería óptima para el objetivo de esta memoria, debido a que el procedimiento ETL a desarrollar se acoplara a nivel de código con otros modelos de computación y/o análisis, por lo que subir los datos a un servidor SQL para luego bajarlos en el mismo sistema es redundante e innecesario.
 
 Por ende, y considerando el lenguaje de programación usado (Python 3.10.8), la mejor opción es la librería Pandas, más específicamente la estructura Dataframe, la cuál a nivel técnico es homóloga a una tabla SQL dentro de un ambiente Python.
 
@@ -90,7 +110,7 @@ El proceso de la solución puede ser revisado en el Anexo 3. Igualmente, el mism
 
 \begin{enumerate}
     \item Filtrado de líneas de logs:
-    En esta etapa, a los registros de log de una noche de operación se les remueven elementos repetidos dentro de las líneas, para luego filtrarlos según las observaciones tomadas durante la noche.
+    En esta etapa, a los registros de log de una noche de operación se les remueven elementos repetidos dentro de las líneas, para luego rescatar las líneas que se encuentren dentro de los periodos de observación ocurridos durante la noche.
 
     \item Extracción de datos:
     En esta etapa, se extrae la información deseada a las líneas de los registros de log, usando una plantilla de lineas prefabricada, que especifica la ubicación de los datos a extraer dentro de las lineas a leer.
@@ -98,8 +118,6 @@ El proceso de la solución puede ser revisado en el Anexo 3. Igualmente, el mism
     \item Guardado de datos:
     En esta etapa, se construyen datasets dedicados para uno de los datos a extraer (según discutido en la sección 3.1)  y se ingestan con la información previamente extraída. Luego de esto, se valida que la información ingestada sea consistente y se construyen las relaciones correspondientes entre los datasets.
 \end{enumerate}
-
-Se desarrollará el código de la solución con Python 3.10.8. y se alojará al mismo en un repositorio público en Github \footnote{link al repo github}.
 
 Los siguientes capítulos se encargan de describir a mayor detalle las etapas del proceso.
 
@@ -113,7 +131,7 @@ Por ende, es prudente procesar los registros de log de forma previa, aplicando t
 
 Tras revisar los registros de log, como el ejemplo presente en el Anexo 2, se puede notar que existe un patrón recurrente en todas las líneas.
 
-Estos tokens iniciales aportan información que es redundante dentro de la misma línea y, a su vez, que es estática, ya que la misma no cambia entre las distintas líneas. De este modo, se puede concluir que dicha información no es necesaria para el objetivo de esta memoria.
+Estos tokens iniciales, como se menciono en la sección 2.4, aportan información que es redundante dentro de la misma línea y, a su vez, que es estática, ya que la misma no cambia entre las distintas líneas. De este modo, se puede concluir que dicha información no es necesaria para el objetivo de esta memoria.
 
 Por lo mismo, con tal de facilitar la extracción de datos, se procede a eliminar estos tokens estáticos.
 
@@ -131,9 +149,13 @@ Los registros de log no muestran de qué tipo es cada observación, por ende es 
     
     Como se mencionó en la sección 2.7, la ESO posee una página donde se puede acceder de forma libre a información sobre las observaciones realizadas por el VLT. Dentro de esta información, se puede extraer las observaciones realizadas, la hora en que se realizaron y el tipo de observación, entre otros atributos.
     
-    Para obtener el documento de observación necesario para el procedimiento ETL, se deben añadir los siguientes campos:
-    
-    \includegraphics[width=13.5cm,height=9cm]{figures/eso_raw.png} \\
+    Para obtener el documento de observación necesario para el procedimiento ETL, se deben añadir los campos mostrados en la Imágen \ref{fig:eso_raw}
+
+    \begin{figure}[h]
+    \centering
+    \includegraphics[width=13.5cm,height=9cm]{figures/eso_raw.png}
+    \caption{\label{fig:eso_raw} Malla Curricular Ingeniería Civil Informática.} Fuente: Elaboración propia.
+    \end{figure}
     
     Estos campos permiten obtener todas las observaciones cientificas y de adquisición de todos los instrumentos en una noche determinada.
     
@@ -143,11 +165,13 @@ Los registros de log no muestran de qué tipo es cada observación, por ende es 
 
     Una vez cargado el documento, se procede a usar el mismo para delimitar los horarios de inicio y término de cada periodo de observación valido, para luego usar estos límites en el filtrado de las observaciones obtenidas desde el registro de logs.
 
-    Inicialmente, se pueden crear estos "bloques de tiempo" usando la hora de inicio de cada observación junto con el tiempo de exposición de la misma. Es importante que, al momento de crear estos bloques, se mantenga la distinción de bajo que instrumento se genera la observación en cuestión.
+    Inicialmente, se pueden crear estos 'bloques de tiempo' usando la hora de inicio de cada observación junto con el tiempo de exposición de la misma. Es importante que, al momento de crear estos bloques, se mantenga la distinción de bajo que instrumento se produce la observación en cuestión.
 
     Luego de este paso, es natural intuir que algunos de estos bloques para un mismo instrumento se puedan sobrelapar, lo cuál provocaría que se duplicaran algunas líneas de log tras filtrar. Por ende, tras crear los bloques de tiempo, se debe cerciorar que aquellos bloques que se sobrelapen en horario para un mismo instrumento sean unidos.
 
-    Sumado a esto, se conoce que los telescopios estarán en funcionamiento por ciertos intervalos de tiempo previo y posterior a una observación \cite{eso1998vlt}. Debido a estos se considera añadir tres margenes paramétricos de tiempo:
+    Sumado a esto, se conoce que los telescopios estarán en funcionamiento por ciertos intervalos de tiempo previo y posterior a una observación \cite{eso1998vlt}. Por último, se realiza la suposición que entre el fin de un bloque de tiempo y el comienzo del siguiente, la operación del telescopio continua por un lapso de tiempo.
+    
+    Debido al párrafo anterior, se considera añadir tres margenes paramétricos de tiempo:
 
     \begin{itemize}
         \item Margen inferior: Cantidad de segundos previo a un bloque de tiempo.
@@ -172,21 +196,19 @@ Los registros de log no muestran de qué tipo es cada observación, por ende es 
 
 \subsection{Extracción de datos}
 
-Para extraer los datos, el método tradicional usa plantillas de líneas de log. El objetivo es extraer los datos deseados de las líneas de texto, y disponerlos en los formatos adecuados.
+El método tradicional para extraer datos de líneas de log es usar plantillas en las mismas. El objetivo es extraer los datos deseados de las líneas de texto, y disponerlos en los formatos adecuados.
 
 Debido a la proliferación y estandarización de este método, se procederá a usar el mismo para las líneas previamente procesadas.
 
 \subsubsection{Plantillas de lineas}
 
-Las plantillas corresponden a una secuencia de carácteres que especifican los valores deseados dentro de una línea de texto.
-
-Estas pueden ser creadas manualmente o generadas automáticamente. Debido a que se conoce la cantidad específica de datos requeridos, se prefiere no complejizar el procedimiento con un sistema de creación de plantillas automático, y en cambio crear las plantillas manualmente.
+Las plantillas corresponden a una secuencia de carácteres que marcan la posición de los valores deseados dentro de una línea de texto. Debido a que se conoce la cantidad específica de datos requeridos, se decide crear las plantillas manualmente.
 
 Estas plantillas se disponen finalmente al procedimiento ELT, el cuál extraerá los datos de las líneas de log con las plantillas de forma automática.
 
 El formato final de las plantillas varía según el método de extracción de datos usado, por lo que se muestran imágenes de las mismas en las subsecciones correspondientes.
 
-Sin embargo, según el análisis realizado en la sección 3.1, se puede estimar que se necesitan unas 16 plantillas para obtener los datos deseados; una plantilla para cada línea a analizar.
+Sin embargo, según el análisis realizado en la sección 3.1, se ha determinado usar 16 plantillas para obtener los datos deseados; una plantilla para cada línea a analizar.
 
 \subsubsection{Extracción de información de las lineas de log}
 
@@ -217,9 +239,72 @@ Para aplicar la extracción de datos en las líneas de texto, existen varios mé
 
     Luego de detectar las líneas, se aplican a estas todas las plantillas hasta que se pueda extraer correctamente con una.
 
-    Para este método de extracción, las plantillas tienen el siguiente formato:
+    Para este método de extracción, las plantillas tienen el formato presentado en el Listing \ref{myverbatim:regex}:
 
-    \includegraphics[width=13cm,height=3cm]{figures/plantillas_regex.png} \\
+    \begin{myverbatim}[caption={Plantillas Regex},label={myverbatim:regex}]
+
+(([0-2][0-9]{3}-[0-1][0-9]-[0-3][0-9]) ([0-2][0-9]:
+[0-5][0-9]:[0-5][0-9](.[0-9]+)*) lt[1-4]m1m3 m1as 
+m1asSetGlb[Abs|Rel]+ [0-9.-]+ [0-9.-]+ AS Forces 
+#([0-9.-]+) \(abs\): ([0-9.\-\s]+))
+
+(([0-2][0-9]{3}-[0-1][0-9]-[0-3][0-9]) ([0-2][0-9]:
+[0-5][0-9]:[0-5][0-9](.[0-9]+)*) lt[1-4]m1m3 m1as 
+m1asSetGlb[Abs|Rel]+ [0-9.-]+ [0-9.-]+ AS Executed 
+cmd #([0-9.-]+): SUCCESS)
+
+(([0-2][0-9]{3}-[0-1][0-9]-[0-3][0-9]) ([0-2][0-9]:
+[0-5][0-9]:[0-5][0-9](.[0-9]+)*) lt[1-4]m1m3 m1as 
+m1asSetGlb[Abs|Rel]+ [0-9.-]+ [0-9.-]+ AS Received 
+cmd #([0-9.-]+): [A-Z]+)
+
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9]
+(.[0-9]+)*)> DET EXP NO = ([0-9]+) \/ Unique exposure 
+ID number \[(lt[1-4][a-z]{2}[a-c])\])
+
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9]
+(.[0-9]+)*)> TEL ACTO (INTTIME) = ([0-9]+))
+
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9]
+(.[0-9]+)*)> TEL (ALT) (TORQUE) = ([0-9.-]+))
+
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9]
+(.[0-9]+)*)> TEL (AZ) (TORQUE) = ([0-9.-]+))
+
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9]
+(.[0-9]+)*)> TEL (ALT)( )= ([0-9.-]+))
+
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9]
+(.[0-9]+)*)> TEL (AZ)( )= ([0-9.-]+))
+
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9]
+(.[0-9]+)*)> TEL (IA) (ABER)([0-9.-]+) = ([0-9.-]+))
+
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9]
+(.[0-9]+)*)> TEL (IA) (ABERANG)([0-9.-]+) = ([0-9.-]+))
+
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9]
+(.[0-9]+)*)> TEL (ACTO) (ALTPOS) = ([0-9.-]+))
+
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9]
+(.[0-9]+)*)> TEL (ACTO) (AZPOS) = ([0-9.-]+))
+
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9]
+(.[0-9]+)*)> TEL (IA) (ABERAVE)([0-9.-]+) = ([0-9.-]+))
+
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9]
+(.[0-9]+)*)> TEL (IA) (ABERAVEANG)([0-9.-]+) = 
+([0-9.-]+))
+
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9]
+(.[0-9]+)*)> TEL (IA) (ABERFILMOD)([0-9.-]+) = 
+([0-9.-]+))
+
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9]
+(.[0-9]+)*)> TEL (IA) (ABERFILANG)([0-9.-]+) = 
+([0-9.-]+))
+    
+    \end{myverbatim}
 
     \item{Extracción de datos con Template Text Parser}
 
@@ -227,15 +312,47 @@ Para aplicar la extracción de datos en las líneas de texto, existen varios mé
 
     Como es una librería diseñada para estos fines exclusivos, se procede solo a ejecutar un método de la misma para extraer datos.
 
-    Para este método de extracción, las plantillas tienen el siguiente formato:
+    Para este método de extracción, las plantillas tienen el formato presentadas en el Listing \ref{myverbatim:ttp}:
 
-    \includegraphics[width=13cm,height=5cm]{figures/plantillas_ttp.png} \\
+    \begin{myverbatim}[caption={Plantillas TTP},label={myverbatim:ttp}]
+
+{{ date }} {{ hour }} lt[1-4]m1m3 m1as m1asSetGlbAbs 
+[0-9.-]+ [0-9.-]+ AS Forces #([0-9.-]+) \(abs\): 
+{{ data }}
+
+{{ date }} {{ hour }} lt[1-4]m1m3 m1as m1asSetGlbAbs 
+[0-9.-]+ [0-9.-]+ AS Executed cmd #([0-9.-]+): SUCCESS
+
+{{ date }} {{ hour }} lt[1-4]m1m3 m1as m1asSetGlbAbs 
+[0-9.-]+ [0-9.-]+ AS Received cmd #([0-9.-]+): [A-Z]+
+
+wt[1-4]tcs {{ hour }}> DET EXP NO = ([0-9]+) \/ Unique 
+exposure ID number \[(lt[1-4][a-z]{2}[a-c])\]
+
+wt[1-4]tcs {{ hour }}> TEL ACTO (INTTIME) = ([0-9]+)
+
+wt[1-4]tcs {{ hour }}> TEL {{ group }} >{{ label }} = 
+{{ data }}
+
+wt[1-4]tcs {{ hour }}> TEL {{ group }} {{ label }} = 
+{{ data }}
+
+wt[1-4]tcs {{ hour }}> TEL {{ group }}{{ label }}= 
+{{ data }}
+
+wt[1-4]tcs {{ hour }}> TEL {{ group }}{{ label }}= 
+{{ data }}
+
+wt[1-4]tcs {{ hour }}> TEL {{ group }} {{ label }} = 
+{{ data }}
+    
+    \end{myverbatim}
 
 \end{enumerate}
 
 Para ambos casos, los datos extraídos quedan en formato json, donde la llave corresponde al nombre de la caracteristica (definida desde la plantilla con TTP y definida desde el codigo con Regex) y el valor corresponde al dato extraído.
 
-Independiente del origen del dato, todos poseen campos de nombre \"group\" y la mayoría posee también un campo "label". Se usará el campo \"group\" para definir el tipo del dato (distribución de fuerza, imágen, etc.) y el campo "label" para identificar subdivisiones dentro de cada tipo de dato cuando sea conveniente.
+Independiente del origen del dato, todos poseen campos de nombre 'group' y la mayoría posee también un campo 'label'. Se usará el campo 'group' para definir el tipo del dato (distribución de fuerza, imágen, etc.) y el campo 'label' para identificar subdivisiones dentro de cada tipo de dato cuando sea conveniente.
 
 Estos campos se tornan particularmente útiles, cuando se considera que la información para un dato puede estar repartida en varias líneas, como es por ejemplo el caso de las distribuciones de fuerza, donde las fuerzas de los 150 actuadores están siempre repartidos en 6 líneas de 25 actuadores, y que a su vez todas esas líneas están separadas de la ID de la distribucón, que se encuentra en su línea propia. Este formato se puede revisar en el ejemplo disponible en el Anexo 4.
 
@@ -245,7 +362,7 @@ De esta forma, mediante el uso de estos campos, se puede dejar registro de la in
 
 Una vez extraídos los datos, se deben crear y validar los dataframes donde se almacenaran estos mismos, siguiendo la filosofía descrita en la sección 3.2.
 
-Es necesario, como se mencionó, no solo crear los dataframes de forma coherente, sino que también validar que los datos ingresados sean correctos ya sea en formato, en contexto, etc.
+Es necesario no solo crear los dataframes de forma coherente, sino que también validar que los datos ingresados sean correctos ya sea en formato, en contexto, etc.
 
 \subsubsection{Construcción de los dataframes}
 
@@ -271,11 +388,11 @@ De esta forma, los dataframes finales poseen los mismos esquemas que los present
 
 Debido a que los datos extraídos se encuentran en formato json, corresponde iterar por todos los datos, y migrar los datos desde el formato json a dataframe.
 
-En la sección 3.4.2. se mencionaron las llaves \"group\" y \"label\" para diferenciar los tipos de datos. Estas llaves se usan en este proceso, con tal de poder identificar el tipo de dato, y según aquello, migrar los datos de forma acorde.
+En la sección 3.4.2. se mencionaron las llaves 'group' y 'label' para diferenciar los tipos de datos. Estas llaves se usan en este proceso, con tal de poder identificar el tipo de dato, y según aquello, migrar los datos de forma acorde.
 
-Como ejemplo, se conoce que los datos de distribución de fuerzas posee un campo con las fuerzas de los actuadores, y que ningún otro tipo de dato posee tal campo. Entonces, al tener registro del tipo de dato en la llave \"group\", se puede validar que datos poseen ese campo y extraerlos sin temor a falla.
+Como ejemplo, se conoce que los datos de distribución de fuerzas posee un campo con las fuerzas de los actuadores, y que ningún otro tipo de dato posee tal campo. Entonces, al tener registro del tipo de dato en la llave 'group', se puede validar que datos poseen ese campo y extraerlos sin temor a falla.
 
-Asi mismo, se puede concatenar la información de ciertos datos que se encontraban en múltiples líneas. Tras revisar el campo \"group\", se revisa que no existan datos en el dataframe con información faltante, y se revisa el campo "label" para verificar que tipo de información específica es la que falta.
+Asi mismo, se puede concatenar la información de ciertos datos que se encontraban en múltiples líneas. Tras revisar el campo 'group', se revisa que no existan datos en el dataframe con información faltante, y se revisa el campo 'label' para verificar que tipo de información específica es la que falta.
 
 \subsubsection{Validación de los dataframes}
 

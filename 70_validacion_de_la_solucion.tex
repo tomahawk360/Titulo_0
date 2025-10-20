@@ -2,44 +2,44 @@
 
 \subsection{Algoritmo}
 
-El algorimo final sigue el flujo detallado en el Anexo 3, el cuál fue detallado en el Capítulo 3. El mismo se divide en los siguientes pasos:
+El algorimo final sigue el flujo detallado en el Anexo 2, el cuál fue detallado en el Capítulo 3. El mismo se divide en los siguientes pasos:
 
 \subsubsection{Log Formatting}
-Cumple con el proceso planteado en la sección 3.3.1, donde se remueven los tokens de fecha y hora iniciales, debido a su redundancia a nivel de línea, además de corregir otros detalles de formato con tal de facilitar el posterior análisis.
+Cumple con el proceso planteado en la sección 3.2.1, donde se remueven los tokens de fecha y hora iniciales, debido a su redundancia a nivel de línea, además de corregir otros detalles de formato con tal de facilitar el posterior análisis.
 
 \subsubsection{Obs Filtering} 
-Cumple con el proceso descrito en la sección 3.3.2, donde se obtiene un archivo csv con las observaciones de la noche seleccionada, para luego formar bloques de tiempo basados en los tiempos que tarda cada observaciones, más el efecto de parámetros de margen y unión, donde finalmente se filtran las líneas de log con tal de quedar solo con aquellas cuya fecha se encuentre dentro de alguno de esos bloques de tiempo.
+Cumple con el proceso descrito en la sección 3.2.2, donde se obtiene un archivo csv con las observaciones de la noche seleccionada, para luego formar bloques de tiempo basados en los tiempos que tarda cada observaciones, más el efecto de parámetros de margen y unión, donde finalmente se filtran las líneas de log con tal de quedar solo con aquellas cuya fecha se encuentre dentro de alguno de esos bloques de tiempo.
 
 \subsubsection{Log Parsing}
-Cumple con el proceso descrito en la sección 3.4, donde a base de una archivo plano de plantillas, se itera sobre las líneas de log, aplicando cada plantilla por línea hasta encontrar alguna que calze y guardar la data extraída en un json final.
+Cumple con el proceso descrito en la sección 3.3, donde a base de una archivo plano de plantillas, se itera sobre las líneas de log, aplicando cada plantilla por línea hasta encontrar alguna que calze y guardar la data extraída en un json final.
 
-Como se mencionó en la sección 3.4.2, el método para realizar la extracción es mediante Expresiones Regulares, lo cuál se manifiesta tanto en el archivo de plantillas que se ingresa a la función, junto con las líneas a extraer, como en el método de extracción que se aplica a línea de log.
+Como se discute en la sección 2.8.4, hay dos métodos posible para realizar la extracción: mediante Expresiones Regulares y mediante la librería TTP. Escoger uno de los dos métodos cambia tanto en el archivo de plantillas que se ingresa a la función, como en las funciones de extracción que se aplican a las líneas de log.
 
 \subsubsection{Generate Dataframes} 
-Cumple con el proceso de la sección 3.5.2, donde se menciona el traslado de los datos del json generado en la función anterior a un conjunto de dataframes, usando los campos 'group' y 'label' como etiquetas para reconocer a qué dataframe destinar los datos.
+Cumple con el proceso de la sección 3.3.3, donde se menciona el traslado de los datos de los diccionarios generados en la función anterior a un conjunto de dataframes, usando los campos 'group' y 'label' como etiquetas para reconocer a qué dataframe destinar los datos.
 
 De esta función se generan 4 dataframes, como se señalo en la sección 3.5.1: df\_corrections, para las instancias de corrección; df\_images, para las imágenes capturadas; df\_f\_dist, para las distribuciones de fuerza de los actuadores; y df\_additional\_data, para los datos adicionales relacionados con la Óptica Activa.
 
 \subsubsection{Validate Forces} 
-Cumple con el segundo item de la sección 3.5.3, donde se especifica la validación de los datos dentro de df\_f\_dist generado en la función anterior. 
+Cumple con el segundo item de la sección 3.3.4, donde se especifica la validación de los datos dentro de df\_f\_dist generado en la función anterior. 
 
 Principalmente, se eliminan los datos con ID\_f\_dist nulo, además de remover aquellos que no sean antecedidas y/o seguidas por imágenes únicas.
 
 \subsubsection{Validate Images} 
-Cumple con el tercer item de la sección 3.5.3, donde se especifica la validación de los datos dentro de df\_images generados en la función anterior. Solamente se eliminan aquellos datos con ID\_image nulo.
+Cumple con el tercer item de la sección 3.3.4, donde se especifica la validación de los datos dentro de df\_images generados en la función anterior. Solamente se eliminan aquellos datos con ID\_image nulo.
 
 \subsubsection{Link Images} 
-Cumple con el requisito de la sección 3.5.1, sobre df\_images manteniendo la dirección local del archivo .fits correspondiente como un atributo de los datos del dataframe.
+Cumple con el requisito de la sección 3.3.5, sobre df\_images manteniendo la dirección local del archivo .fits correspondiente como un atributo de los datos del dataframe.
 
 En esta función, se ingresa a la carpeta donde estan almacenados los archivos .fits, se extrae el número de ID y el tiempo de exposición del header de cada .fits y se usan estos para buscar el dato de df\_images que le sea correspondiente. En caso de encontrarlo, se guarda su dirección local en el atributo correspondiente del dato.
 
 \subsubsection{Validate Corrections} 
-Cumple con el primer item de la sección 3.5.3, donde se especifica la validación de los datos dentro de df\_corrections generado en la función anterior.
+Cumple con el primer item de la sección 3.3.4, donde se especifica la validación de los datos dentro de df\_corrections generado en la función anterior.
 
 Principalmente se eliminan los datos con ID\_corr nulo, además de remover aquellos sin distribución de fuerza posterior a la corrección.
 
 \subsubsection{Link Dataframes}
-Cumple con el proceso descrito en la sección 3.5.4, en la que se indica como calzar los datos de un dataframe con los datos de dataframe df\_corrections mediante los timestamp de estos datos, comparando estos para luego copiar la ID del dato de la cantidad deseada en un campo designado dentro del dato correspondient en df\_corrections.
+Cumple con el proceso descrito en la sección 3.3.5, en la que se indica como calzar los datos de un dataframe con los datos de dataframe df\_corrections mediante los timestamp de estos datos, comparando estos para luego copiar la ID del dato de la cantidad deseada en un campo designado dentro del dato correspondient en df\_corrections.
 
 Para esta función, como la construcción de relaciones entre df\_images con df\_corrections y entre df\_f\_dist con df\_corrections es identico, por lo que se pudo generalizar y paramétrizar esta construcción en una misma función, que varía con el dataframe de la cualidad deseada, el nombre de la cualidad deseada y el campo de tiempo dentro del dataframe, como parámetros de entrada.
 
@@ -49,7 +49,10 @@ Para ejecutar el código desarrollado, se debe entregar la fecha y el número de
 
 Además se desarrolló un sistema de flags opcionales que otorga la posibilidad de habilitar o deshabilitar las funciones descritas en la sección 4.2.1. Estas se pueden ver en \ref{myverbatim:flags}.
 
-\begin{myverbatim}[caption={Flags del codigo},label={myverbatim:flags}]
+  \begin{listing}[!ht]
+    \caption{\label{myverbatim:flags} Ejemplos de fuerzas aplicadas}
+    \begin{minted}[linenos, breaklines]{text}
+    
 usage: poc-final-v2.py [-h] [-t TEMPLATEFILE] 
 [-p] [-o] [-i] [-l] [-c] [-s SAVE] [-r] date ut
 
@@ -90,7 +93,8 @@ options:
                     csv files
   -r, --report      Prints a report detailing the processing 
                     of log lines
-\end{myverbatim}
+        \end{minted}
+    \end{listing}
 
 Existen 2 posibles modos de retorno de los dataframes generados: por consola o por csv. Estos se habilitan con las flags -c y -s, respectivamente.
 

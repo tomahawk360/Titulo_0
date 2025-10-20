@@ -59,17 +59,29 @@ Corresponde a la traducción al idioma inglés de Palabras Clave anteriores.
 \usepackage{cite}
 
 % Para las etiquetas
-\usepackage{listings,lipsum}
+\usepackage{lipsum}
 \usepackage{courier}
 
-\lstnewenvironment{myverbatim}[1][]{%
-  \lstset{
-    basicstyle=\scriptsize\ttfamily,
-    breaklines=true,
-    frame=tb,
-    #1
-  }%
-}{}
+% Para el codigo
+\usepackage{listings}
+\usepackage{caption}
+
+\usepackage{xcolor} 
+\definecolor{ptred}{HTML}{D60019} 
+\definecolor{ptdarkred}{HTML}{68000C} 
+\definecolor{ptlightblue}{HTML}{499BDA} 
+\definecolor{ptblue}{HTML}{004B85} 
+\definecolor{ptdarkblue}{HTML}{002038} 
+\definecolor{ptgreen}{HTML}{008452} 
+\definecolor{ptdarkgreen}{HTML}{003823} 
+\definecolor{ptyellow}{HTML}{F7AE00} 
+\definecolor{ptdarkyellow}{HTML}{896000}
+\definecolor{ptgray}{HTML}{E0E0E0} 
+\definecolor{ptdarkgray}{HTML}{949494}
+
+\usepackage{minted} \setminted{bgcolor=ptgray!42,fontfamily=tt, fontsize=\small,autogobble=true,linenos=true,tabsize=4,numbersep=5pt,baselinestretch=0.75,showspaces=false,vspace=0.25cm }
+
+
 
 % Settear font
 \setmainfont{Carlito}

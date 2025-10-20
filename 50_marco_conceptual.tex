@@ -15,7 +15,7 @@ Los fines bajo los cuáles se construyó el VLT corresponden a los siguientes \c
 
 El VLT se compone de una red de 4 telescopios principales idénticos, denominados como “Unitary Telescopes” (o por sus siglas UT), 4 telescopios auxiliares, denominados como “Auxiliary Telescopes” (o por sus siglas AT), Interferómetro (por sus siglas en inglés VLTI) y dos telescopios de survey (por sus siglas en inglés VISTA y VST).
 
-Cada UT posee un espejo principal (denominado M1) de forma cóncava con 8,2 metros de diámetro, instalado en un montura de 22 metros de largo, 10 metros de ancho y 20 metros de alto, como se aprecia en la Imágen \ref{fig:real_mount}. Dicha montura permite al espejo moverse según azimut (eje horizontal) y altitud (eje vertical) \cite{eso1998vlt}, como se muestra en la Imagen \ref{fig:front_ut}, con el azimut como líneas celestes en vertical y la altitud como líneas celestes en horizontal.
+Cada UT posee un espejo principal (denominado M1) de forma cóncava con 8,2 metros de diámetro, instalado en un montura de 22 metros de largo, 10 metros de ancho y 20 metros de alto, como se aprecia en la Figura \ref{fig:real_mount}. Dicha montura permite al espejo ajustar hacia donde apunta el UT, rotando horizontal y verticalmente \cite{eso1998vlt}, como se muestra en la Figura \ref{fig:front_ut}.
 
 \begin{figure}[h]
 \centering
@@ -31,115 +31,429 @@ Cada UT posee un espejo principal (denominado M1) de forma cóncava con 8,2 metr
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=8cm]{figures/real_ut.jpg}
+\includegraphics[width=6cm]{figures/real_ut.jpg}
 \caption{\label{fig:real_ut} UT 2 visto desde el exterior} Fuente: Elaboración propia
 \end{figure}
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=8cm]{figures/real_mount.jpg}
+\includegraphics[width=8cm, height=4.5cm]{figures/real_mount.jpg}
 \caption{\label{fig:real_mount} Montura del M1} Fuente: Elaboración propia
 \end{figure}
 
-El M1 está compuesto de espejos más pequeñas, distribuidas en forma de dona. Bajo M1, repartidos en 6 anillos concéntricos, se encuentran 150 actuadores de fuerza axiales; estos son, pistones hidráulicos y neumáticos, donde cada actuador se encuentra debajo de una espejo pequeña respectiva. Estos actuadores dan a M1 una determinada forma óptica, determinada por el patrón de fuerza presentado por los actuadores \cite{eso1998vlt}. El M1 es visible en la Imágen \ref{fig:real_m1}.
+Bajo M1, se encuentran 150 actuadores de fuerza axiales; estos son, pistones hidráulicos y neumáticos, donde cada actuador se encuentra debajo de una espejo pequeña respectiva. Estos actuadores están repartidos en 6 anillos concéntricos, distribuidas en forma de dona, desde donde dan a M1 una determinada forma óptica, establecida por el patrón de fuerza presentado por los actuadores \cite{eso1998vlt}. El M1 es visible en la Figura \ref{fig:real_m1}.
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=8cm]{figures/real_m1.jpg}
-\caption{\label{fig:real_m1} Espejo M1, con M2 reflejado y M3 en el centro} Fuente: Elaboración propia
+\includegraphics[width=8cm]{figures/actuators-dist.jpg}
+\caption{\label{fig:actuators_dist} Diagrama de la distribución de los actuadores de fuerza a lo largo de la base del espejo M1} Fuente: The VLT primary mirrors: mirror production and measured performance \cite{eso2011pm}
 \end{figure}
 
-El M2 consiste de una espejo de 0.9 metros de diámetro, montada a una distancia de aproximadamente 12.3 metros de M1 a lo largo del eje azimutal, con la espejo de M2 apuntando hacia M1. El M2 además está montado sobre un mecanismo electromecánico que sujeta y controla su inclinación \cite{eso2011m2}. El M2 es visible en la Imágen \ref{fig:real_m2}.
-
 \begin{figure}[h]
 \centering
-\includegraphics[width=8cm]{figures/real_m2.jpg}
-\caption{\label{fig:real_m2} Espejo M2} Fuente: Elaboración propia
+\includegraphics[width=8cm, height=4.5cm]{figures/real_m1.jpg}
+\caption{\label{fig:real_m1} Espejo M1, con M2 siendo reflejado y M3 en el centro, en el telescopio UT 2} Fuente: Elaboración propia, tomada el 28/08/2025
 \end{figure}
 
-El M3 consiste de una espejo elíptica de 1.24 metros de diámetro mayor con 0.86 metros de diámetro menor. Este se ubica dentro de una torre, posicionada en el orificio central del M1. Este puede rotar alrededor de su eje azimutal \cite{eso2011m1}. El M3 es visible en la Imágen \ref{fig:real_m3}.
+El M2 consiste de una espejo de 0.9 metros de diámetro, montado a una distancia de aproximadamente 12.3 metros de M1 en paralelo y centrado a M1, con el espejo de M2 apuntando a M3 \cite{eso2011m2}. El M2 es visible en la Figura \ref{fig:real_m2}.
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=8cm]{figures/real_m3.jpg}
-\caption{\label{fig:real_m3} Espejo M3} Fuente: Elaboración propia
+\includegraphics[width=8cm, height=4.5cm]{figures/real_m2.jpg}
+\caption{\label{fig:real_m2} Espejo M2} Fuente: Elaboración propia, tomada el 28/08/2025
+\end{figure}
+
+El M3 consiste de una espejo elíptica de 1.24 metros de diámetro mayor con 0.86 metros de diámetro menor. Este se ubica dentro de una torre, posicionada en el orificio central del M1. Este puede rotar alrededor de su eje azimutal \cite{eso2011m1}. El M3 es visible en la Figura \ref{fig:real_m3}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=8cm, height=4.5cm]{figures/real_m3.jpg}
+\caption{\label{fig:real_m3} Espejo M3} Fuente: Elaboración propia, tomada el 28/08/2025
+\end{figure}
+
+
+Luego de que la luz sea redirigida por M3, la luz llega a uno de 3 puntos focales: Nasmyth A, Nasmyth B y Cassegrain. Desde estos puntos la luz es capturada por un sensor de frente de onda, y finalmente, es capturada por un instrumento de análisis espectrométrico, el cuál varía según el punto focal por el que la luz entró \cite{eso1998vlt}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=10cm]{figures/diagram_oa}
+\caption{\label{fig:real_oa} Diagrama explicativo del sistema Óptica Activa} Fuente: Elaboración propia, basado en una diagrama de The VLT White Book \cite{eso1998vlt}
 \end{figure}
 
 \subsection{SISTEMA DE ÓPTICA ACTIVA}
 La Óptica Activa es un sistema integrado en el M1, encargado de corregir las aberraciones y degradación en la calidad de imágen provocadas por las ópticas del espejo \cite{eso1998vlt}.
 
-Estas aberraciones ópticas suelen ser causadas por la sensibilidad de este a perturbaciones ambientales, cómo las distorsiones térmicas, deformación de espejo por ráfagas de viento, errores de manufactura y mantenimiento del telescopio, entre otros. Esta sensibilidad es causada por la baja proporción entre el grosor y el diámetro del espejo, la cuál es la principal característica que permite al espejo M1 tener su gran tamaño, debido a que esta proporción es la que permite deformar el espejo \cite{wilson1987active}.
+Estas aberraciones ópticas suelen ser causadas por la sensibilidad de este a perturbaciones ambientales, cómo las distorsiones térmicas, deformación de espejo por ráfagas de viento, errores de manufactura y mantenimiento del telescopio, entre otros. Esta sensibilidad es causada por la baja proporción entre el grosor y el diámetro del espejo, la cuál es la principal característica que permite al espejo M1 tener su gran tamaño, debido a que esta proporción es la que permite ajustar el espejo \cite{wilson1987active}.
 
-El ciclo básico del sistema de Óptica Activa se ilustra en la imágen del Anexo 1. El mismo sigue el siguiente procedimiento:
+El ciclo básico del sistema de Óptica Activa se ilustra en la Figura \ref{fig:real_oa}. El mismo sigue el siguiente procedimiento:
 
 \begin{enumerate}
-    \item El sensor de frente de onda Shack-Hartmann toma una imagen de una estrella en el cielo y la toma como guia\cite{eso1998vlt}.
+    \item Los operadores del UT escogen una estrella en el cielo, es designada como guía y toman un imágen de la estrella con el sensor de frente de onda Shack-Hartmann\cite{eso1998vlt}.
 
     \item Se analiza la imágen y se miden las perturbaciones ópticas, calculando las aberraciones\cite{wilson1987active}.
 
     \item Cuando la desviación es considerable, se genera un set de fuerzas que se deben aplica al M1 para corregir las perturbaciones \cite{wilson1987active}.
 
-    \item Se aplica el set de fuerzas al espejo M1 y, durante una observación, el sensor de frente de onda Shack-Hartmann toma una nueva imágen, repitiendo el proceso\cite{wilson1987active}. Un ejemplo de imágen tomada por el sensor Shack-Hartmann se muestra en la Imágen \ref{fig:sh}.
+    \item Se aplica el set de fuerzas al espejo M1 y, durante una observación, el sensor de frente de onda Shack-Hartmann toma una nueva imágen, repitiendo el proceso\cite{wilson1987active}. Un ejemplo de imágen tomada por el sensor Shack-Hartmann se muestra en la Figura \ref{fig:sh}.
 
     \begin{figure}[h]
     \centering
-    \includegraphics[width=8cm]{figures/sh_eje.png}
-    \caption{\label{fig:sh} Imágen capturada por un sensor de frente de onda Shack-Hartmann} Fuente: Implementation of adaptive optics in fluorescent microscopy using wavefront sensing and correction\cite{azucena2010ao}
+    \includegraphics[width=8cm]{figures/sh-0.jpg}
+    \caption{\label{fig:sh} Imágen capturada por un sensor de frente de onda Shack-Hartmann} Fuente: How to use Active Optics Shack-Hartmann data to measure the seeing at the focal plane of a telescope \cite{kolb2010ao}
     \end{figure}
 
-     \item Todo este ciclo es repetido hasta que la imágen tomada durante el Paso 1 venga con una calidad óptica\cite{wilson1987active}.
+     \item Finalmente, se retorna al paso 2\cite{wilson1987active}.
 
 \end{enumerate}
 
 \subsection{SENSOR DE FRENTE DE ONDA}
-Un sensor de frente de onda es un dispositivo electrónico diseñado para calcular las aberraciones ópticas presentes en una imágen tomada, ya sea en el espectro visible o en infrarrojo. El VLT usa CCD Shack-Hartmann como sensores de frente de onda, con cada UT poseyendo uno en un brazo mecánico específico para los sensores.\cite{eso1998vlt}
+Un sensor de frente de onda es un dispositivo electrónico diseñado para calcular las aberraciones ópticas presentes en una imágen tomada, ya sea en el espectro visible o en infrarrojo. El VLT usa CCD Shack-Hartmann como sensores de frente de onda\cite{eso1998vlt}.
 
 El objetivo del uso de sensores Shack-Hartmann es la medición de distorsiones del frente de onda capturado desde la fuente, sobre las cuáles se realiza el proceso de Óptica Activa.\cite{eso1998vlt}
 
 \subsection{LOGS}
 Logging se refiere al proceso de registrar diferentes eventos y actividades que ocurren dentro de un sistema de software \cite{jayathilake2011mind}. Estos registros suelen almacenarse en archivos para su posterior análisis, tanto por parte de desarrolladores como de operadores externos.
 
-Los registros de log son los únicos tipos de datos que, valga la redundancia, registran información de la operación interna de un sistema de software, por lo que su rol en la industria es importante. Debido a esto mismo, los registros de log pueden alcanzar tamaños en el orden de hasta el orden de millones de líneas\cite{ma2023automatic}.
+Los logs son los únicos tipos de datos que registran información de la operación interna de un sistema de software, por lo que su rol en la industria es crucial. Debido a esto mismo, los logs pueden alcanzar tamaños en el orden de hasta el orden de millones de líneas\cite{ma2023automatic}.
 
-Los registros de log de los telescopios UT registra un día completo de operación, donde se registra información sobre las condiciones ambientales, el funcionamiento del sistema de Óptica Activa, la toma de imágenes durante periodos de calibración y de observación, entre otros. Debido a lo anterior, estos registros de log suelen alcanzar el orden de cientos de miles de líneas. Un ejemplo de estos registros de log puede verse en el Anexo 2.
+Los logs de los telescopios UT registran un día completo de operación, donde se registra información sobre las condiciones ambientales, el funcionamiento del sistema de Óptica Activa, la toma de imágenes durante periodos de calibración y de observación, lo cuál resulta en logs que alcanzan tamaños entre, aproximadamente, 50000 a 60000 KB, con un número de líneas en el orden de cientos de miles. Un ejemplo de estos logs puede verse en el Anexo 1.
 
 Las líneas de un registro de log estan compuestas de tokens estáticos y valores dinámicos. Los tokens estáticos corresponden a cadenas de texto que entregan metadata e información complementaria sobre el dato reportado en las líneas, y como tal se repiten de forma sistemática a lo largo del registro. Los valores dinámicos son cadenas de texto o números que entregan el valor del dato reportado, y por ende no se repiten con un patrón claro en el registro \cite{ma2023automatic}. 
 
 \subsection{ANÁLISIS DE LOGS}
-Originalmente, el análisis de registros de logs era realizado por desarrolladores con el fin de trazar el flujo de ejecución del sistema de software, identificar excepciones y potenciales errores. \cite{jayathilake2011mind}
+Originalmente, el análisis de logs era realizado por desarrolladores con el fin de trazar el flujo de ejecución del sistema de software, identificar excepciones y potenciales errores. \cite{jayathilake2011mind}
 
-Actualmente este enfoque se ha expandido a casos de uso en otros servicios en la industria \cite{ma2023automatic}, debido a que, por la naturaleza de la información contenida en los registros de log, su análisis permite a los operadores detectar, diagnosticar e incluso predecir errores que puedan afectar la disponibilidad y el rendimiento del sistema de software \cite{jayathilake2011mind}.
+Actualmente este enfoque se ha expandido a casos de uso en otros servicios en la industria \cite{ma2023automatic}, debido a que, por la naturaleza de la información contenida en los logs, su análisis permite a los operadores detectar, diagnosticar e incluso predecir errores que puedan afectar la disponibilidad y el rendimiento del sistema de software \cite{jayathilake2011mind}.
 
-En el pasado, durante la prevalencia del enfoque original, el análisis de registros de log era realizado aplicando revisiones visuales y reglas construidas manualmente. Sin embargo, la complejidad de los sistemas de software actuales ha llevado a la complejización de sus respectivos registros de logs, por lo que ya no es posible depender solamente de los métodos anteriormente mencionados. \cite{ma2023automatic}
+En el pasado el análisis de logs era realizado aplicando revisiones visuales y reglas construidas manualmente. Sin embargo, la complejidad de los sistemas de software actuales ha llevado a la complejización de sus respectivos logs, por lo que ya no es posible depender solamente de los métodos anteriormente mencionados. \cite{ma2023automatic}
 
-Por esto, en los últimos años se ha desarrollado ampliamente el área del análisis automatizado de registros de logs, mejorando su eficiencia y exactitud mediante la aplicación de tecnologías distribuidas y técnicas de machine learning. \cite{ma2023automatic}
+Por esto, en los últimos años se ha desarrollado ampliamente el área del análisis automatizado de logs, mejorando su eficiencia y exactitud mediante la aplicación de tecnologías distribuidas y técnicas de machine learning. \cite{ma2023automatic}
 
 \subsection{ESTRUCTURACIÓN DE LOGS}
-Los registros de logs generalmente poseen una composición demasiado compleja como para ser interpretada de forma directa y manual; sin el acceso de conocimiento profesional, es difícil seleccionar de forma manual las reglas apropiadas para la comprensión de los registros de log \cite{ma2023automatic}. Por esta condición es que se refiere a que los registros de log sean “No Estructurados” o “Semi Estructurados”. 
+Los logs son considerados como "No Estructurados", lo cuál alude al hecho de que los logs no son almacenados con una estructura estandarizada. Esto porque, generalmente, poseen una composición demasiado compleja como para ser interpretada de forma directa y manual: sin el acceso de conocimiento profesional, es difícil seleccionar de forma manual las reglas apropiadas para la comprensión de los logs \cite{ma2023automatic}.
 
-Además, el gran tamaño de los archivos de log promedio también se vuelve un problema para el análisis manual de los registros de log \cite{ma2023automatic}.
+Además, el gran tamaño de los archivos de log promedio también se vuelve un problema para el análisis manual de los logs \cite{ma2023automatic}.
 
-Debido a esto, durante los últimos años, se han desarrollado herramientas, procedimientos y frameworks para el análisis automático de registros de log, y una parte considerable de los esfuerzos realizados se enfocan en la “Estructuración” de los registros de log.
+Debido a esto, durante los últimos años, se han desarrollado herramientas, procedimientos y frameworks para el análisis automático de logs, y una parte considerable de los esfuerzos realizados se enfocan en la “Estructuración” de los logs.
 
-Actualmente, el workflow de análisis automático de registros de log se divide en 2 etapas centrales \cite{ma2023automatic}:
+Actualmente, el workflow de análisis automático de logs se divide en 2 etapas centrales \cite{ma2023automatic}:
 
 \begin{itemize}
-    \item Log Parsing: Se toman los registros semi-estructurados de log y se generan plantillas a partir de estos. Una plantilla es una sentencia estructurada que se repite entre varios registros de log, dividiéndose en los tokens estáticos y valores dinámicos. \cite{ma2023automatic}
+    \item Log Parsing: Se toman los registros semi-estructurados de log y se generan plantillas a partir de estos. Una plantilla es una sentencia estructurada que se repite entre varios logs, dividiéndose en los tokens estáticos y valores dinámicos. \cite{ma2023automatic}
 
-    \item Feature Extraction: Se aplican las plantillas generadas sobre los registros de log para obtener las características, esto es, las variables dinámicas, de los mismos. \cite{ma2023automatic}
+    \item Feature Extraction: Se aplican las plantillas generadas sobre los logs para obtener las características, esto es, las variables dinámicas, de los mismos. \cite{ma2023automatic}
 
 \end{itemize}
 
-\subsection{ORIGENES DE DATOS}
+\subsection{FUENTES DE DATOS}
 
-Tres origenes de datos son considerados para la presente memoria:
+Se ha determinado la siguiente lista de fuentes de datos que son relevantes para la presente memoria:
 
 \begin{enumerate}
-    \item Registros de log: El origen de dato más importante para esta memoria, considerando la problemática a resolver. Estos datos son propios de los telescopios UT, y como tales, se obtienen directamente de los mismos una vez terminada su ejecución \cite{eso1998vlt}
+    \item Archivos de logs: El origen de dato más importante para esta memoria, considerando la problemática a resolver. Los logs son propios de cada telescopio UT que los produzca, siendo disponibilizados en archivos donde son agrupados en ciclos de 24 horas UTC \cite{eso1998vlt}.
 
-    \item Imágenes en formáto fits: Las imágenes tomadas por el telescopio usan el formato fits, el cuál es universal en ciencias y astronomía\cite{nasa2025fits}. Es formato se divide en dos secciones: el contenido científico y el Header, donde este último contiene la metadata que describe a la misma imágen que lo aloja, como por ejemplo su número de ID, su tiempo de exposición, las fechas de inicio y término de grabado, entre otros\cite{nasa2025fits}. Para el caso de esta memoria, solo importan las imágenes que fueron tomadas desde el sensor de frente de onda como parte del ciclo de Óptica Activa.
+    \item Imágenes en formáto fits: Las imágenes tomadas por el telescopio usan el formato fits, el cuál es universal en ciencias y astronomía. Este formato se divide en dos secciones: el Header y la imágen, donde el Header contiene la metadata que describe a la misma imágen que lo aloja, como por ejemplo su número de ID, su tiempo de exposición, las fechas de inicio y término de grabado, entre otros\cite{nasa2025fits}. Para el caso de esta memoria, es relevante ser capaz de identificar las imágenes que fueron tomadas desde el sensor de frente de onda como parte del ciclo de Óptica Activa.
 
 
-    \item Observaciones en formáto csv: La ESO mantiene en una página web con el fin de archivar la información sobre todas las observaciones válidas de los UTs. Desde esa página se pueden obtener los datos de todas las observaciones de un día mediante una query. La información disponible en la página puede incluir el número de ID de la observación, la fecha de inicio, el tiempo de exposición, el instrumento de captura de la imágen, entre otros.
+    \item Observaciones en formáto csv: La ESO mantiene en una página web con el fin de archivar la información sobre todas las adquisiciones validas de los diferentes telescopios. La página web puede ser vista en la Figura \ref{fig:eso_raw}. Desde esa página se pueden obtener los datos de todas las observaciones de un día, la cuál también esta permite la aplicación de diferentes filtros de búsqueda. La información disponible en la página tipicamente incluye el número de ID de la observación, la fecha de inicio, el tiempo de exposición, el instrumento de captura de la imágen, entre otros.
+
+    \begin{figure}[h]
+    \centering
+    \includegraphics[width=15cm]{figures/eso_raw}
+    \caption{\label{fig:eso_raw} Página web de archivo de observación de la ESO} Fuente: https://archive.eso.org/eso/eso\_archive\_main.html, visitada el 20/10/2025.
+    \end{figure}
+
+\end{enumerate}
+
+
+\subsection{PROBLEMÁTICAS RELEVANTES}
+
+\subsubsection{Identificación de datos deseados}
+
+Los registros de log proporcionan una gran cantidad de información sobre las operaciones del VLT en una noche. Sin embargo, para efectos prácticos no es necesario ingerir toda esta información; acorde al objetivo general, solo se buscan datos relevantes para el sistema de Óptica Activa.
+
+Debido a esto, antes de la propuesta de una solución, es necesario hacer un estudio de los registros de log y determinar aquellos que se tengan importancia para el sistema de la Óptica Activa.
+
+Cada telescopio durante su operación nocturna, genera un log sobre su comportamiento. De esta información se deben extraer dos caracteristicas centrales: datos sobre la Óptica Activa y datos sobre las características ambientales.
+
+Los datos principales serán aquellos relacionados con el sistema de Óptica Activa: las fuerzas aplicadass de los 150 actuadores, las imágenes tomadas durante la operación y las instancias de corrección; todas dentro del rango de una observación.
+
+\begin{enumerate}
+    \item Iteración de corrección:
+
+    Se realizan múltiples iteraciones del ciclo de Óptica Activa, donde cada iteración comienza con la adquisición de una imágen y termina con una adquisición posterior de otra imágen, donde ambas imágenes son capturadas por el sensor de frente de onda.
+    
+    En cada iteración, se corrigen las fuerzas aplicadas por los actuadores al espejo M1, retornando un nuevo set de fuerzas a aplicar. 
+    
+    Con esto en consideración, es posible tomar las iteraciones como un tipo de dato central, con el cuál se pueden relacionar las fuerzas aplicadas y las imágenes tomadas.
+
+    \item Imágenes del frente de onda
+
+    Durante el proceso de Óptica Activa, las correcciones de las fuerzas aplicadas en los actuadores son realizadas en base a imágenes tomadas previamente por los sensores. Se debe considerar, además, que el proceso es iterativo, por lo que después de una corrección, se toma una nueva imágen con las nuevas fuerzas aplicadas para una nueva corrección, continuando el ciclo \cite{eso1998vlt}.
+    
+    Con estas consideraciones en mente, se tiene que para cada iteración de corrección habrá una imágen que determine su inicio y otra que determine su final, y que esta úlima será a su vez dará icinio a la iteración siguiente.
+
+    \item Fuerzas aplicadas:
+
+    Durante el sistema de Óptica Activa, se ajustan los valores de las fuerzas aplicadas de los 150 actuadores, por lo que se hace necesario conocer estos valores\cite{eso1998vlt}. 
+
+    Durante cada iteración de la Óptica Activa, se determinan las diferencias de valores entre las fuerzas que se ejercen en ese momento y las fuerzas ajustadas; estas diferencias se conocen como fuerzas relativas. Luego, las fuerzas ajustadas, conocidas como fuerzas absolutas, son las que ejercen los actuadores al espejo M1 luego de la iteración \cite{wilson1987active}.
+    
+    Tanto las fuerzas relativas como las fuerzas absolutas son escritas en los registros de log. Como se busca extraer un conjunto de fuerzas aplicadas, presentes en el registro de log, se decide extraer únicamente las fuerzas absolutas.
+    
+    \item Datos adicionales
+    
+    Existen otras características ambientales que son de interés, debido a que  podrían estar relacionados con las deformaciones a las cuáles es sometido el espejo.
+    
+    Debido a esto, se ha determinado la siguiente lista de valores que también se deben extraer de los logs:
+    
+    \begin{itemize}
+        \item Torque aplicado al motor, tanto en altitud como en acimut, durante el tracking del telescopio \cite{eso1998vlt}.
+    
+        \item Posición y ángulo del UT en el momento de la observación, representados ambos con altitud y acimut \cite{eso1998vlt}.
+    
+        \item Velocidad y dirección del viento detectado dentro de la estructura del telescopio, medidos en metros por segundo y grados, respectivamente \cite{eso1998vlt}.
+    
+        \item Temperatura ambiental detectada dentro de la estructura del telescopio, medida en grados Celsius \cite{eso1998vlt}.
+    
+        \item Porcentaje de humedad ambiental relativa detectada dentro de la estructura del telescopio \cite{eso1998vlt}.
+    
+        \item Presión del aire detectada dentro de la estructura del telescopio \cite{eso1998vlt}.    
+    \end{itemize}
+
+\subsubsection{Almacenamiento de los datos}
+
+Una vez identificados los datos a extraer desde las líneas de log, se hace necesario plantear como se almacenarán los mismos despues de obtenerlos. 
+
+Para la solución a desarrollar, se ha determinado la estructura de tablas vista en la Figura \ref{fig:db_general}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=16cm]{figures/db_diagram}
+\caption{\label{fig:db_general} Diagrama general de las tablas de datos} Fuente: Elaboración propia.
+\end{figure}
+
+Según lo visto anteriormente, los datos principales consisten en imágenes, fuerzas aplicadas, etc. asociados a iteración de corrección de la forma del espejo M1. Más específicamente, se tiene que cada iteración de corrección cambia, generalmente, los valores de estos datos. 
+
+Se puede considerar entonces agrupar los datos deseados según la iteración de corrección asociada. Por lo señalado anteriormente, cada iteración de corrección tendrá asociado un número de fuerzas aplicadas y una imágen previa a la corrección y otro número de fuerzas aplicadas y otra imágen similar luego de la misma. Entonces, cada corrección correspondería a una tabla con ambos sets de datos como atributos de la misma.
+
+Esto puede llevar a un problema, ya que en el escenario de dos correcciones consecutivas, el set de datos post-corrección de la primera instancia y el set de datos pre-corrección de la segunda instancia serían los mismos, por lo que estos datos aparecen repetidos en ambas tablas.
+
+Para solucionar este problema, las fuerzas aplicadas y las imágenes se almacenarán de forma separada a las iteraciones de corrección, mediante una llave foránea. Al mantener entidades distintas con múltiples relaciones por tabla, se logra normalizar la información.
+
+De este modo, se tiene una tabla para las iteraciones de corrección, la cuál se relaciona vía llaves foráneas a otras dos tablas: una para las fuerzas aplicadas y otra para la imágenes.
+
+Este modelo de tablas y sus respectivos campos se puede apreciar en la Figura \ref{fig:db_corr}.
+
+\begin{figure}[h]
+\centering
+\includegraphics{figures/db_diagram_corr}
+\caption{\label{fig:db_corr} Diagrama del almacenamiento de datos directamente relacionados con la corrección de fuerzas.} Fuente: Elaboración propia.
+\end{figure}
+
+Para cada tabla, se definen sus campos:
+
+\begin{itemize}
+    \item images:
+        \begin{itemize}
+            \item ID: integer, llave primaria, id del dato de imágen.
+            \item exposition\_start: timestamp, hora de inicio de exposición.
+            \item integration\_time: integer, tiempo en segundo que tardo en tomarse la imágen.
+            \item readout\_start: timestamp, hora de inicio de captura de la imágen.
+            \item readout\_stop: timestamp, hora de fin de captura de la imágen.
+            \item ccd: string, punto focal de captura de la imágen.
+            \item img\_path: string, dirección del archivo fits que almacena la imágen.
+        \end{itemize}
+
+    \item forces\_distribution:
+        \begin{itemize}
+            \item ID: integer, llave primaria, id del dato de las fuerzas
+            \item forces: array de int, valores numéricos de las fuerzas aplicadas
+            \item timestamp: timestamp, hora de la corrección de dichas fuerzas
+        \end{itemize}
+
+    \item corrections:
+        \begin{itemize}
+            \item ID: int, llave primaria, id del dato de la iteración de corrección.
+            \item timestamp: timestamp, hora del momento de la corrección.
+            \item ID\_f\_dist\_old: int, id de las fuerzas aplicadas pre-corrección.
+            \item ID\_f\_dist\_new: int, id de las fuerzas aplicadas post-corrección.
+            \item ID\_img\_old: int, id de la imágen pre-corrección.
+            \item ID\_img\_new: int, id de la imágen post-corrección.
+        \end{itemize}
+\end{itemize}
+
+Con respecto a los datos adicionales, debido a que estos no cambian con las correcciones, se decide almacenar estos en una tabla propia, conteniendo los atributos clave y sin necesidad de relaciones con otras tablas, como se muestran en la Figura \ref{fig:db_add_data}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=6cm]{figures/db_diagram_add_data}
+\caption{\label{fig:db_add_data} Diagrama de almacenamiento de datos sobre valores adicionales} Fuente: Elaboración propia.
+\end{figure}
+
+Para esta tabla, se definen los campos:
+
+\begin{itemize}
+    \item additional\_data:
+        \begin{itemize}
+            \item ID: int, llave primaria, id del dato de valor adicional.
+            \item timestamp: timestamp, hora del registro del valor en el log.
+            \item group: string, procedimiento que agrupa a la característica descrita por el valor (ejemplo, Óptica Activa, Análisis de Imágen, etc.)
+            \item label: string, característica descrita por el valor (ejemplo, torque, temperatura, presión, etc.)
+            \item type: string, tipo real del valor.
+            \item value\_str: string, valor en tipo string.
+            \item value\_float: float, valor en tipo float.
+            \item value\_int: int, valor en tipo int.
+        \end{itemize}
+\end{itemize}
+
+\subsubsection{Formato de almacenamiento}
+
+Después de diseñar la estructura de los datos, se hace necesario saber qué tecnologías usar para llevarla a cabo.
+
+El modelo relacional de la Figura \ref{fig:db_general} parece particularmente adecuado para implementar tecnologías como base de datos relacionales. Esta opción no sería óptima para el objetivo de esta memoria, debido a que es más factible que los datasets a generar sean consumidos a nivel de código por los modelos de osft-computing, por lo que subir los datos a un servidor de tablas relacionales para luego bajarlos en el mismo sistema es redundante e innecesario.
+
+Así mismo, cabe mencionar que el gran tamaño de los archivos de logs, siendo de entre 50000 a 60000 KB aproximadamente, terminarían con tablas de gran tamaño, lo cúal causaría demoras en tiempos de carga y de subida, por lo que desde esta mirada también conviene el uso de datasets.
+
+Por ende, y considerando que se planea usar el lenguaje de Python 3.13, se ha determinado el uso de la libreria Pandas, por ser una forma estandarizada de poder guardar datos para técnicas de análisis y de soft-compunting.
+
+
+\subsubsection{Extracción de información de las lineas de log}
+
+La extracción de datos de líneas de log se refiere al análisis de las líneas de texto presentes en los registros de log con el fin de identificar los tokens presentes y detectar los datos relevantes con el fin de extraerlos \cite{jayathilake2011mind}. 
+
+Existen varias formas de realizar la extracción de datos en registros de log; escoger la adecuada no es trivial, ya que se presentan dos desafíos principales a la hora de aplicar la misma en logs \cite{jayathilake2011mind}:
+
+Las arquitecturas de software grandes y complejas generan grandes cantidades de información de log mientras se ejecutan, por lo que la forma tradicional de construir manualmente expresiones regulares es demasiado costosa.
+Las funciones de sistemas de software complejos y actualizaciones de negocio de alta frecuencia llevan a actualizaciones más frecuentes de plantillas de línea, incrementado así en gran medida la diversidad de plantillas de línea.
+
+La problemática 1 se orienta principalmente a la extracción de datos general de registros de log, el cuál no es el caso para este trabajo; ya que se tiene claridad de los datos requeridos y de las líneas específicas que los poseen, el uso de expresiones regulares y plantillas creadas manualmente no es descartado.
+
+La problemática 2, si bien también se orienta hacia la extracción de datos general de registros de log y a la creación automática de plantillas de log, se puede extender su cuestionamiento a la creación de plantillas manuales; a medida que se actualicen las reglas de negocio de la Óptica Activa, las plantillas manuales creadas pueden aumentar.
+
+Como se mencionó en el Capítulo 1, el sistema de logging de Óptica Activa tiene décadas de servicio continuo, por lo que se espera que no hayan cambios de ese registro. Por el lado de los datos relevantes para el sistema de Óptica Activa, es posible que puedan existir cambios en los datos requeridos en un futuro, sin embargo el análisis realizado en la sección 3.1, se puede asegurar que los cambios se mantendrían dentro de ese modelo de datos. Por ende, cualquier cambio futuro no incrementa el número de plantillas en gran medida.
+
+Debido a todo lo anterior, se decide optar por un modelo sencillo de extracción de datos en líneas de log, donde se itera sobre las secciones de log obtenidas tras el preprocesamiento, y dentro de cada iteración se aplica de forma greedy cada plantilla sobre la línea seleccionada hasta que una calce. En caso de calzar, se extraen los datos acordes a la plantilla y se almacenan estos en una lista.
+
+Para aplicar la extracción de datos en las líneas de texto, existen varios métodos y librerías diseñadas para la extracción de datos desde strings. Para este trabajo, se analizaron dos opciones posibles y se compararon según eficiencia y exactitud.
+
+\begin{enumerate}
+
+    \item{Extracción de datos con Expresiones Regulares}
+    
+    En este caso, se tienen las plantillas en forma de expresiones regulares, donde los tokens deseados estan marcados como grupos dentro de las mismas plantillas.
+
+    Para este caso, se iteran en todas las líneas de log filtradas por observación, y se detectan las líneas que contienen los datos deseados usando ciertos tokens claves detectados al estudiar el formato del archivo de log.
+
+    Luego de detectar las líneas, se aplican a estas todas las plantillas hasta que se pueda extraer correctamente con una.
+
+    Para este método de extracción, las plantillas tienen el formato presentado en el Listing \ref{myverbatim:regex}:
+
+    \begin{listing}[!ht]
+        \caption{\label{myverbatim:regex} Plantillas Regex}
+        \begin{minted}[linenos, breaklines]{text}
+
+(([0-2][0-9]{3}-[0-1][0-9]-[0-3][0-9]) ([0-2][0-9]:[0-5][0-9]:[0-5][0-9](.[0-9]+)*) lt[1-4]m1m3 m1as m1asSetGlb[Abs|Rel]+ [0-9.-]+ [0-9.-]+ AS Forces #([0-9.-]+) \(abs\): ([0-9.\-\s]+))
+
+(([0-2][0-9]{3}-[0-1][0-9]-[0-3][0-9]) ([0-2][0-9]:[0-5][0-9]:[0-5][0-9](.[0-9]+)*) lt[1-4]m1m3 m1as m1asSetGlb[Abs|Rel]+ [0-9.-]+ [0-9.-]+ AS Executed cmd #([0-9.-]+): SUCCESS)
+
+(([0-2][0-9]{3}-[0-1][0-9]-[0-3][0-9]) ([0-2][0-9]:[0-5][0-9]:[0-5][0-9](.[0-9]+)*) lt[1-4]m1m3 m1as m1asSetGlb[Abs|Rel]+ [0-9.-]+ [0-9.-]+ AS Received cmd #([0-9.-]+): [A-Z]+)
+
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9](.[0-9]+)*)> DET EXP NO = ([0-9]+) \/ Unique exposure ID number \[(lt[1-4][a-z]{2}[a-c])\])
+
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9](.[0-9]+)*)> TEL ACTO (INTTIME) = ([0-9]+))
+
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9](.[0-9]+)*)> TEL (ALT) (TORQUE) = ([0-9.-]+))
+
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9](.[0-9]+)*)> TEL (AZ) (TORQUE) = ([0-9.-]+))
+
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9](.[0-9]+)*)> TEL (ALT)( )= ([0-9.-]+))
+
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9](.[0-9]+)*)> TEL (AZ)( )= ([0-9.-]+))
+
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9](.[0-9]+)*)> TEL (IA) (ABER)([0-9.-]+) = ([0-9.-]+))
+
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9](.[0-9]+)*)> TEL (IA) (ABERANG)([0-9.-]+) = ([0-9.-]+))
+
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9](.[0-9]+)*)> TEL (ACTO) (ALTPOS) = ([0-9.-]+))
+
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9](.[0-9]+)*)> TEL (ACTO) (AZPOS) = ([0-9.-]+))
+
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9](.[0-9]+)*)> TEL (IA) (ABERAVE)([0-9.-]+) = ([0-9.-]+))
+
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9](.[0-9]+)*)> TEL (IA) (ABERAVEANG)([0-9.-]+) = ([0-9.-]+))
+
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9](.[0-9]+)*)> TEL (IA) (ABERFILMOD)([0-9.-]+) = ([0-9.-]+))
+
+(wt[1-4]tcs ([0-2][0-9]:[0-5][0-9]:[0-5][0-9](.[0-9]+)*)> TEL (IA) (ABERFILANG)([0-9.-]+) = ([0-9.-]+))
+    
+        \end{minted}
+    \end{listing}
+
+    \item{Extracción de datos con Template Text Parser}
+
+    Para este caso, se usa la librería externa Template Text Parser, o TTP, la cuál, de forma similar al caso anterior, permite escribir los tokens deseados en la misma plantilla, y luego durante la extracción solo retorna los datos llamados anteriormente.
+
+    Como es una librería diseñada para estos fines exclusivos, se procede solo a ejecutar un método de la misma para extraer datos.
+
+    Para este método de extracción, las plantillas tienen el formato presentadas en el Listing \ref{myverbatim:ttp}:
+
+    \begin{listing}[!ht]
+        \caption{\label{myverbatim:ttp} Plantillas TTP}
+        \begin{minted}[linenos, breaklines]{text}
+
+{{ date }} {{ hour }} lt[1-4]m1m3 m1as m1asSetGlbAbs [0-9.-]+ [0-9.-]+ AS Forces #([0-9.-]+) \(abs\): {{ data }}
+
+{{ date }} {{ hour }} lt[1-4]m1m3 m1as m1asSetGlbAbs [0-9.-]+ [0-9.-]+ AS Executed cmd #([0-9.-]+): SUCCESS
+
+{{ date }} {{ hour }} lt[1-4]m1m3 m1as m1asSetGlbAbs [0-9.-]+ [0-9.-]+ AS Received cmd #([0-9.-]+): [A-Z]+
+
+wt[1-4]tcs {{ hour }}> DET EXP NO = ([0-9]+) \/ Unique exposure ID number \[(lt[1-4][a-z]{2}[a-c])\]
+
+wt[1-4]tcs {{ hour }}> TEL ACTO (INTTIME) = ([0-9]+)
+
+wt[1-4]tcs {{ hour }}> TEL {{ group }} >{{ label }} = {{ data }}
+
+wt[1-4]tcs {{ hour }}> TEL {{ group }} {{ label }} = {{ data }}
+
+wt[1-4]tcs {{ hour }}> TEL {{ group }}{{ label }}= {{ data }}
+
+wt[1-4]tcs {{ hour }}> TEL {{ group }}{{ label }}= {{ data }}
+
+wt[1-4]tcs {{ hour }}> TEL {{ group }} {{ label }} = {{ data }}
+    
+        \end{minted}
+    \end{listing}
+
+\end{enumerate}
+
+Para ambos casos, los datos extraídos quedan en formato json, donde la llave corresponde al nombre de la caracteristica (definida desde la plantilla con TTP y definida desde el codigo con Regex) y el valor corresponde al dato extraído.
+
+Independiente del origen del dato, todos poseen campos de nombre 'group' y la mayoría posee también un campo 'label'. Se usará el campo 'group' para definir el tipo del dato (distribución de fuerza, imágen, etc.) y el campo 'label' para identificar subdivisiones dentro de cada tipo de dato cuando sea conveniente.
+
+Estos campos se tornan particularmente útiles, cuando se considera que la información para un dato puede estar repartida en varias líneas, como es por ejemplo el caso de las fuerzas aplicadas, donde las fuerzas de los 150 actuadores están siempre repartidos en 6 líneas de 25 actuadores, y que a su vez todas esas líneas están separadas de la ID de la distribucón, que se encuentra en su línea propia. Este formato se puede revisar en el Listing \ref{myverbatim:fuerza_ejemplo}.
+
+  \begin{listing}[!ht]
+    \caption{\label{myverbatim:fuerza_ejemplo} Ejemplos de fuerzas aplicadas}
+    \begin{minted}[linenos, breaklines]{text}
+
+Sep 21 23:30:55 wt1tcs logManager[318044]: 2024-09-21  23:30:51.970000  lt1m1m3  m1as  m1asSetGlbRel  33  110  AS Executed cmd #807: SUCCESS
+
+Sep 21 23:30:55 wt1tcs logManager[318044]: 2024-09-21  23:30:51.970000  lt1m1m3  m1as  m1asSetGlbRel  33  110  AS Forces #1 (abs):   42   45   49   50   39   14  -20  -33  -10   21   47   57   53  -38  -13   25   47   43    9   18  -20   36   46   11   25
+
+Sep 21 23:30:55 wt1tcs logManager[318044]: 2024-09-21  23:30:51.970000  lt1m1m3  m1as  m1asSetGlbRel  33  110  AS Forces #2 (abs):  -58  -53  -47  -31   -6   19   35   40   26    1  -22  -38  -42   31   16  -14  -37   -8   -6    9   52   29  -14    9    9
+
+Sep 21 23:30:55 wt1tcs logManager[318044]: 2024-09-21  23:30:51.970000  lt1m1m3  m1as  m1asSetGlbRel  33  110  AS Forces #3 (abs):  -66  -75  -74  -55  -26   -2    3   38   28   23   31   46   57   21    2   0.   21   45  -32  -37  -27  -71  -64  -18  -43
+
+Sep 21 23:30:55 wt1tcs logManager[318044]: 2024-09-21  23:30:51.970000  lt1m1m3  m1as  m1asSetGlbRel  33  110  AS Forces #4 (abs):   39   53   43   14  -11  -19   -8  -24    3   24   38   49   57  -23   15   43   53    9   38   37    6   23   22   -7   29
+
+Sep 21 23:30:55 wt1tcs logManager[318044]: 2024-09-21  23:30:51.970000  lt1m1m3  m1as  m1asSetGlbRel  33  110  AS Forces #5 (abs):  -83  -58  -38  -28  -24  -14   10   80   67   36   -4  -35  -41   73   64   24  -25  -45  -28  -22   -5  -44  -83   14  -12
+
+Sep 21 23:30:55 wt1tcs logManager[318044]: 2024-09-21  23:30:51.970000  lt1m1m3  m1as  m1asSetGlbRel  33  110  AS Forces #6 (abs):  -99  -99  -89  -78  -72  -66  -49   80   73   62   51   44   45   58   36   22   26  -22  -33  -80  -62  -88 -114   14  -13
+    
+        \end{minted}
+    \end{listing}
+
+De esta forma, mediante el uso de estos campos, se puede dejar registro de la información de un mismo dato para su posterior unión.
 
 \end{enumerate}

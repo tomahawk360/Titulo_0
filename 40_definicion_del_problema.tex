@@ -1,30 +1,36 @@
 \secnumbersection{DEFINICIÓN DEL PROBLEMA}
 
-En el VLT del Observatorio Paranal, se busca disponer de datasets con información útil sobre el comportamiento del sistema de Óptica Activa, extrayendola de sus registros de log, con el fin de implementar técnicas de soft-computing para la asistencia y mejora de las operaciones del sistema.
+En el VLT del Observatorio Paranal, se busca disponer de datasets con información útil sobre el comportamiento del sistema de Óptica Activa, extrayéndola de sus registros de log, con el fin de implementar técnicas de soft-computing para la asistencia y mejora de las operaciones del sistema. Sin embargo, actualmente no existe un procedimiento que permita analizar los logs y extraer sets de información, en ciertos rangos de tiempo, con tal de producir los datasets deseados. 
 
-Sin embargo, actualmente no existe un procedimiento que permita analizar los registros de log y extraer sets de información precisas de estos, bajo ciertas condiciones especificas, con tal de generar los datasets deseados. 
+Este procedimiento es esencial para habilitar la discusión sobre la implementación de técnicas de soft-computing, lo cuál no fue prioritario durante la construcción del sistema de Óptica Activa.
 
-Este procedimiento es esencial, ya que el análisis as-is de la información dispuesta en dichos logs no es posible, debido a que el costo para reordenar y organizar los datos acorde a lo necesitado supera los beneficios del análisis mismo.
-
-Esto es a causa de que los datos retornados por el sistema de Óptica Activa usan un formato abstracto y poco estructurado. Los registros de log generados durante las operaciones dentro del sistema también usan dicho formato. Además, estos logs registran todas las actividades y factores presentes durante la operación de los UTs en una noche, generando archivos de gran tamaño con información muy variada.
+Esto es a causa de que los datos retornados por el sistema de Óptica Activa usan un formato abstracto y poco estructurado. Los registros de log generados durante las operaciones dentro del sistema también usan dicho formato. Además, estos logs registran todas las actividades y factores presentes durante la operación de los UTs en un lapso de 24 horas, generando archivos de gran tamaño con información muy variada.
 
 \subsection{CONTEXTO}
 
-El observatorio Paranal, perteneciente a la ESO, se ubica en el cerro homónimo en el Norte de Chile, y se dedica principalmente a la búsqueda y estudio de galaxias y otras estructuras interestelares. El observatorio, para lograr estos objetivos, cuenta con el VLT, uno de los telescopio ópticos más avanzados del mundo\cite{eso1998vlt}.
+El observatorio Paranal, perteneciente a la ESO, se ubica en el cerro homónimo en el Norte de Chile, y se dedica principalmente a la búsqueda y estudio de galaxias y otras estructuras interestelares. El observatorio, para lograr estos objetivos, cuenta con el VLT, una de las instalaciones astronómicas más avanzadas del mundo\cite{eso1998vlt}.
 
 El VLT debe cumplir con altos estándares tecnológicos, con tal de cumplir la visión de avanzar el entendimiento del Universo mediante la disposición de instalaciones de clase mundial \cite{eso1998vlt}.
 
-Como telescopio óptico, el VLT usa una serie de espejos para conducir la luz estelar a instrumentos que capturan la misma para la toma de imagenes, análisis del espectro electromagnético e interferometría óptica; todos estas formas destinadas tanto a fines científicos como para la mejora del funcionamiento del telescopio\cite{eso1998vlt}.
+Como telescopio óptico, el VLT usa una serie de espejos para conducir la luz estelar a instrumentos que capturan la misma para la toma de imagenes, análisis del espectro electromagnético e interferometría óptica; todos estas formas destinadas tanto a fines científicos como para la mejora del funcionamiento de los sistemas involucrados\cite{eso1998vlt}.
 
 Para cumplir con estas funciones, el VLT consta principalmente de 4 telescopios primarios, denominados UT, sumado a 4 telescopios auxiliares y otros sistemas complementarios\cite{eso1998vlt}.
 
-La forma en la que cada UT capta la luz esta reflejada en el Anexo 1. Primero, la luz es captada por un espejo principal de 8.2 metros de diametro, denominado M1, el cuál gracias a su forma redirige la luz a un espejo de 0.9 metros de diametro, denominado M2. Luego este último vuelve a redirigir la luz a un tercer espejo eliptico, denominado M3, el cuál redirige la luz a uno de cuatro puntos focales. Desde cada punto focal, la luz es procesada por un sensor de frente de onda Shack-Hartmann, y luego estos datos son procesados por un computador central, el cuál interpreta estos datos como imágenes \cite{eso1998vlt}.
+La forma en la que cada UT capta la luz es la siguiente:
+
+\begin{itemize}
+    \item Primero, la luz es captada por un espejo principal de 8.2 metros de diametro, denominado M1, el cuál gracias a su forma redirige la luz a un espejo de 0.9 metros de diametro, denominado M2 \cite{eso1998vlt}.
+
+    \item Luego este último vuelve a redirigir la luz a un tercer espejo eliptico, denominado M3, el cuál redirige la luz a uno de cuatro puntos focales \cite{eso1998vlt}.
+
+    \item Desde cada punto focal, la luz es procesada por un sensor de frente de onda Shack-Hartmann, y luego estos datos son procesados por un computador central, el cuál interpreta estos datos como imágenes \cite{eso1998vlt}.
+\end{itemize}
 
 Las características físicas del M1 lo vuelven susceptible a sufrir deformaciones por diversos factores, como por ejemplo el efecto de la gravedad cuando se inclina. Estas deformaciones, a su vez, pueden causar aberraciones ópticas en las imágenes obtenidas \cite{wilson1987active}.
 
-Con tal de resolver estos problemas, en los UT se implementa un sistema de soporte bajo el espejo M1, con 150 pistones de funcionamiento hidráulico y neumático que aplican fuerza al espejo, deformandolo \cite{eso1998vlt}. 
+Con tal de resolver estos problemas, en los UT se implementa un sistema de soporte bajo el espejo M1, con 150 pistones de funcionamiento hidráulico y neumático que aplican fuerza al espejo, permitiendole conservar su forma ideal, compensado las deformaciones que pueda tener debido a factores externos \cite{eso1998vlt}. 
 
-Durante las observaciones de los UTs, estos escogen una estrella guía, cuya luz es capturada y analizada por el sensor Shack-Hartmann, calculando con esta las aberraciones ópticas. En base a estos calculos, se determina una nueva distribución de fuerzas para los actuadores, la cuál luego es aplicada por los mismos en el M1, brindando a este último de una nueva forma que permita tomar una imágen de mejor calidad \cite{eso1998vlt}. 
+Durante las observaciones de los UTs, sus operadores escogen una estrella guía, cuya luz es capturada y analizada por el sensor Shack-Hartmann, calculando con esta las aberraciones ópticas. En base a estos calculos, se determina una nueva distribución de fuerzas para los actuadores, los cuáles aplican estas fuerzas en el M1, devolviendo a este último a una forma apropiada para continuar con las observaciones\cite{eso1998vlt}. 
 
 El ciclo anteriormente descrito corresponde al sistema de Óptica Activa, implementada en todos los UTs, el cuál se ejecuta repetidas veces por cada observación hasta lograr una imágen de calida óptima\cite{eso1998vlt}.
 
@@ -35,4 +41,4 @@ Los actores involucrados en el problema corresponden a los elementos participant
 \subsection{OBJETIVOS Y ALCANCE}
 
 EL objetivo detrás de la solución busca desarrollar un procedimiento para extraer los datos no estructurados, transformarlos en datos estructurados, y disponerlos para distintos modelos y sistemas
-que busquen analizar dichos datos con diversos fines, como por ejemplo mantenimiento o técnicas de softcomputing.
+que busquen analizar dichos datos con diversos fines, como por ejemplo mantenimiento o técnicas de soft-computing.

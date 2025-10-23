@@ -29,7 +29,7 @@ Por ende, es prudente procesar los logs de forma previa, aplicando transformacio
 
 Tras revisar los logs, como el ejemplo presente en el Anexo 1, se puede notar que existe un patrón recurrente en todas las líneas.
 
-Estos valores inicales, que incluyen la fecha, hora, nombre del UT y del logManager, aportan información que es redundante dentro de la misma línea, como la hora y el nombre del UT, o dentro del archivo, como la fecha. De este modo, se puede concluir que dichos valores iniciales no son necesarios para el objetivo de esta memoria, debido a que la información que aportan puede ser extraída desde otras fuentes.
+Estos valores inicales, que incluyen la primera mención a la hora, nombre del UT y del logManager, aportan información que es redundante dentro de la misma línea, como la hora y el nombre del UT, o dentro del archivo, como la fecha. De este modo, se puede concluir que dichos valores iniciales no son necesarios para el objetivo de esta memoria, debido a que la información que aportan puede ser extraída desde otras fuentes.
 
 Por lo mismo, con tal de facilitar la extracción de datos, se procede a eliminar estos valores.
 
@@ -91,6 +91,8 @@ El método tradicional para extraer datos de líneas de log es usar plantillas e
 Las plantillas corresponden a una secuencia de carácteres que marcan la posición de los valores deseados dentro de una línea de texto. Debido a que se conoce la cantidad específica de datos requeridos, se decide crear las plantillas manualmente.
 
 Estas plantillas se disponen finalmente al procedimiento ELT, el cuál extraerá los datos de las líneas de log con las plantillas de forma automática.
+
+Este procedimiento implica iterar por cada línea del log, aplicando cada plantilla hasta que una de estas logre extraer datos de la línea de log exitosamente. Este proceso es de complejidad exponencial, al tratarse de un ciclo dentro de otro ciclo. El número del ciclo interno correspondiente al número de plantillas, y por lo mismo no puede reducirse. El número del ciclo externo corresponde al número de líneas de log, el cuál si puede reducirse aplicando el filtrado de la sección 3.2. Con esto dicho, considerando que el número de líneas de log sin filtrar es del orden de cientos de miles, este número no es de un tamaño tan grande en el contexto de la big data, por lo que la complejidad exponencial es aceptable.
 
 El formato final de las plantillas varía según el método de extracción de datos usado, por lo que se muestran imágenes de las mismas en las subsecciones correspondientes.
 
